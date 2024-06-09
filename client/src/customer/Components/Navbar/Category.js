@@ -210,7 +210,7 @@ const Category = () => {
               className="mt-4 mb-2"
             />
             <h2 className="font-bold mb-2">PERSONAL CARE</h2>
-            <ul className="space-y-1">
+            <ul className="space-y-1 mb-4 font-extralight">
               <li>
                 <button onClick={() => handleNavigate("/personal-care/skin-care")}>Skin Care</button>
               </li>

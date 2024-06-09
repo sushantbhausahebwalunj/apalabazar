@@ -9,7 +9,6 @@ import ProductComponent from '../customer/Components/Adverties/Adverties.js';
 import FrozenSnacks from '../customer/Components/Products/Product.js'
 import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
 
-
 function HomePage() {
   let sliderRef = useRef(null);
   const next = () => {
@@ -102,6 +101,8 @@ function HomePage() {
         <ProductComponent />
         <FrozenSnacks/>
     <PopularBrand/>
+    
+
       <Footer/>
     </div>
   );

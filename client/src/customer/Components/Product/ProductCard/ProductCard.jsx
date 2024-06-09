@@ -16,7 +16,7 @@ export function ProductCard({ productimg, logo, productname, productprice, aplab
         </div>
 
         <div>
-          <h6 className='Product-name'>{productname}</h6>
+          <h6 className='Product-name pl-4'>{productname}</h6>
 
 
 
@@ -32,7 +32,7 @@ export function ProductCard({ productimg, logo, productname, productprice, aplab
 
 
             <div className='mrpp'>
-              <p className='mrpp1'>Apla Bazar</p>
+              <p className='mrpp1'>Apala Bazar</p>
               <p className='mrpp2'> {aplabazarprice}</p>
             </div>
             <p className='taxes'>(Inclusive of all taxes)</p>

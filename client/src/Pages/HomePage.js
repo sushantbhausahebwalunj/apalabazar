@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Navbar from "../Components/Navbar";
 import ProductComponent from "../Components/Adverties";
 import React, { useRef } from "react";
@@ -8,6 +9,11 @@ import Slider from "react-slick";
 import FrozenSnacks from "../Components/Product";
 import PopularBrand from "../Components/Popularbrand";
 
+=======
+import React from 'react'
+import Navbar from '../customer/Components/Navbar/Navbar';
+import Footer from '../customer/Components/footer/Footer';
+>>>>>>> c0563fb00bc4ef67a762975059cd707a192ebc35
 
 function HomePage() {
   let sliderRef = useRef(null);
@@ -103,7 +109,13 @@ function HomePage() {
     <PopularBrand/>
       
     </div>
+<<<<<<< HEAD
   );
+=======
+    
+    </div>
+  )
+>>>>>>> c0563fb00bc4ef67a762975059cd707a192ebc35
 }
 
 export default HomePage;

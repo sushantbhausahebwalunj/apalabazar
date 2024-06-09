@@ -1,19 +1,14 @@
-<<<<<<< HEAD
-import Navbar from "../Components/Navbar";
-import ProductComponent from "../Components/Adverties";
+
+import Navbar from "../customer/Components/Navbar/Navbar.js";
 import React, { useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-import Slider from "react-slick";
-import FrozenSnacks from "../Components/Product";
-import PopularBrand from "../Components/Popularbrand";
-
-=======
-import React from 'react'
-import Navbar from '../customer/Components/Navbar/Navbar';
 import Footer from '../customer/Components/footer/Footer';
->>>>>>> c0563fb00bc4ef67a762975059cd707a192ebc35
+import Slider from "react-slick";
+import ProductComponent from '../customer/Components/Adverties/Adverties.js';
+import FrozenSnacks from '../customer/Components/Products/Product.js'
+import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
+
 
 function HomePage() {
   let sliderRef = useRef(null);
@@ -107,15 +102,9 @@ function HomePage() {
         <ProductComponent />
         <FrozenSnacks/>
     <PopularBrand/>
-      
+      <Footer/>
     </div>
-<<<<<<< HEAD
   );
-=======
-    
-    </div>
-  )
->>>>>>> c0563fb00bc4ef67a762975059cd707a192ebc35
 }
 
 export default HomePage;

@@ -17,10 +17,10 @@ function Grocery() {
   return (
     <div>
       <Navbar/>
-      <div className=' flex gap-6'>
+      <div className=' flex gap-6 font-semibold'>
         
         <SideBar setActiveTab={setActiveTab}  title={"Grocery"}  sidebarDairy={sidebarDairy} key={'2'}/>
-        {activeTab==="All Grocery" ? <div className='flex flex-wrap  w-full'>
+        {activeTab==="All Grocery" ? <div className='flex flex-wrap   w-full'>
           <Dryfruits/>
           <Flours/>
           <Masala/>

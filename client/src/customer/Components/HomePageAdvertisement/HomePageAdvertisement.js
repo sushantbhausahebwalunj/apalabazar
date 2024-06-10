@@ -5,7 +5,7 @@ const HomePageAdvertisement = () => {
     { id: 1, imageUrl: 'https://image.useinsider.com/itcindia/defaultImageLibrary/Frozen%201080-x-1080_desktop%20v2-1717427674.jpeg' },
     { id: 2, imageUrl: 'https://image.useinsider.com/itcindia/defaultImageLibrary/Bingo%201080-x-1080_T20_desktop%20v2-1717427681.jpeg' },
     { id: 3, imageUrl: 'https://image.useinsider.com/itcindia/defaultImageLibrary/B%20Natural%201080-x-1080_desktop%20v2-1717427692.jpeg' },
-    { id: 4, imageUrl: 'https://image.useinsider.com/itcindia/defaultImageLibrary/B%20Natural%201080-x-1080_desktop%20v2-1717427692.jpeg' },
+    { id: 4, imageUrl: 'https://image.useinsider.com/itcindia/defaultImageLibrary/KOI%201080-x-1080_desktop%20v2-1717427698.jpeg' },
   ];
 
   return (

@@ -89,19 +89,19 @@ const Navbar = () => {
             <span>All Categories</span>
           </button>
         </div>
-        <a href="#" className="text-zinc-700">
-          Ready To Cook
+        <a href="/grocery" className="text-zinc-700 font-bold">
+         Grocery
         </a>
-        <a href="#" className="text-zinc-700">
+        <a href="#" className="text-zinc-700 font-bold">
           Value Packs
         </a>
-        <a href="#" className="text-zinc-700">
+        <a href="#" className="text-zinc-700 font-bold">
           Home Appliances
         </a>
-        <a href="#" className="text-zinc-700">
+        <a href="#" className="text-zinc-700 font-bold">
           Cleaners
         </a>
-        <a href="#" className="text-zinc-700">
+        <a href="#" className="text-zinc-700 font-bold">
           Detergent &amp; Fabric Care
         </a>
       </div>

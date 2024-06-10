@@ -13,6 +13,8 @@ import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
 
 import './HomePage.css'
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
+import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/HomePageAdvertisement.js";
+import Maylike from "../customer/Components/Adverties/Maylike.js";
 
 function HomePage() {
   const settings = {
@@ -76,15 +78,60 @@ function HomePage() {
       
         </Slider>
       </div>
+      <HomePageAdvertisement/>
       <TrendingProducts/>
         <ProductComponent />
         <FrozenSnacks/>
+        
+    <div className="w-[85vw] mx-auto mt-2 border-0 radius" >
+        <Slider {...settings} className="radius">
+          <div className="radius">
+            <a href="./product/1 radius">
+              <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
+                <img
+                  src="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2FF_4500-x-1125_paneer.jpg%3Fwidth%3D1024&w=1920&q=75"
+                  className=" object-fill h-[30vh] w-full radius"
+                ></img>
+              </div>
+            </a>
+          </div>
+          <div className="radius">
+            <a href="./product/2 radius" >
+              <div className="flex items-center  justify-end bg-opacity-50 rounded radius w-full">
+                <img
+                  src="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2FEngage_Travel_Pack_Desktop_.jpg%3Fwidth%3D1024&w=1920&q=75"
+                  className=" object-fill h-[30vh] w-full radius"
+                ></img>
+              </div>
+            </a>
+          </div>
+          <div className="radius">
+            <a href="./product/1">
+              <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
+                <img
+                  src="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2FBanner_8_Desktop_.jpg%3Fwidth%3D1024&w=1920&q=75"
+                  className=" object-fill h-[30vh] w-full radius"
+                ></img>
+              </div>
+            </a>
+          </div>
+          <div className="radius">
+            <a href="./product/1">
+              <div className="flex items-center  justify-end bg-opacity-50 radius  w-full">
+                <img
+                  src="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2Fbanner.jpg%3Fwidth%3D1024&w=1920&q=75"
+                  className=" object-fill h-[30vh] w-full radius"
+                ></img>
+              </div>
+            </a>
+          </div>
+      
+        </Slider>
+      </div>
     <PopularBrand/>
 
-
-
-
     
+<Maylike/>
 
       <Footer/>
     </div>

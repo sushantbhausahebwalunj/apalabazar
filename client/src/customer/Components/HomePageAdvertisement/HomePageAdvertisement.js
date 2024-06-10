@@ -9,7 +9,7 @@ const HomePageAdvertisement = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center mt-6 min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-screen-lg px-4">
         {advertisements.map(ad => (
           <div key={ad.id} className="advertisement-card p-2 h-96">

@@ -3,7 +3,7 @@ import './Product.css';
 
 const productCardClasses = 'product-card bg-white rounded-lg p-4 w-64 flex-shrink-0 content-center mt-5';
 const imageClasses = 'w-full h-40 object-contain mb-4';
-const buttonClasses = 'bg-green-500 text-white text-sm py-2 px-4 rounded-lg w-50';
+const buttonClasses = 'bg-green-500 text-white text-sm py-2 px-4 rounded-lg w-full';
 
 const ProductCard = ({ product }) => {
   return (

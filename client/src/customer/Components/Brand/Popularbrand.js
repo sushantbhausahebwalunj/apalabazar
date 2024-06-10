@@ -25,7 +25,7 @@ const brands = [
 
 const PopularBrand = () => {
   return (
-    <div className="popular-brand-container w-[96vw] m-auto rounded-md overflow-hidden relative mt-3 mb-8 bg-gray-200 ">
+    <div className="popular-brand-container w-[96vw] m-auto rounded-xl overflow-hidden relative mt-3 mb-8 bg-gray-200 ">
          <h2 className="text-lg font-semibold mx-5 mt-4">Our most loved brands</h2>
       <div className="brand-scroll flex items-center animate-scroll mb-8">
         {brands.map((brand, index) => (

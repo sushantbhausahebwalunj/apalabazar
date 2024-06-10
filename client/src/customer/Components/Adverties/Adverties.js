@@ -4,7 +4,7 @@ const buttonClasses = 'bg-green-500 text-white px-4 py-2 mx-5 rounded-lg';
 
 const ProductCard = ({ imageUrl, title, description, link }) => {
   return (
-<div className='p-3 bg-gray-200 mx-1 rounded space-y-1'>
+<div className='p-3 bg-gray-200 mx-1 rounded-xl space-y-1'>
 <a href={link}>
     <div className="flex items-center  justify-end bg-opacity-50  w-full"  >
 
@@ -19,7 +19,7 @@ const ProductCard = ({ imageUrl, title, description, link }) => {
 
 const ProductList = () => {
   return (
-    <div className="m-6 space-y-2 rounded-md">
+    <div className="m-6 space-y-2 rounded-xl">
 
       <ProductCard
         imageUrl="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2Fnew_korean_Style_banner_desktop_4500-x-1125.jpg%3Fwidth%3D1024&w=1920&q=75"

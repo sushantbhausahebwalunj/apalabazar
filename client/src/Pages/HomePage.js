@@ -8,8 +8,12 @@ import Slider from "react-slick";
 import ProductComponent from '../customer/Components/Adverties/Adverties.js';
 import FrozenSnacks from '../customer/Components/Products/Product.js'
 import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
+
+
+
 import './HomePage.css'
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
+
 function HomePage() {
   const settings = {
     dots: true,
@@ -76,7 +80,12 @@ function HomePage() {
         <ProductComponent />
         <FrozenSnacks/>
     <PopularBrand/>
+
+
+
+
     
+
       <Footer/>
     </div>
   );

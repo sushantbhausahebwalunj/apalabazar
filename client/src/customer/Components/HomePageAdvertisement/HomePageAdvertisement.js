@@ -9,14 +9,16 @@ const HomePageAdvertisement = () => {
   ];
 
   return (
-    <div className="flex flex-wrap ">
-      {advertisements.map(ad => (
-        <div key={ad.id} className="advertisement-card p-4 h-96">
-          <div className="bg-white rounded-lg shadow-md  overflow-hidden h-full">
-            <img src={ad.imageUrl} alt={`Advertisement ${ad.id}`} className="w-96 h-full object-cover" />
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-screen-lg px-4">
+        {advertisements.map(ad => (
+          <div key={ad.id} className="advertisement-card p-2 h-96">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex justify-center items-center">
+              <img src={ad.imageUrl} alt={`Advertisement ${ad.id}`} className="w-full h-full object-cover" />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

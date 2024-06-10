@@ -101,7 +101,7 @@ function HomePage() {
         <ProductComponent />
         <FrozenSnacks/>
     <PopularBrand/>
-    
+
 
       <Footer/>
     </div>

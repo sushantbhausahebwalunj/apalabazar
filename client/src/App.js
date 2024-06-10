@@ -13,6 +13,7 @@ function App() {
         <Route path="/*" element={<CustomersRoute />} />
         <Route path="/admin/*" element={<AdminPannel />} />
         
+        
       </Routes>
     </div>
   );

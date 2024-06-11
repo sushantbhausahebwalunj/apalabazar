@@ -1,15 +1,11 @@
 
 import React ,{useState}from "react";
 import Register from "../Auth/Register";
-
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
-
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const Navbar = () => {
   const navigate = useNavigate();
+
 
   const handleNavigate = () => {
     navigate('/category');

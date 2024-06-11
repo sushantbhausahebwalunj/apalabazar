@@ -46,7 +46,7 @@ function SideBar({ sidebarDairy, title, setActiveTab,activeTab }) {
             key={item.name}
           >
             {item.name}
-            {console.log(item)}
+            
             
             {activeTab === "All Grocery"?"": activeTab === item.name ? <div className='bg-green-200 pl-4 pr-3 transition-all  '>{item.subCatog.map((items) => {
               

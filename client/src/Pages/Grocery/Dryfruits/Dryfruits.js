@@ -26,7 +26,8 @@ const DryfruitsData = [
     offprice:"₹1",
     quantity:"50 g",
     logo : logo,
-    catogery:"Dry Fruits"
+    catogery:"Dry Fruits",
+    subCatogery:"Chana Dal"
   },
 
 

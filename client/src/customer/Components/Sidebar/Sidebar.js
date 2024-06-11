@@ -23,12 +23,13 @@
 
 
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-function SideBar({ sidebarDairy, title, setActiveTab }) {
+function SideBar({ sidebarDairy, title, setActiveTab,activeTab }) {
   const location = useLocation();
-
+  const [click,setClick] = useState(false);
+  const sub = ["hello","world","nikhil"]
   return (
     <div className='min-h-screen p-3 w-52'>
       <h2 className=''>{title}</h2>
@@ -38,11 +39,14 @@ function SideBar({ sidebarDairy, title, setActiveTab }) {
             to={location.pathname}
             onClick={() => {
               setActiveTab(item)
+              setClick(!click)
             }}
             className='flex flex-col transition-all py-1 pl-3 hover:bg-green-200/90'
             key={item}
           >
             {item}
+            {activeTab === "All Grocery"?"": activeTab === item ? <div className='bg-green-200 pl-6'>{sub.map((item) => <Link to={"/"}><br/>{item}</Link>) }</div>:""}
+            
           </Link>
         ))}
       </div>

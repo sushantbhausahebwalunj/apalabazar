@@ -19,7 +19,7 @@ function Grocery() {
       <Navbar/>
       <div className=' flex gap-6 font-semibold'>
         
-        <SideBar setActiveTab={setActiveTab}  title={"Grocery"}  sidebarDairy={sidebarDairy} key={'2'}/>
+        <SideBar setActiveTab={setActiveTab} activeTab={activeTab}  title={"Grocery"}  sidebarDairy={sidebarDairy} key={'2'}/>
         {activeTab==="All Grocery" ? <div className='flex flex-wrap   w-full'>
           <Dryfruits/>
           <Flours/>

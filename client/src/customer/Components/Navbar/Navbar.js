@@ -1,3 +1,10 @@
+
+import React ,{useState}from "react";
+import Register from "../Auth/Register";
+
+const Navbar = () => {
+  const [showModal, setShowModal] = useState(false);
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +14,7 @@ const Navbar = () => {
   const handleNavigate = () => {
     navigate('/category');
   };
+
 
   return (
     <div className="shadow-lg ">
@@ -46,7 +54,8 @@ const Navbar = () => {
                 d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
               ></path>
             </svg>
-            <button className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
+            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
+            <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
           <div className="flex items-center space-x-2">
             <svg

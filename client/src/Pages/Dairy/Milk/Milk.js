@@ -3,14 +3,6 @@ import React from 'react'
 import logo from './veg-logo.svg'
 
 
-import pumpkinseed from '../Milk/green-pumpkin-seeds-img.webp'
-import liondates from '../Milk/lion-dates-img.webp'
-import kismis from '../Milk/organic-kismis-img.webp'
-import pista from '../Milk/pista-kernel-img.webp'
-import raisinkishmish from '../Milk/raisinskishmish-black-with-seeds-img.webp'
-import sabja from '../Milk/seeds-sabja-img.webp'
-import walnutakhrot from '../Milk/walnutakhrot-kernels-chile-img.webp'
-import watermelonseed from '../Milk/watermelontarbuj-seeds-img.webp'
 import {ProductCard  } from '../../../customer/Components/Product/ProductCard/ProductCard'
 
 
@@ -19,8 +11,8 @@ export function Milk() {
 
 const DryfruitsData = [
   {
-    productname:"Green Pumpkin Seeds" ,
-    productimg: pumpkinseed ,
+    productname:"Milk" ,
+    productimg: "./milk1.jpg" ,
     productprice:"₹50" ,
     aplabazarprice:"₹49",
     offprice:"₹1",
@@ -31,8 +23,8 @@ const DryfruitsData = [
 
 
   {
-    productname:"Dates/Kharjura" ,
-    productimg: liondates ,
+    productname:"Milk" ,
+    productimg: "./milk1.png" ,
     productprice:"₹185" ,
     aplabazarprice:"₹180",
     offprice:"₹5",
@@ -43,8 +35,8 @@ const DryfruitsData = [
 
 
   {
-    productname:"Organic kismis/Raisins" ,
-    productimg: kismis ,
+    productname:"Milk" ,
+    productimg: "./milk2.png" ,
     productprice:"₹599" ,
     aplabazarprice:"₹493",
     offprice:"₹18",
@@ -54,8 +46,8 @@ const DryfruitsData = [
   },
 
   {
-    productname:"Pista Magaj-Plain Kernel " ,
-    productimg: pista ,
+    productname:"Milk" ,
+    productimg: "./milk3.png" ,
     productprice:"₹300" ,
     aplabazarprice:"₹226",
     offprice:"₹25",
@@ -67,8 +59,8 @@ const DryfruitsData = [
 
 
   {
-    productname:"Black Raisins" ,
-    productimg: raisinkishmish ,
+    productname:"Milk Powder" ,
+    productimg: "./milkpowder.jpg" ,
     productprice:"₹120" ,
     aplabazarprice:"₹93",
     offprice:"₹23",
@@ -78,44 +70,6 @@ const DryfruitsData = [
   },
 
 
-  {
-    productname:"Sabja" ,
-    productimg: sabja ,
-    productprice:"₹180" ,
-    aplabazarprice:"₹130",
-    offprice:"₹50",
-    quantity:"100 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-
-  {
-    productname:"Walnut/Akhrot" ,
-    productimg: walnutakhrot ,
-    productprice:"₹1000" ,
-    aplabazarprice:"₹774",
-     offprice:"₹23",
-    quantity:"500 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-
-  {
-    productname:"Watermelon Seeds/Kallangadi Bija" ,
-    productimg: watermelonseed ,
-    productprice:"₹80" ,
-    aplabazarprice:"₹53",
-    offprice:"₹34",
-    quantity:"50 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-  
 
 ];
 return(

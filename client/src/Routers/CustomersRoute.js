@@ -6,6 +6,7 @@ import Grocery from "../Pages/Grocery/Grocery"
 import Category from "../customer/Components/Navbar/Category.js";
 
 import Dairy from '../Pages/Dairy/Dairy';
+import Register from '../customer/Components/Auth/Login';
 
 
 function CustomersRoute() {
@@ -16,6 +17,8 @@ function CustomersRoute() {
       <Route path="/grocery" element={<Grocery />}></Route>
       <Route path="/category" element={<Category />} />
       <Route path="/dairy" element={<Dairy />}></Route>
+      <Route path="/register" element={<Register />}></Route>
+
 
 
 

@@ -3,22 +3,14 @@ import React from 'react'
 import logo from './veg-logo.svg'
 import {ProductCard  } from '../../../customer/Components/Product/ProductCard/ProductCard'
 
-import chana from '../Dahi/chana-dal-img.webp'
-import greenharimoog from '../Dahi/greenhari-moong-dalchilka-unpolished-high-in-protein-dietary-fibre.webp'
-import masoordal from '../Dahi/masoor-dal-img.webp'
-import mixdal from '../Dahi/mix-dal-img.webp'
-import moongdal from '../Dahi/moong-dal-img.webp'
-import toordal from '../Dahi/toor-arhar-dal-img.webp'
-import uraddal from '../Dahi/urad-dal-white-img.webp'
-
 
 
 export function Dahi() {
 
 const PulsesData = [
   {
-    productname:"Green Pumpkin Seeds" ,
-    productimg: chana ,
+    productname:"Dahi" ,
+    productimg: "./dahi.jpg",
     productprice:"₹50" ,
     aplabazarprice:"₹49",
     offprice:"₹1",
@@ -28,8 +20,8 @@ const PulsesData = [
 
 
   {
-    productname:"Dates/Kharjura" ,
-    productimg: greenharimoog ,
+    productname:"Dahi" ,
+    productimg: "./dahi1.jpg" ,
     productprice:"₹185" ,
     aplabazarprice:"₹180",
     offprice:"₹5",
@@ -39,8 +31,8 @@ const PulsesData = [
 
 
   {
-    productname:"Organic kismis/Raisins" ,
-    productimg: masoordal ,
+    productname:"Dahi" ,
+    productimg: "./dahi2.jpg" ,
     productprice:"₹599" ,
     aplabazarprice:"₹493",
     offprice:"₹18",
@@ -49,8 +41,8 @@ const PulsesData = [
   },
 
   {
-    productname:"Pista Magaj-Plain Kernel " ,
-    productimg: mixdal ,
+    productname:"Dahi " ,
+    productimg: "./dahi3.jpg" ,
     productprice:"₹300" ,
     aplabazarprice:"₹226",
     offprice:"₹25",
@@ -61,35 +53,12 @@ const PulsesData = [
 
 
   {
-    productname:"Black Raisins" ,
-    productimg: moongdal ,
+    productname:"Dahi" ,
+    productimg: "./dahi4.jpg" ,
     productprice:"₹120" ,
     aplabazarprice:"₹93",
     offprice:"₹23",
     quantity:"200 g",
-    logo : logo,
-  },
-
-
-  {
-    productname:"" ,
-    productimg: toordal ,
-    productprice:"₹180" ,
-    aplabazarprice:"₹130",
-    offprice:"₹50",
-    quantity:"1 L",
-    logo : logo,
-  },
-
-
-
-  {
-    productname:"Sesame Oil" ,
-    productimg: uraddal ,
-    productprice:"₹625" ,
-    aplabazarprice:"₹625",
-     offprice:"₹19",
-    quantity:"1 L",
     logo : logo,
   },
 

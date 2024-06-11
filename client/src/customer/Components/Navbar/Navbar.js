@@ -2,13 +2,14 @@
 import React ,{useState}from "react";
 import Register from "../Auth/Register";
 
-const Navbar = () => {
-  const [showModal, setShowModal] = useState(false);
-
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const [showModal, setShowModal] = useState(false);
+
+
+
+
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -19,6 +20,7 @@ const Navbar = () => {
   return (
     <div className="shadow-lg ">
       {/* Top Navbar */}
+      
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img
@@ -27,6 +29,7 @@ const Navbar = () => {
             className="h-10"
             crossOrigin="anonymous"
           />
+          ApalaBazar
         </div>
         <div className="flex items-center space-x-1">
           <input

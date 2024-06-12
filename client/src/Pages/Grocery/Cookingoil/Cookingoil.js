@@ -137,7 +137,7 @@ const CookingOilData = [
 ];
 return(
 <>
-<div className='cookingoilcards flex flex-wrap '>
+<div className='cookingoilcards border w-full flex flex-wrap '>
 {
   
   CookingOilData.map(
@@ -146,7 +146,7 @@ return(
   return (
 
     
-     <ProductCard  productname={data.productname} productimg={data.productimg} productprice={data.productprice} aplabazarprice={data.aplabazarprice} offprice={data.offprice} quantity={data.quantity} logo={data.logo} />
+     <ProductCard  c productname={data.productname} productimg={data.productimg} productprice={data.productprice} aplabazarprice={data.aplabazarprice} offprice={data.offprice} quantity={data.quantity} logo={data.logo} />
   
   )
 }

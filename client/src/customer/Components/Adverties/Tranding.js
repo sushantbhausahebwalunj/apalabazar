@@ -7,7 +7,7 @@ const buttonClasses = 'bg-green-500 text-white text-sm py-2 px-4 rounded-lg w-fu
 
 const ProductCard = ({ product }) => {
   return (
-    <div className={`${productCardClasses}`}>
+    <div className={`${productCardClasses} `}>
       <Link to={product.url}>
          <img className={imageClasses} src={product.image} alt="Product Image" />
       <h3 className="text-sm font-medium mb-2">{product.name}</h3>
@@ -92,7 +92,7 @@ const TrendingProducts = () => {
   ];
 
   return (
-    <div className="bg-purple-100 p-4 mt-12 mb-12 mx-6 rounded-xl">
+    <div className="bg-purple-100   p-4 mt-12 mb-12 mx-6 rounded-xl">
       <h2 className="text-lg font-semibold mb-4">Tranding Products</h2>
       <div className="flex overflow-x-auto space-x-4 py-5 scroll">
         {products.map((product, index) => (

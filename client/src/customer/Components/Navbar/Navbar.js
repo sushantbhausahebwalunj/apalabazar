@@ -2,6 +2,7 @@
 import React ,{useState}from "react";
 import Register from "../Auth/Register";
 
+
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -10,7 +11,12 @@ const Navbar = () => {
 
 
 
+import { useNavigate } from 'react-router-dom';
+const Navbar = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
+
 
   const handleNavigate = () => {
     navigate('/category');

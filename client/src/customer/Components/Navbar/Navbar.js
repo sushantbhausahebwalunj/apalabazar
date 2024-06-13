@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
     navigate('/category');
   };
+  const showCart=()=>{
+    navigate('/cart');
+  }
 
   return (
     <div className="shadow-lg ">
@@ -49,12 +52,14 @@ const Navbar = () => {
             <button className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
           </div>
           <div className="flex items-center space-x-2">
+            <button onClick={()=>showCart()}>
             <svg
               className="w-6 h-6 text-zinc-700"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+           
             >
               <path
                 strokeLinecap="round"
@@ -63,7 +68,8 @@ const Navbar = () => {
                 d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
               ></path>
             </svg>
-            <span className="text-yellow-500">0</span>
+            </button>
+            <span className="text-yellow-500">{props.number}</span>
             <span className="text-zinc-700">₹0</span>
           </div>
         </div>

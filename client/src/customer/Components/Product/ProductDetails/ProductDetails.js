@@ -4,27 +4,34 @@ import Slider from 'react-slick'
 import { useLocation } from 'react-router-dom';
 import {FrozenData} from '../../../../Pages/FrozenFood/constant';
 import Navbar from '../../Navbar/Navbar';
+
 import Footer from '../../footer/Footer';
 
+import { useCartContext } from '../../../../Usecontext/cartContext';
+
+
 function ProductDetails() {
+  const {addTocart}= useCartContext();
   const pathname = useLocation();
   const [tab,setTab] = useState("Description");
   const [productData,setProductData] = useState({
-    productTitle:"",
+    name:"",
     url:"",
     mrp:"",
     price:"",
-    saveupto:"",
-    productImg:[],
+    discount:"",
+    image:[],
     description:"",
 
-  })
+  }
+)
 
 
     useEffect(() => {
       window.scroll(0,0)
+ 
       FrozenData.map((item) => {
-      console.log(item)
+  
       if(item.url === pathname.pathname){
           setProductData({...item})
       }
@@ -40,7 +47,7 @@ function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  console.log(productData.description)
+  // console.log(productData.description)
   return (
     <>
     <Navbar/>
@@ -49,10 +56,11 @@ function ProductDetails() {
         <div className='flex flex-col lg:flex-row items-center justify-center'>
           <div className='w-[299px] my-6 lg:my-0 -translate-y-5  mx-12 '>
             <Slider {...settings}>
+
               {productData.productImg.map((image,i) => {
                 return <div >
                   <img src={image} key={i} className='w-96' alt={productData.productTitle}/>
-                </div>
+                  </div>
               })}
           
           </Slider>
@@ -70,6 +78,12 @@ function ProductDetails() {
         <hr className='w-24 mt-4'/>
        <div className='rounded-lg p-2  '>
 
+  
+     <div className='w-80'>
+        <h2 className='font-semibold text-xl'>{productData.name}</h2>
+       <div className='rounded-lg p-2 border my-2 border-black'>
+
+
         <p className='my-1 text-lg'>Variant</p>
         <button className='p-1 bg-green-100 rounded-lg  w-24 my-2 text-green-700 border border-green-700'>{productData.productWeight}</button>
       </div>
@@ -82,9 +96,14 @@ function ProductDetails() {
 
       </div>
 
+
       <div className='flex hover:scale-[103%] transition-all justify-between my-6 p-[2px] w-fit rounded-lg bg-gradient-to-br from-violet-500 to-orange-300 '>
-        <button className=' bg-gradient-to-b  from-violet-100 to-orange-100 border w-32  text-black p-2 rounded-lg '>Add to Cart</button>
+        <button onClick={()=>{addTocart(productData)}  onClick={()=>{addTocart(productData)} className=' bg-gradient-to-b  from-violet-100 to-orange-100 border w-32  text-black p-2 rounded-lg '>Add to Cart</button>
         {/* <div className='w-32 blur-lg bg-orange-200'></div> */}
+
+      <div className='flex justify-between my-6 rounded-md'>
+        <button className='bg-green-100 text-green-600 p-2 rounded-md'>Save {productData.discount}</button>
+
       </div>
       <hr className='my-6'/>
 

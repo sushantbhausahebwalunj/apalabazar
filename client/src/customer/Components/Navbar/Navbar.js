@@ -1,20 +1,32 @@
 
 import React ,{useState}from "react";
 import Register from "../Auth/Register";
+
+
 import { useNavigate } from 'react-router-dom';
-const Navbar = () => {
+
+const Navbar = (props) => {
+
   const [showModal, setShowModal] = useState(false);
+
+
+
+
   const navigate = useNavigate();
 
 
   const handleNavigate = () => {
     navigate('/category');
   };
+  const showCart=()=>{
+    navigate('/cart');
+  }
 
 
   return (
     <div className="shadow-lg ">
       {/* Top Navbar */}
+      
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img
@@ -23,6 +35,7 @@ const Navbar = () => {
             className="h-10"
             crossOrigin="anonymous"
           />
+          ApalaBazar
         </div>
         <HomeDevliveryStatus/>
         <div className="flex items-center space-x-1">
@@ -55,12 +68,14 @@ const Navbar = () => {
             <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
           <div className="flex items-center space-x-2">
+            <button onClick={()=>showCart()}>
             <svg
               className="w-6 h-6 text-zinc-700"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+           
             >
               <path
                 strokeLinecap="round"
@@ -69,7 +84,8 @@ const Navbar = () => {
                 d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
               ></path>
             </svg>
-            <span className="text-yellow-500">0</span>
+            </button>
+            <span className="text-yellow-500">{props.number}</span>
             <span className="text-zinc-700">₹0</span>
           </div>
         </div>

@@ -8,9 +8,6 @@ import Slider from "react-slick";
 import ProductComponent from '../customer/Components/Adverties/Adverties.js';
 import FrozenSnacks from '../customer/Components/Products/Product.js'
 import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
-
-
-
 import './HomePage.css'
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
 import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/HomePageAdvertisement.js";
@@ -30,7 +27,7 @@ function HomePage() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar number={12} />
 
       <div className="w-[95vw] ml-5 mt-2 bottom-0 radius" >
         <Slider {...settings} className="radius ">
@@ -129,9 +126,7 @@ function HomePage() {
         </Slider>
       </div>
     <PopularBrand/>
-
-    
-<Maylike/>
+    <Maylike/>
 
       <Footer/>
     </div>

@@ -1,8 +1,19 @@
-import React from 'react';
+
+import React ,{useState}from "react";
+import Register from "../Auth/Register";
+
+
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = (props) => {
+
+  const [showModal, setShowModal] = useState(false);
+
+
+
+
   const navigate = useNavigate();
+
 
   const handleNavigate = () => {
     navigate('/category');
@@ -11,9 +22,11 @@ const Navbar = (props) => {
     navigate('/cart');
   }
 
+
   return (
     <div className="shadow-lg ">
       {/* Top Navbar */}
+      
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img
@@ -22,6 +35,7 @@ const Navbar = (props) => {
             className="h-10"
             crossOrigin="anonymous"
           />
+          ApalaBazar
         </div>
         <div className="flex items-center space-x-1">
           <input
@@ -49,7 +63,8 @@ const Navbar = (props) => {
                 d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
               ></path>
             </svg>
-            <button className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
+            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
+            <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
           <div className="flex items-center space-x-2">
             <button onClick={()=>showCart()}>

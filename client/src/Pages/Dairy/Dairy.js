@@ -68,7 +68,7 @@ function Dairy() {
     <div>
       <Navbar />
       <div className='flex gap-6'>
-        <SideBar setActiveTab={setActiveTab} title={"Dairy"} sidebarDairy={sidebarDairy} key={'2'} />
+        <SideBar setActiveTab={setActiveTab} activeTab={activeTab} title={"Dairy"} sidebarDairy={sidebarDairy} key={'2'} />
         {activeTab === "All Dairy Products" ? <div className='flex flex-wrap w-full'>
           <Butter />
           <Cheese />

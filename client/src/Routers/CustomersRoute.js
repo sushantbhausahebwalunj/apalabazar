@@ -7,6 +7,11 @@ import Category from "../customer/Components/Navbar/Category.js";
 
 import Dairy from '../Pages/Dairy/Dairy';
 
+import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
+
+import Register from '../customer/Components/Auth/Login';
+
+
 
 function CustomersRoute() {
   return (
@@ -17,6 +22,10 @@ function CustomersRoute() {
       <Route path="/category" element={<Category />} />
       <Route path="/dairy" element={<Dairy />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
+
+      <Route path="/product/:id" element={<ProductDetails />}></Route>
+
+      <Route path="/register" element={<Register />}></Route>
 
 
       </Routes>

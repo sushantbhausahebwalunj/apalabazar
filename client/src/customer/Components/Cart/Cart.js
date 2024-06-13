@@ -99,7 +99,7 @@ const Cart = () => {
                     <CartItem
                       key={item.id}
                       unik={item.id}
-                      imageSrc={item.image}
+                      imageSrc= {typeof(item.image)==='string'?item.image:item.image[0]}
                       productName={item.name}
                       price={item.price}
                       savings={item.discount}

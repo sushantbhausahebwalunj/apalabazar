@@ -4,26 +4,30 @@ import Slider from 'react-slick'
 import { useLocation } from 'react-router-dom';
 import {FrozenData} from '../../../../Pages/FrozenFood/constant';
 import Navbar from '../../Navbar/Navbar';
+import { useCartContext } from '../../../../Usecontext/cartContext';
 
 function ProductDetails() {
+  const {addTocart}= useCartContext();
   const pathname = useLocation();
   const [tab,setTab] = useState("Description");
   const [productData,setProductData] = useState({
-    productTitle:"",
+    name:"",
     url:"",
     mrp:"",
     price:"",
-    saveupto:"",
-    productImg:[],
+    discount:"",
+    image:[],
     description:"",
 
-  })
+  }
+)
 
 
     useEffect(() => {
       window.scroll(0,0)
+ 
       FrozenData.map((item) => {
-      console.log(item)
+  
       if(item.url === pathname.pathname){
           setProductData({...item})
       }
@@ -39,7 +43,7 @@ function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  console.log(productData.description)
+  // console.log(productData.description)
   return (
     <>
     <Navbar/>
@@ -48,9 +52,9 @@ function ProductDetails() {
         <div className='flex'>
           <div className='w-[299px]   mx-12 '>
             <Slider {...settings}>
-              {productData.productImg.map((image,i) => {
+              {productData.image.map((image,i) => {
                 return <div>
-                  <img src={image} key={i} className='w-96' alt={productData.productTitle}/>
+                  <img src={image} key={i} className='w-96' alt={productData.name}/>
                 </div>
               })}
           
@@ -58,7 +62,7 @@ function ProductDetails() {
           </div>
   
      <div className='w-80'>
-        <h2 className='font-semibold text-xl'>{productData.productTitle}</h2>
+        <h2 className='font-semibold text-xl'>{productData.name}</h2>
        <div className='rounded-lg p-2 border my-2 border-black'>
 
         <p className='my-1'>Variant</p>
@@ -70,8 +74,8 @@ function ProductDetails() {
       </div>
 
       <div className='flex justify-between my-6 rounded-md'>
-        <button className='bg-green-100 text-green-600 p-2 rounded-md'>Save {productData.saveupto}</button>
-        <button className='bg-green-600 text-white p-2 rounded-md'>Add to Cart</button>
+        <button className='bg-green-100 text-green-600 p-2 rounded-md'>Save {productData.discount}</button>
+        <button className='bg-green-600 text-white p-2 rounded-md' onClick={()=>{addTocart(productData)}}>Add to Cart</button>
       </div>
       <hr className='my-6'/>
 

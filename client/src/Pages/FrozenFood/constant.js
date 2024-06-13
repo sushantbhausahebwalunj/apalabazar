@@ -1,12 +1,12 @@
 export const FrozenData = [
  {
-  productTitle:"Godrej Yummiez Crispy Veg Sticks",
+  name:"Godrej Yummiez Crispy Veg Sticks",
   url:`/product/${"Godrej Yummiez Crispy Veg Sticks".replace(/ /g, "-").toLowerCase()}`,
   productWeight:"320 gms",
-  mrp:"₹140",
-  price:"₹92",
-  saveupto:"₹48",
-  productImg:["https://cdn.dmart.in/images/products/JUN120002845xx28JUN22_5_B.jpg",
+  mrp:"140",
+  price:"92",
+  discount:"₹48",
+  image:["https://cdn.dmart.in/images/products/JUN120002845xx28JUN22_5_B.jpg",
     "https://cdn.dmart.in/images/products/JUN120002845xx28JUN22_6_B.jpg",
     "https://cdn.dmart.in/images/products/JUN120002845xx28JUN22_7_B.jpg"
   ],
@@ -20,14 +20,14 @@ How to Use
 - Deep Fry/Shallow Fry/Air Fry.`
 },
 {
-  productTitle:"Mccain Smiles",
+  name:"Mccain Smiles",
   productWeight:"415 gms",
   url:`/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
   
   mrp:"₹140",
-  price:"₹120",
-  saveupto:"₹20",
-   productImg:["https://cdn.dmart.in/images/products/LGRATER750gmMcCa2xx300421_5_B.jpg","https://cdn.dmart.in/images/products/LGRATER750gmMcCa2xx300421_6_B.jpg"],
+  price:"120",
+  discount:"₹20",
+   image:["https://cdn.dmart.in/images/products/LGRATER750gmMcCa2xx300421_5_B.jpg","https://cdn.dmart.in/images/products/LGRATER750gmMcCa2xx300421_6_B.jpg"],
   description:`Recipe
 McCain Smiles Canape
 Preparation Time - 10 minutes
@@ -66,14 +66,14 @@ Instructions
 
 Note : This product is eligible for return ONLY at the time of delivery. Once delivered, it cannot be returned.`
 },{
-  productTitle:"Godrej Yummiez American Sweet Corn",
+  name:"Godrej Yummiez American Sweet Corn",
   productWeight:"400 gms",
   url:`/product/${"Godrej Yummiez American Sweet Corn".replace(/ /g, "-").toLowerCase()}`,
   
   mrp:"₹99",
-  price:"₹70",
-  saveupto:"₹20",
-   productImg:["https://cdn.dmart.in/images/products/AUG120004098xx25AUG21_5_B.jpg","https://cdn.dmart.in/images/products/AUG120004098xx25AUG21_6_B.jpg"],
+  price:"70",
+  discount:"₹20",
+   image:["https://cdn.dmart.in/images/products/AUG120004098xx25AUG21_5_B.jpg","https://cdn.dmart.in/images/products/AUG120004098xx25AUG21_6_B.jpg"],
    description:`
 Product Highlights
 
@@ -83,14 +83,14 @@ Versatile for various dishes
 High-quality Godrej Yummiez brand`
 },
 {
-  productTitle:"Lay's India's Magic Masala Potato Chips",
+  name:"Lay's India's Magic Masala Potato Chips",
   productWeight:"73 gms",
   url:`/product/${"Lay's India's Magic Masala Potato Chips".replace(/ /g, "-").toLowerCase()}`,
   
   mrp:"₹30",
-  price:"₹25",
-  saveupto:"₹5",
-   productImg:["https://cdn.dmart.in/images/products/APR120004684xx8APR22_5_B.jpg","https://cdn.dmart.in/images/products/APR120004684xx8APR22_6_B.jpg"],
+  price:"25",
+  discount:"₹5",
+   image:["https://cdn.dmart.in/images/products/APR120004684xx8APR22_5_B.jpg","https://cdn.dmart.in/images/products/APR120004684xx8APR22_6_B.jpg"],
    description:`Key Features
 Grab this crispy Lays Magic Masala potato chips to experience a unique burst of Indian flavour and spices! Your favourite pack of Lays potato chips now comes with a desi twist.
 

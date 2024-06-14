@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 
 const Register = ({ showModal, setShowModal }) => {

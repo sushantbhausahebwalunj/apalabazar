@@ -10,6 +10,7 @@ import Dairy from '../Pages/Dairy/Dairy';
 import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
 
 import Register from '../customer/Components/Auth/Login';
+import Checkout from '../customer/Components/Checkout/CheckoutPage.js';
 
 
 
@@ -26,6 +27,7 @@ function CustomersRoute() {
       <Route path="/product/:id" element={<ProductDetails />}></Route>
 
       <Route path="/register" element={<Register />}></Route>
+      <Route path="/checkout" element={<Checkout />}></Route>
 
 
       </Routes>

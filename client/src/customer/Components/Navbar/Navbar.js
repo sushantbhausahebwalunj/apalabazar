@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Register from '../Auth/Register.js'; 
+import React, { useState } from "react";
+import Register from "../Auth/Register";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false); // Define the state for showModal
 
   const handleNavigate = () => {
-    navigate('/category');
+    navigate("/category");
+  };
+  const showCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -21,12 +24,14 @@ const Navbar = () => {
             className="h-10"
             crossOrigin="anonymous"
           />
+          ApalaBazar
         </div>
+        <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">
           <input
             type="text"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[600px] dark:bg-white dark:text-zinc-300"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
           />
           <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
             SEARCH
@@ -54,21 +59,23 @@ const Navbar = () => {
             <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
           <div className="flex items-center space-x-2">
-            <svg
-              className="w-6 h-6 text-zinc-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
-              ></path>
-            </svg>
-            <span className="text-yellow-500">0</span>
+            <button onClick={() => showCart()}>
+              <svg
+                className="w-6 h-6 text-zinc-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
+                ></path>
+              </svg>
+            </button>
+            <span className="text-yellow-500">{props.number}</span>
             <span className="text-zinc-700">₹0</span>
           </div>
         </div>
@@ -113,5 +120,38 @@ const Navbar = () => {
     </div>
   );
 };
+
+function HomeDeliveryStatus() {
+  return (
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
+      <div className="flex gap-2 text-gray-600">
+        <span>Earliest</span>
+        <span className="text-green-500">Home Delivery</span>
+        <span>available</span>
+      </div>
+      <div className="flex gap-2 items-center justify-center font-semibold">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-clock-8"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 8 14" />
+        </svg>
+        <span>Tomorrow</span>
+        <span>09:00AM</span>
+        <span className="mx-1">-</span>
+        <span>06:00AM</span>
+      </div>
+    </div>
+  );
+}
 
 export default Navbar;

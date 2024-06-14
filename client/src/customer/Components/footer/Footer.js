@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="text-center mt-12 text-lg">
-        <p>Copyright © 2024 Arohi Software. All Rights Reserved.</p>
+        <p className='tracking-wide '>Copyright © 2024 Arohi Software. All Rights Reserved.</p>
       </div>
     </footer>
   );

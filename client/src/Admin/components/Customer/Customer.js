@@ -55,11 +55,11 @@ const Customers = () => {
   const displayCustomers = sortedCustomers.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <Box className="flex flex-col items-center h-screen p-4 bg-gray-100">
-      <Typography variant="h4" component="h1" className="mb-6 text-blue-600">
+    <Box className="flex flex-col items-center h-screen p-4 bg-gray-100" sx={{ borderRadius: "5px" }}>
+      <Typography variant="h4" component="h1" className="mb-6 text-black-600" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mt: 2 }}>
         Customer List
       </Typography>
-      <Box className="mb-4 p-4 bg-white shadow-md rounded-lg flex flex-col md:flex-row justify-between items-center gap-4 w-full md:w-1/2">
+      <Box className="mb-4 p-4  rounded-lg flex flex-col md:flex-row justify-between items-center gap-4 w-full md:w-1/2">
         <TextField
           label="Search Customer"
           variant="outlined"
@@ -72,8 +72,8 @@ const Customers = () => {
       <TableContainer component={Paper} className="w-full md:w-3/4">
         <Table>
           <TableHead>
-            <TableRow className="bg-blue-600">
-              <TableCell className="p-4 text-left">
+            <TableRow className="bg-green-600 ">
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
                 <TableSortLabel
                   active={sortBy === 'id'}
                   direction={sortBy === 'id' ? sortOrder : 'asc'}
@@ -82,7 +82,7 @@ const Customers = () => {
                   ID
                 </TableSortLabel>
               </TableCell>
-              <TableCell className="p-4 text-left">
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
                 <TableSortLabel
                   active={sortBy === 'name'}
                   direction={sortBy === 'name' ? sortOrder : 'asc'}
@@ -91,7 +91,7 @@ const Customers = () => {
                   Name
                 </TableSortLabel>
               </TableCell>
-              <TableCell className="p-4 text-left">
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
                 <TableSortLabel
                   active={sortBy === 'orders'}
                   direction={sortBy === 'orders' ? sortOrder : 'asc'}
@@ -100,9 +100,9 @@ const Customers = () => {
                   Orders
                 </TableSortLabel>
               </TableCell>
-              <TableCell className="p-4 text-left">Image</TableCell>
-              <TableCell className="p-4 text-left">Address</TableCell>
-              <TableCell className="p-4 text-left">Mobile</TableCell>
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>Image</TableCell>
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>Address</TableCell>
+              <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>Mobile</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

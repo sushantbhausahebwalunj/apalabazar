@@ -49,11 +49,11 @@ const ProductsTable = () => {
   const displayProducts = filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <Box className="flex flex-col h-screen p-4 bg-gray-100">
-      <Typography variant="h4" component="h1" className="text-center mb-6 text-blue-600">
+    <Box className="flex flex-col h-screen p-4 bg-gray-100"sx={{ borderRadius: "5px", }} >
+      <Typography variant="h4" component="h1" className="text-center mb-6 text-black-600" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mt:2 }}>
         Product List
       </Typography>
-      <Box className="mb-4 p-4 bg-white shadow-md rounded-lg flex flex-col md:flex-row justify-between items-center gap-4">
+      <Box className="mb-4 p-4  rounded-lg flex flex-col md:flex-row justify-between items-center gap-4">
         <TextField
           label="Search"
           variant="outlined"
@@ -88,9 +88,9 @@ const ProductsTable = () => {
           style={{ backgroundColor: '#f0f0f0' }}
         />
       </Box>
-      <Box className="flex-1 overflow-y-auto">
-        <table className="min-w-full border-collapse block md:table bg-white shadow-lg rounded-lg">
-          <thead className="block md:table-header-group bg-blue-600">
+      <Box className="flex-1 overflow-y-auto " sx={{ borderRadius: "5px" }}>
+        <table className="min-w-full border-collapse block md:table bg-white shadow-lg rounded-lg" >
+          <thead className="block md:table-header-group bg-green-600" >
             <tr className="md:table-row">
               <th className="p-4 text-white font-semibold text-left block md:table-cell">Title</th>
               <th className="p-4 text-white font-semibold text-left block md:table-cell">Category</th>

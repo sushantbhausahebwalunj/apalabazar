@@ -70,7 +70,7 @@ const renderState = () => {
 const MonthlyOverview = () => {
   return (
    <div className="p-5 ">
-     <Card sx={{backgroundColor:"black", color:"white"}}>
+     <Card sx={{ color:"green"}}>
       <CardHeader
         title="Monthly Overview"
         action={
@@ -94,7 +94,9 @@ const MonthlyOverview = () => {
             mb: 2.5,
             lineHeight: "2rem !important",
             letterSpacing: ".15px !important",
-            color:"white"
+            color:"black",
+            fontFamily : "sans-serif",
+            fontWeight: "bold", 
           },
         }}
       />

@@ -51,23 +51,30 @@ function ProductDetails() {
   return (
     <>
     <Navbar/>
-    <div className='flex flex-col items-center justify-center  mt-12'>
+    <div className='flex flex-col items-center justify-center   mt-12'>
 
-        <div className='flex flex-col lg:flex-row items-center justify-center'>
+        <div className='rounded-3xl bg-gradient-to-br from-violet-500 to-orange-300'>
+          <div className='flex flex-col shadow-lg backdrop-blur-sm bg-white/60 rounded-3xl lg:flex-row items-center justify-center'>
           <div className='w-[299px] my-6 lg:my-0 -translate-y-5  mx-12 '>
             <Slider {...settings}>
 
               {productData.productImg.map((image,i) => {
+<<<<<<< HEAD
                 return <div >
                   <img src={image} key={i} className='w-96' alt={productData.productTitle}/>
                   </div>
+=======
+                return <div  >
+                  <img src={image} key={i} className='w-96 rounded-xl' alt={productData.productTitle}/>
+                </div>
+>>>>>>> 16447bf (feat: Add activeSubTab prop to Flours component)
               })}
           
           </Slider>
           </div>
-     <div className='w-80  p-2  backdrop-blur-sm z-10 relative'>
+     <div className='w-80 p-2  backdrop-blur-xl pl-8 z-10 relative'>
     <div className='w-80 bg-gray-50 h-96 absolute -z-10 blur-xl right-0'></div>
-        <h2 className='font-semibold text-xl mb-4'>{productData.productTitle}</h2>
+        <h2 className='font-semibold text-2xl mb-4 font-thin'>{productData.productTitle}</h2>
           <div className='flex gap-1'>
             <StarIcon/>
             <StarIcon/>
@@ -108,6 +115,7 @@ function ProductDetails() {
       <hr className='my-6'/>
 
      </div>
+        </div>
         </div>
      <nav className='flex justify-start items-center gap-12 select-none mt-12 '>
 

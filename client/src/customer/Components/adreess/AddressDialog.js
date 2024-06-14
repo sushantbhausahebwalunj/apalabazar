@@ -17,33 +17,35 @@ const AddressDialog = ({ isOpen, onClose, onSave }) => {
   };
 
   return (
+    <>
     <dialog
       ref={dialogRef}
       open={isOpen}
-      className="p-6 bg-white  rounded-lg shadow-lg fixed mx-4 lg:mx-auto   top-6 right-3 max-w-[800px] min-w-[300px]"
+      className="p-6  fixed bg-white/30 backdrop-blur-2xl rounded-lg shadow-lg  mx-4 lg:mx-auto   top-6 right-3 max-w-[800px] min-w-[300px]"
     >
+  
       <h2 className="text-xl font-semibold mb-4">Add New Address</h2>
       <form>
         <div className="mb-4">
           <label htmlFor="addressLine1" className="block mb-1">Address Line 1</label>
-          <input type="text" id="addressLine1" className="w-full px-3 py-2 border rounded" />
+          <input type="text" id="addressLine1" className="w-full outline-violet-400 px-3 py-2 border rounded" />
         </div>
         <div className="mb-4">
-          <label htmlFor="addressLine2" className="block mb-1">Address Line 2</label>
-          <input type="text" id="addressLine2" className="w-full px-3 py-2 border rounded" />
+          <label htmlFor="addressLine2" className="block  mb-1">Address Line 2</label>
+          <input type="text" id="addressLine2" className="w-full outline-violet-400 px-3 py-2 border rounded" />
         </div>
         <div className="mb-4">
           <label htmlFor="city" className="block mb-1">City</label>
-          <input type="text" id="city" className="w-full px-3 py-2 border rounded" />
+          <input type="text" id="city" className="w-full px-3 outline-violet-400 py-2 border rounded" />
         </div>
         <div className='flex gap-3 justify-between'>
             <div className="mb-4">
           <label htmlFor="state" className="block mb-1">State</label>
-          <input type="text" id="state" className="w-full px-3 py-2 border rounded" />
+          <input type="text" id="state" className="w-full px-3 outline-violet-400 py-2 border rounded" />
         </div>
         <div className="mb-4">
           <label htmlFor="zipCode" className="block mb-1">Zip Code</label>
-          <input type="number" id="zipCode" className="w-full px-3 py-2 border rounded" />
+          <input type="number" id="zipCode" className="w-full outline-violet-400 px-3 py-2 border rounded" />
         </div>
         </div>
         <div className="flex flex-col lg:flex-row gap-3  justify-end ">
@@ -63,7 +65,7 @@ const AddressDialog = ({ isOpen, onClose, onSave }) => {
           </button>
         </div>
       </form>
-    </dialog>
+    </dialog></>
   );
 };
 

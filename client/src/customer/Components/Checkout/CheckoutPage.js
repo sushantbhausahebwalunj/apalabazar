@@ -19,10 +19,10 @@ export default function Checkout(){
   };
 
   return (
-    <div className='bg-gray-200'>
-      <h1 className="text-2xl font-bold mb-4 py-7 max-w-[760px] mx-auto">Checkout</h1>
+    <div className='bg-gradient-to-br from-violet-500 to-orange-300'>
+      <h1 className="text-2xl  font-bold mb-4 py-7 max-w-[760px] mx-auto">Checkout</h1>
     <div className="flex flex-col max-w-[800px] w-[3/4] gap-12 justify-center  mx-auto p-4">
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className=" bg-white/30 backdrop-blur-lg rounded-lg shadow-lg p-6">
         <DeliveryMode />
         <SavedAddresses setAddresses={setAddresses} onAddNewAddress={handleAddNewAddress}
           addresses={addresses} />
@@ -61,7 +61,7 @@ const SavedAddresses = ({setAddresses, onAddNewAddress, addresses }) => {
       <h2 className="text-xl font-semibold mb-2">Saved addresses</h2>
       {addresses.length > 0 ? (
         addresses.map((address, index) => (
-          <div key={index} className="border  border-solid border-gray-400 p-4 rounded mb-2">
+          <div key={index} className=" p-4 rounded mb-2">
             <p>{address.addressLine1}</p>
             <p>{address.addressLine2}</p>
             <p>{address.city}, {address.state} - {address.zipCode}</p>
@@ -73,13 +73,15 @@ const SavedAddresses = ({setAddresses, onAddNewAddress, addresses }) => {
           <p className="text-gray-600 mb-2">You don't have any saved address. Try adding a new address</p>
         </div>
       )}
-      <div className='my-4'>
-        <button
-        className="text-blue-500 mr-6"
+      <div className='my-4 flex'>
+        <div className='p-[1px] rounded-lg w-fit bg-gradient-to-br from-violet-500 to-orange-300'>
+          <button
+        className="text-blue-500 backdrop-blur-lg bg-white/30 border p-2 rounded-lg  "
         onClick={onAddNewAddress}
       >
         + Add New Address
       </button>
+        </div>
      
        <button onClick={() => {
                 setAddresses("")
@@ -106,7 +108,7 @@ const TimeSlot = () => {
 
 const PriceSummary = () => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
+    <div className="bg-white/40 backdrop-blur-xl rounded-lg shadow-lg p-6 mt-6">
       <h2 className="text-xl font-semibold mb-2">Price Summary</h2>
       <div className="flex justify-between mb-2">
         <span>You Pay</span>

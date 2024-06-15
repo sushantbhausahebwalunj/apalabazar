@@ -46,7 +46,7 @@ function Grocery() {
   const [showall,setShowAll] = useState(true);
 
 
-  console.log('Active SubTab:', activeSubTab);
+
 
   return (
     <div>

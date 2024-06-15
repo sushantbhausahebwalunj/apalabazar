@@ -46,13 +46,13 @@ function AdminPanel() {
         flexDirection: "column",
         justifyContent: "space-between",
         height: "100%",
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        boxShadow: "rgba(135, 206, 250, 0.5) 0px 3px 8px",
         // Remove borders
         border: "none",
         // Tailwind CSS classes for interactive design
         transition: "all 0.3s",
         "&:hover": {
-          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          boxShadow: "rgba(135, 206, 250, 0.5) 0px 5px 15px",
           transform: "scale(1.02)",
         },
       }}
@@ -61,14 +61,25 @@ function AdminPanel() {
       {isLargeScreen && <Toolbar />}
 
       <List>
+
         {menu.map((item) => (
           <ListItem
+            sx={{
+              color: "Black",
+
+            }}
             key={item.name}
             disablePadding
             onClick={() => navigate(item.path)}
             className="cursor-pointer"
           >
-            <ListItemButton>
+            <ListItemButton sx={{
+
+              "&:hover": {
+                bgcolor: "rgba(135, 206, 250, 0.5)",
+                transform: "scale(1.02)",
+              },
+            }}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText>{item.name}</ListItemText>
             </ListItemButton>
@@ -80,7 +91,13 @@ function AdminPanel() {
 
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton sx={{
+
+            "&:hover": {
+              bgcolor: "rgba(135, 206, 250, 0.5)",
+              transform: "scale(1.02)",
+            },
+          }}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
@@ -107,6 +124,7 @@ function AdminPanel() {
               '&:hover': {
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                 transform: "scale(1.02)",
+
               },
             },
           }}
@@ -116,7 +134,7 @@ function AdminPanel() {
         </Drawer>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+          sx={{ flexGrow: 1, bgcolor: "rgba(135, 206, 250, 0.5)", p: 3, minHeight: '150vh' }}
         >
           <Routes>
             <Route path="/" element={<AdminDashboard />} />

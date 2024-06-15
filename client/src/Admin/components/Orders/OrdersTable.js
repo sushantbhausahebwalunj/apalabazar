@@ -105,8 +105,8 @@ const OrdersTable = () => {
   const displayOrders = sortedOrders.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <Box className="flex flex-col items-center p-4 bg-gray-100">
-      <Typography variant="h4" component="h1" className="mb-6 text-blue-600">
+    <Box className="flex flex-col items-center p-4 bg-gray-100" sx={{ borderRadius: "5px" }}>
+      <Typography variant="h4" component="h1" className="mb-6 text-black-600" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mt: 2 }}>
         Orders Table
       </Typography>
       <Box className="mb-4 p-4 bg-white shadow-md rounded-lg flex flex-col md:flex-row justify-between items-center gap-4 w-full md:w-3/4">
@@ -134,90 +134,92 @@ const OrdersTable = () => {
           <MenuItem value="500">$500</MenuItem>
         </TextField>
       </Box>
-      <TableContainer component={Paper} className="w-full md:w-3/4">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className="p-4 text-left">
-                <TableSortLabel
-                  active={sortBy === 'orderId'}
-                  direction={sortBy === 'orderId' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('orderId')}
-                >
-                  Order ID
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className="p-4 text-left">
-                <TableSortLabel
-                  active={sortBy === 'orderName'}
-                  direction={sortBy === 'orderName' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('orderName')}
-                >
-                  Order Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className="p-4 text-left">
-                <TableSortLabel
-                  active={sortBy === 'orderQuantity'}
-                  direction={sortBy === 'orderQuantity' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('orderQuantity')}
-                >
-                  Order Quantity
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className="p-4 text-left">
-                <TableSortLabel
-                  active={sortBy === 'orderPrice'}
-                  direction={sortBy === 'orderPrice' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('orderPrice')}
-                >
-                  Order Price ($)
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className="p-4 text-left">Customer Details</TableCell>
-              <TableCell className="p-4 text-left">
-                <TableSortLabel
-                  active={sortBy === 'status'}
-                  direction={sortBy === 'status' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('status')}
-                >
-                  Order Status
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className="p-4 text-left">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {displayOrders.map((order) => (
-              <TableRow key={order.orderId} className="hover:bg-gray-50">
-                <TableCell className="p-4 text-left">{order.orderId}</TableCell>
-                <TableCell className="p-4 text-left">{order.orderName}</TableCell>
-                <TableCell className="p-4 text-left">{order.orderQuantity}</TableCell>
-                <TableCell className="p-4 text-left">${order.orderPrice}</TableCell>
-                <TableCell className="p-4 text-left">
-                  <div className="flex items-center">
-                    <Avatar alt={customers.find((customer) => customer.id === order.customerId)?.name} src={customers.find((customer) => customer.id === order.customerId)?.image} />
-                    <div className="ml-2">
-                      <Typography variant="subtitle2">{customers.find((customer) => customer.id === order.customerId)?.name}</Typography>
-                      <Typography variant="body2">{customers.find((customer) => customer.id === order.customerId)?.address}</Typography>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="p-4 text-left">{order.status}</TableCell>
-                <TableCell className="p-4 text-left">
-                  <IconButton
-                    aria-label="edit"
-                    onClick={() => handleOrderSelection(order.orderId)}
-                    className={selectedOrders.includes(order.orderId) ? 'text-blue-500' : ''}
+      <Box className="flex-1 overflow-y-auto " sx={{ borderRadius: "5px" }}>
+        <TableContainer component={Paper} className="w-full md:w-3/4">
+          <Table>
+            <TableHead>
+              <TableRow className="bg-green-600 ">
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
+                  <TableSortLabel
+                    active={sortBy === 'orderId'}
+                    direction={sortBy === 'orderId' ? sortOrder : 'asc'}
+                    onClick={() => handleSort('orderId')}
                   >
-                    <EditIcon />
-                  </IconButton>
+                    Order ID
+                  </TableSortLabel>
                 </TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
+                  <TableSortLabel
+                    active={sortBy === 'orderName'}
+                    direction={sortBy === 'orderName' ? sortOrder : 'asc'}
+                    onClick={() => handleSort('orderName')}
+                  >
+                    Order Name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
+                  <TableSortLabel
+                    active={sortBy === 'orderQuantity'}
+                    direction={sortBy === 'orderQuantity' ? sortOrder : 'asc'}
+                    onClick={() => handleSort('orderQuantity')}
+                  >
+                    Order Quantity
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
+                  <TableSortLabel
+                    active={sortBy === 'orderPrice'}
+                    direction={sortBy === 'orderPrice' ? sortOrder : 'asc'}
+                    onClick={() => handleSort('orderPrice')}
+                  >
+                    Order Price ($)
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>Customer Details</TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>
+                  <TableSortLabel
+                    active={sortBy === 'status'}
+                    direction={sortBy === 'status' ? sortOrder : 'asc'}
+                    onClick={() => handleSort('status')}
+                  >
+                    Order Status
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell className="p-4 text-left" sx={{ color: "White", fontWeight: "bold", }}>Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {displayOrders.map((order) => (
+                <TableRow key={order.orderId} className="hover:bg-gray-50">
+                  <TableCell className="p-4 text-left">{order.orderId}</TableCell>
+                  <TableCell className="p-4 text-left">{order.orderName}</TableCell>
+                  <TableCell className="p-4 text-left">{order.orderQuantity}</TableCell>
+                  <TableCell className="p-4 text-left">${order.orderPrice}</TableCell>
+                  <TableCell className="p-4 text-left">
+                    <div className="flex items-center">
+                      <Avatar alt={customers.find((customer) => customer.id === order.customerId)?.name} src={customers.find((customer) => customer.id === order.customerId)?.image} />
+                      <div className="ml-2">
+                        <Typography variant="subtitle2">{customers.find((customer) => customer.id === order.customerId)?.name}</Typography>
+                        <Typography variant="body2">{customers.find((customer) => customer.id === order.customerId)?.address}</Typography>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-4 text-left">{order.status}</TableCell>
+                  <TableCell className="p-4 text-left">
+                    <IconButton
+                      aria-label="edit"
+                      onClick={() => handleOrderSelection(order.orderId)}
+                      className={selectedOrders.includes(order.orderId) ? 'text-blue-500' : ''}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
       <Box className="mt-4 flex items-center justify-between w-full md:w-3/4">
         <Pagination count={Math.ceil(filteredOrders.length / itemsPerPage)} page={page} onChange={handleChangePage} color="primary" />
         {selectedOrders.length > 0 && (

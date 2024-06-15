@@ -17,19 +17,20 @@ const TrophyImg = styled("img")({
 function Achivement() {
   return (
     <div className="p-5">
-      <Card className=" " sx={{ position: "relative" ,  bgcolor:"black", color:"white" }}>
+      <Card className="bg-gray-100 " sx={{ position: "relative", color: "black" }}>
         <CardContent>
-          <Typography variant="h6" sx={{ letterSpacing: ".25px" }}>
-            Shop with apana bazar
+          <Typography variant="h5" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mb:3 }}>
+            Shop with Apana Bazar
           </Typography>
-          <Typography variant="body2">Congratulation 🥰</Typography>
-          <Typography variant="h5" sx={{my:1.1}}>200k</Typography>
-          <Button size="small" variant="contained">
+          <TrophyImg src="https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-c4d-hd-enterprise-golden-trophy-enterprise-honor-gold-cup-cupenterprise-honorqualificationgolden-png-image_621239.jpg"></TrophyImg>
+
+          <Typography variant="body2" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif",}}>Congratulation 🥰</Typography>
+          <Typography variant="h5" sx={{ mt: 2 }}>200k</Typography>
+          <Button className="" size="small" variant="contained" sx={{ mt: 1 }}>
             view sales
           </Button>
-          <TrignleImg src=""></TrignleImg>
-          <TrophyImg src="https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-c4d-hd-enterprise-golden-trophy-enterprise-honor-gold-cup-cupenterprise-honorqualificationgolden-png-image_621239.jpg"></TrophyImg>
-          <CardContent />
+
+          
         </CardContent>
       </Card>
     </div>

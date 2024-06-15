@@ -1,12 +1,16 @@
 
-import React ,{useState}from "react";
+import React ,{useEffect, useState}from "react";
 import Register from "../Auth/Register";
 
-
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { HiUserCircle } from "react-icons/hi";
 const Navbar = (props) => {
-
+  //const[item,setItem]=useState('');
+// useEffect(()=>{
+//   const cart=JSON.parse(localStorage.getItem('cart'));
+//   setItem(cart.length)
+// })
+const [user,setUser]=useState(true)
   const [showModal, setShowModal] = useState(false);
 
 
@@ -48,24 +52,30 @@ const Navbar = (props) => {
           </button>
         </div>
         <div className="flex items-center space-x-7">
-          <div className="flex items-center space-x-1">
-            <svg
-              className="w-6 h-6 text-zinc-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
-            <Register showModal={showModal} setShowModal={setShowModal} />
-          </div>
+          {
+user?<div>
+            <Link to={'/profile'}> <HiUserCircle className="text-3xl text-blue-500"/></Link> </div>:
+  <div className="flex items-center space-x-1">
+<svg
+  className="w-6 h-6 text-zinc-700"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+  ></path>
+</svg>
+<button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
+<Register showModal={showModal} setShowModal={setShowModal} />
+</div>
+          }
+       
+
           <div className="flex items-center space-x-2">
             <button onClick={()=>showCart()}>
             <svg
@@ -82,11 +92,14 @@ const Navbar = (props) => {
                 strokeWidth="2"
                 d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
               ></path>
+              
             </svg>
+
             </button>
-            <span className="text-yellow-500">{props.number}</span>
-            <span className="text-zinc-700">₹0</span>
+            {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
+            {/* <sub className="text-zinc-700">₹0</sub> */}
           </div>
+        
         </div>
       </div>
       {/* Bottom Navbar */}

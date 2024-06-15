@@ -40,11 +40,13 @@ function ProductDetails() {
 
   return (
     <>
-      <Navbar />
-      <div className='flex flex-col items-center justify-center mt-12'>
+      <div className='hidden lg:block'>      
+        <Navbar  />
+      </div>
+      <div className='flex flex-col overflow-hidden items-center justify-center mt-12'>
         <div className='rounded-3xl bg-gradient-to-br w-full from-violet-500 to-orange-300 p-[1px]'>
           <div className='flex flex-col shadow-lg backdrop-blur-sm bg-white/60 rounded-3xl lg:flex-row items-center justify-center'>
-            <div className='w-[399px] my-6 lg:my-0 mx-12'>
+            <div className='w-3/4 lg:w-[399px] my-6 lg:my-0 mx-12'>
               <Slider {...settings}>
                 {productData.image.map((image, i) => (
                   <div key={i}>
@@ -70,7 +72,7 @@ function ProductDetails() {
                   <p className='my-1 text-lg'>Variant</p>
                   <button className='p-1 bg-green-100 rounded-lg w-24 my-2 text-green-700 border border-green-700'>{productData.productWeight}</button>
                 </div>
-                <hr className='my-6 w-44' />
+                <hr className='my-6' />
                 <div className='flex gap-2 items-center'>
                   <div className='flex gap-2 text-gray-400 bg-gray-200 rounded-lg items-center px-2'>
                     <p>MRP</p>

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -15,9 +14,8 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="shadow-lg ">
+    <div className="shadow-lg">
       {/* Top Navbar */}
-
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img
@@ -28,7 +26,7 @@ const Navbar = (props) => {
           />
           ApalaBazar
         </div>
-        <HomeDevliveryStatus/>
+        <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">
           <input
             type="text"
@@ -55,10 +53,7 @@ const Navbar = (props) => {
                 d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
               ></path>
             </svg>
-            <button
-              onClick={() => setShowModal(true)}
-              className="text-zinc-700 hover:text-blue-600 "
-            >
+            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600">
               Sign In / Register
             </button>
             <Register showModal={showModal} setShowModal={setShowModal} />
@@ -86,12 +81,9 @@ const Navbar = (props) => {
         </div>
       </div>
       {/* Bottom Navbar */}
-      <div className="bg-white  border-b-[2px] flex items-center space-x-8">
-        <div className=" border-r-[3px] p-2 pr-16">
-          <button
-            onClick={handleNavigate}
-            className="flex items-center space-x-1 text-zinc-700"
-          >
+      <div className="bg-white border-b-[2px] flex items-center space-x-8">
+        <div className="border-r-[3px] p-2 pr-16">
+          <button onClick={handleNavigate} className="flex items-center space-x-1 text-zinc-700">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -129,12 +121,37 @@ const Navbar = (props) => {
   );
 };
 
-
-function HomeDevliveryStatus(){
-  return <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
-    <div className="flex gap-2 text-gray-600"><span>Earliest</span><span className="text-green-500">Home Delivery</span> <span>available</span></div>
-    <div className="flex gap-2 items-center justify-center  font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg><span className="">Tomorrow</span> <span>09:00AM</span> <span className="mx-1">-</span><span>06:00AM</span></div>
-  </div>
+function HomeDeliveryStatus() {
+  return (
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
+      <div className="flex gap-2 text-gray-600">
+        <span>Earliest</span>
+        <span className="text-green-500">Home Delivery</span>
+        <span>available</span>
+      </div>
+      <div className="flex gap-2 items-center justify-center font-semibold">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-clock-8"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 8 14" />
+        </svg>
+        <span>Tomorrow</span>
+        <span>09:00AM</span>
+        <span className="mx-1">-</span>
+        <span>06:00AM</span>
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;

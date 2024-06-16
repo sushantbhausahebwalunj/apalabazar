@@ -1,11 +1,13 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import AddressDialog from '../adreess/AddressDialog';
 
 export default function Checkout(){
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isTimeSlotDialogOpen, setIsTimeSlotDialogOpen] = useState(false);
   const [addresses, setAddresses] = useState([]);
-
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [timeslot,setTimeSlot] = useState("")
    const handleAddNewAddress = () => {
     setIsDialogOpen(true);
   };
@@ -26,12 +28,18 @@ export default function Checkout(){
         <DeliveryMode />
         <SavedAddresses setAddresses={setAddresses} onAddNewAddress={handleAddNewAddress}
           addresses={addresses} />
-        <TimeSlot />
+        <div className=' p-2'>
+          <div className='border-2 p-2 border-dotted  border-gray-500 '>
+            <button onClick={()=> setIsTimeSlotDialogOpen(!isTimeSlotDialogOpen)} >Time Slot</button>
+          </div>
+        <p className='my-3'>{timeslot}</p>
+        </div>
       </div>
       <PriceSummary />
       <AddressDialog  isOpen={isDialogOpen}
         onClose={handleDialogClose}
         onSave={handleSaveAddress}/>
+        <TimeSlot isOpen={isTimeSlotDialogOpen} onSave={setTimeSlot}   onClose={handleDialogClose}/>
     </div>
     </div>
   );
@@ -61,7 +69,7 @@ const SavedAddresses = ({setAddresses, onAddNewAddress, addresses }) => {
       <h2 className="text-xl font-semibold mb-2">Saved addresses</h2>
       {addresses.length > 0 ? (
         addresses.map((address, index) => (
-          <div key={index} className=" p-4 rounded mb-2">
+          <div key={index} className=" p-4 rounded mb-2 border ">
             <p>{address.addressLine1}</p>
             <p>{address.addressLine2}</p>
             <p>{address.city}, {address.state} - {address.zipCode}</p>
@@ -92,13 +100,68 @@ const SavedAddresses = ({setAddresses, onAddNewAddress, addresses }) => {
 };
 
 
-const TimeSlot = () => {
+const TimeSlot = ({isOpen,onSave,onClose}) => {
+  const [day,setDay] = useState("")
+  const [time,setTime] = useState("")
+  const dialogRef = useRef(null);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    console.log(e.target.value)
+    onSave(`${time}`)
+    // onClose()
+    dialogRef.current.close()
+  };
+
+
   return (
-    <div className="mb-6">
-      <h2 className="text-xl font-semibold mb-2">Select a time slot</h2>
-      <input className='border borer-black p-2 bg-gray-200  rounded-lg font-thin' type='datetime-local'/>
+    <>
+    <dialog
+      ref={dialogRef}
+      open={isOpen}
+      className="p-6  fixed bg-white/30 backdrop-blur-2xl rounded-lg shadow-lg  mx-4 lg:mx-auto   top-6 right-3 max-w-[800px] min-w-[300px]"
+    >
+  
+      <h2 className="text-xl font-semibold mb-4">Add Time Slot</h2>
+      <form onSubmit={handleSave} className='flex flex-col gap-2 mb-7 '>
+        <div className='flex gap-3'>
+          <div className={`flex flex-col gap-2 border ${day ==='Sunday 8 June'? 'bg-green-400':'bg-white'}   p-2 rounded-lg`}>
+          <input name='dateslot' className='accent-green-900 mx-auto'  onChange={(e) => setDay(e.target.value)} value='Sunday 8 June' type='radio' id='sunday'/>
+          <label htmlFor='sunday'>Sunday 8 June</label>
+        </div>
+        <div className={`flex flex-col gap-2 border ${day ==='Monday 9 June'? 'bg-green-400':'bg-white'}  p-2 rounded-lg`}>
+          <input name='dateslot'  className='accent-green-900'   onChange={(e) => setDay(e.target.value)} value='Monday 9 June' type='radio' id='monday'/>
+          <label htmlFor='monday'>Monday 9 June</label>
+        </div>
+        <div className={`flex flex-col gap-2 border ${day ==='Tuesday 10 June'? 'bg-green-400':'bg-white'}  p-2 rounded-lg`}>
+          <input name='dateslot'  className='accent-green-900'  onChange={(e) => setDay(e.target.value)} value='Tuesday 10 June' type='radio' id='thusday'/>
+          <label htmlFor='thusday'>Tuesday 10 June</label>
+        </div>
+        <div className={`flex flex-col gap-2 border ${day ==='Wednesday 11 June'? 'bg-green-400':'bg-white'}  p-2 rounded-lg`}>
+          <input name='dateslot' className='accent-green-900'  onChange={(e) => setDay(e.target.value)} value='Wednesday 11 June' type='radio' id='wednesday'/>
+          <label htmlFor='wednesday'>Wednesday 11 June</label>
+        </div>
+        </div>
+          <div className='mt-6'></div>
+         <div>
+          <div className="mb-4  flex items-center  ">
+          <input type="radio" onChange={(e) =>   setTime(e.target.value)} value={`${day} 9AM - 12AM`} name='timeslot' id="tiemslot1" className="mr-8 outline-violet-400  py-2 border rounded" />
+          <label htmlFor="tiemslot1" className="block mb-1">{day} 9AM - 12AM</label>
+        </div>
+        <div className="mb-4 flex items-center">
+          <input type="radio" onChange={(e) =>   setTime(e.target.value)} value={`${day} 1PM - 4PM`}  name='timeslot' id="tiemslot2" className="mr-8 outline-violet-400 px-3 py-2 border rounded" />
+          <label htmlFor="tiemslot2" className="block  mb-1">{day} 1PM - 4PM</label>
+        </div>
+        <div className="mb-4 flex items-center">
+          <input type="radio" onChange={(e) =>   setTime(e.target.value)} value={`${day} 4PM - 7AM`}  name='timeslot' id="tiemslot3" className="mr-8 px-3 outline-violet-400 py-2 border rounded" />
+          <label htmlFor="tiemslot3" className="block mb-1">{day} 4PM - 7PM</label>
+        </div>
+         <div>
+          </div>
+      <button type="submit" className='bg-black p-2 text-white rounded-lg '>Submit</button>
     </div>
-  );
+      </form>
+    </dialog></>)
 };
 
 

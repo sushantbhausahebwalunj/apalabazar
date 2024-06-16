@@ -49,7 +49,7 @@ const ProductsTable = () => {
   const displayProducts = filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
-    <Box className="flex flex-col h-screen p-4 bg-gray-100"sx={{ borderRadius: "5px", }} >
+    <Box className="flex flex-col h-screen p-4 bg-white"sx={{ borderRadius: "5px", }} >
       <Typography variant="h4" component="h1" className="text-center mb-6 text-black-600" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mt:2 }}>
         Product List
       </Typography>

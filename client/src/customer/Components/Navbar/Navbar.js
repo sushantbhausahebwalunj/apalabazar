@@ -28,11 +28,12 @@ const Navbar = (props) => {
           />
           ApalaBazar
         </div>
+        <HomeDevliveryStatus/>
         <div className="flex items-center space-x-1">
           <input
             type="text"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[600px] dark:bg-white dark:text-zinc-300"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
           />
           <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
             SEARCH
@@ -127,5 +128,13 @@ const Navbar = (props) => {
     </div>
   );
 };
+
+
+function HomeDevliveryStatus(){
+  return <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
+    <div className="flex gap-2 text-gray-600"><span>Earliest</span><span className="text-green-500">Home Delivery</span> <span>available</span></div>
+    <div className="flex gap-2 items-center justify-center  font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="16" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg><span className="">Tomorrow</span> <span>09:00AM</span> <span className="mx-1">-</span><span>06:00AM</span></div>
+  </div>
+}
 
 export default Navbar;

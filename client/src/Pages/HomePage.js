@@ -30,13 +30,13 @@ function HomePage() {
       <Navbar number={12} />
 
       <div className="w-[95vw] ml-5 mt-2 bottom-0 radius" >
-        <Slider {...settings} className="radius">
-          <div className="w-full radius">
+        <Slider {...settings} className="radius ">
+          <div className="w-full radius ">
             <a href="./product/1 radius">
               <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
                 <img
                   src="./skin_care.jpg"
-                  className=" object-fill h-[60vh] w-full radius"
+                  className=" object-fill h-[60vh] w-full radius px-4"
                  
                 ></img>
               </div>
@@ -47,7 +47,7 @@ function HomePage() {
               <div className="flex items-center  justify-end bg-opacity-50 rounded radius w-full">
                 <img
                   src="./chocolates.jpg"
-                  className=" object-fill h-[60vh] w-full radius"
+                  className=" object-fill h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>
@@ -57,7 +57,7 @@ function HomePage() {
               <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
                 <img
                   src="./dailyneeds.jpg"
-                  className=" object-fill h-[60vh] w-full radius"
+                  className=" object-fill h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>
@@ -67,7 +67,7 @@ function HomePage() {
               <div className="flex items-center  justify-end bg-opacity-50 radius  w-full">
                 <img
                   src="./snacks.jpg"
-                  className=" object-fill h-[60vh] w-full radius"
+                  className=" object-fill h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>

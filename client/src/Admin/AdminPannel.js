@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -21,7 +21,7 @@ import CreateProductForm from "./components/createProduct/CreateProductForm";
 import OrdersTable from "./components/Orders/OrdersTable";
 import ProductsTable from "./components/Products/ProductsTable";
 import Customers from "./components/Customer/Customer";
-import UpdateProducts from "./components/updateProduct/UpdateProducts";
+
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import AddIcon from '@mui/icons-material/Add';
@@ -134,7 +134,7 @@ function AdminPanel() {
         </Drawer>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "rgba(135, 206, 250, 0.5)", p: 3, minHeight: '150vh' }}
+          sx={{ flexGrow: 1, bgcolor: "Rgba(153,153,153, 0.2)", minHeight: '200vh', }}
         >
           <Routes>
             <Route path="/" element={<AdminDashboard />} />

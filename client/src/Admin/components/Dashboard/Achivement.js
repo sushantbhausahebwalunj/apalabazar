@@ -17,7 +17,7 @@ const TrophyImg = styled("img")({
 function Achivement() {
   return (
     <div className="p-5">
-      <Card className="bg-gray-100 " sx={{ position: "relative", color: "black" }}>
+      <Card className="bg-white" sx={{ position: "relative", color: "black" }}>
         <CardContent>
           <Typography variant="h5" sx={{ letterSpacing: ".25px", fontWeight: "bold", fontFamily: "sans-serif", mb:3 }}>
             Shop with Apana Bazar

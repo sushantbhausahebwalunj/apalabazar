@@ -16,7 +16,7 @@ export function ProductCard({ productimg, logo, productname, productprice, aplab
         </div>
 
         <div>
-          <h6 className='Product-name pl-4'>{productname}</h6>
+          <h6 className='Product-name w-[240px] mx-auto text-balance'>{productname}</h6>
 
 
 

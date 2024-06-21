@@ -14,10 +14,10 @@ const Navbar = (props,setActiveTab) => {
   };
 
   return (
-    <div className="shadow-lg">
+    <div className="shadow-lg overflow-hidden">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+        <a href="/" className="flex items-center space-x-4">
           <img
             src="https://placehold.co/100x40"
             alt="Logo"
@@ -25,7 +25,7 @@ const Navbar = (props,setActiveTab) => {
             crossOrigin="anonymous"
           />
           ApalaBazar
-        </div>
+        </a>
         <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">
           <input
@@ -81,7 +81,7 @@ const Navbar = (props,setActiveTab) => {
         </div>
       </div>
       {/* Bottom Navbar */}
-      <div className="bg-white border-b-[2px] flex items-center space-x-8">
+      <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2  items-center space-x-8">
         <div className="border-r-[3px] p-2 pr-16">
           <button onClick={handleNavigate} className="flex items-center space-x-1 text-zinc-700">
             <svg

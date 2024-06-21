@@ -24,7 +24,7 @@ const Navbar = (props,setActiveTab) => {
             className="h-10"
             crossOrigin="anonymous"
           />
-          ApalaBazar
+          
         </a>
         <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">

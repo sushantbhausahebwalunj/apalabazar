@@ -10,8 +10,10 @@ const Navbar = () => {
   {
     name: 'GROCERY',
     types: [
-      { name: 'Dals', path: '/grocery/dals' },
-      { name: 'Pulses', path: '/grocery/pulses' },
+      { name: 'Dals', path: '/grocery/' },
+      // { name: 'Dals', path: '/grocery/dals' },
+      { name: 'Pulses', path: '/grocery/' },
+      // { name: 'Pulses', path: '/grocery/pulses' },
       { name: 'Dry Fruits', path: '/grocery/dry-fruits' },
       { name: 'DMart Grocery', path: '/grocery/dmart-grocery' },
       { name: 'Cooking Oil', path: '/grocery/cooking-oil' },
@@ -147,7 +149,7 @@ const Navbar = () => {
                 <path fillRule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
               )}
             </svg>
-           <span className='capitalize'> apalabazar</span>
+           <Link to={"/"} className='capitalize'> apalabazar</Link>
           </button>
           <div className='flex gap-6'>
         <SearchIcon/>

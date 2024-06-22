@@ -21,8 +21,8 @@ export default function Checkout(){
   };
 
   return (
-    <div className='bg-gradient-to-br from-violet-500 to-orange-300'>
-      <h1 className="text-2xl  font-bold mb-4 py-7 max-w-[760px] mx-auto">Checkout</h1>
+    <div className='bg-gradient-to-br p-3 mt-2 rounded-lg from-violet-500 to-orange-300'>
+      <h1 className="text-2xl  font-bold mb-4 py-7 max-w-[790px] mx-auto">Checkout</h1>
     <div className="flex flex-col max-w-[800px] w-[3/4] gap-12 justify-center  mx-auto p-4">
       <div className=" bg-white/30 backdrop-blur-lg rounded-lg shadow-lg p-6">
         <DeliveryMode />

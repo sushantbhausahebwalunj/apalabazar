@@ -1,6 +1,7 @@
 import { BsFillTrashFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
+import MobNavBar from '../Navbar/MobileNavbar';
 import { FaCircleInfo } from "react-icons/fa6";
 
 const CartItem = ({ unik, imageSrc, productName, price, savings, qty, setQty, decreaseQuantity, increaseQuantity, removeItem }) => {
@@ -76,9 +77,17 @@ const Cart = () => {
     calculateTotal(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
   };
+  const [viewport,setViewport] = useState(false);
+  useEffect(() => {
+    if(window.innerWidth < 620){
+      setViewport(true)
+    }else{
+      setViewport(false)
+    }
+  },[])
   return (
     <div>
-      <Navbar />
+      {viewport ? <MobNavBar/> :  <Navbar number={12} />}
       <div className="container mx-auto p-4">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-3/4">

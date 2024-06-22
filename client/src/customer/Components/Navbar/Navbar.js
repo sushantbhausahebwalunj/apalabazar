@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Register from "../Auth/Register";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = (props) => {
+const Navbar = (props,setActiveTab) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -104,17 +104,17 @@ const Navbar = (props) => {
         <a href="/grocery" className="text-zinc-700 font-bold">
           Grocery
         </a>
-        <a href="#" className="text-zinc-700 font-bold">
+        <a href="/valuepack" className="text-zinc-700 font-bold">
           Value Packs
         </a>
-        <a href="#" className="text-zinc-700 font-bold">
+        <a href="/appliances" className="text-zinc-700 font-bold">
           Home Appliances
         </a>
-        <a href="#" className="text-zinc-700 font-bold">
+        <a href="/cleaner" onClick={() => props.setActiveTab('Cleaners')} className="text-zinc-700 font-bold">
           Cleaners
         </a>
-        <a href="#" className="text-zinc-700 font-bold">
-          Detergent &amp; Fabric Care
+        <a href="/detergent" onClick={() => props.setActiveTab('Detergent & Fabric Care')} className="text-zinc-700 font-bold">
+          Detergent & Fabric Care
         </a>
       </div>
     </div>

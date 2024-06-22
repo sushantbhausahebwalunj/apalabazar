@@ -23,11 +23,13 @@ function HomeAppliances() {
   return (
     <div>
       <Navbar />
-      <div className='flex gap-6 font-semibold'>
+      <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
         <SideBar title={"Appliances"} showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab}  sidebarDairy={sidebarDairy} key={'2'} />
         
-
+    <div className='overflow-hidden'>
+      
         {activeTab === 'Home Appliances' ? <LightBatteries showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
+    </div>
       
     </div>
     </div>

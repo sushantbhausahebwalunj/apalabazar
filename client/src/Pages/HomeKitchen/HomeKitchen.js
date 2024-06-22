@@ -55,10 +55,11 @@ function HomeKitchen() {
   return (
     <div>
       <Navbar setActiveTab={setActiveTab}/>
-      <div className='flex gap-6 font-semibold'>
+      <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
         <SideBar title="Home & Kitchen" showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab} sidebarDairy={sidebarDairy} key={'2'} />
         
-        {activeTab === 'Home & Kitchen' ? (
+        <div className='overflow-hidden'>
+          {activeTab === 'Home & Kitchen' ? (
           <div className='flex flex-wrap w-full'>
             <DetergentFabricCare showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} />
             <Cleaners showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} />
@@ -67,6 +68,7 @@ function HomeKitchen() {
 
         {activeTab === 'Detergent & Fabric Care' ? <DetergentFabricCare showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
         {activeTab === 'Cleaners' ? <Cleaners showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
+        </div>
       
     </div>
     </div>

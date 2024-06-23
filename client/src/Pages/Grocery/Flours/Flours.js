@@ -18,7 +18,7 @@ import brokenwheat from '../Flours/organic-wheat-broken-dhaliya-img.webp'
 import readymixragi from '../Flours/ready-mix-ragi-idli-img.webp'
 import riceflour from '../Flours/royal-rice-flour-img.webp'
 
-export function Flours() {
+export function Flours({activeSubTab}) {
 
 const FloursData = [
   {
@@ -176,11 +176,13 @@ const FloursData = [
   },
 
 ];
+
 return(
 
 <div className='flex  flex-wrap w-full'>
 
 {
+
   FloursData.map(
     (data) => {
     

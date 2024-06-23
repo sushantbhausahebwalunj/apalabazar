@@ -1,36 +1,25 @@
-
-import React ,{useEffect, useState}from "react";
+import React, { useState } from "react";
 import Register from "../Auth/Register";
-
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { HiUserCircle } from "react-icons/hi";
+
 const Navbar = (props) => {
-  //const[item,setItem]=useState('');
-// useEffect(()=>{
-//   const cart=JSON.parse(localStorage.getItem('cart'));
-//   setItem(cart.length)
-// })
-const [user,setUser]=useState(true)
   const [showModal, setShowModal] = useState(false);
-
-
-
-
   const navigate = useNavigate();
 
-
   const handleNavigate = () => {
-    navigate('/category');
+    navigate("/category");
   };
-  const showCart=()=>{
-    navigate('/cart');
-  }
-
+  const showCart = () => {
+    navigate("/cart");
+  };
+  const handleProfile = () => {
+    navigate("/Myprofile/profile");
+  };
 
   return (
-    <div className="shadow-lg ">
+    <div className="shadow-lg">
       {/* Top Navbar */}
-      
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img
@@ -41,70 +30,67 @@ const [user,setUser]=useState(true)
           />
           ApalaBazar
         </div>
+        <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">
           <input
             type="text"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[600px] dark:bg-white dark:text-zinc-300"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
           />
           <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
             SEARCH
           </button>
         </div>
         <div className="flex items-center space-x-7">
-          {
-user?<div>
-            <Link to={'/profile'}> <HiUserCircle className="text-3xl text-blue-500"/></Link> </div>:
-  <div className="flex items-center space-x-1">
-<svg
-  className="w-6 h-6 text-zinc-700"
-  fill="none"
-  stroke="currentColor"
-  viewBox="0 0 24 24"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="2"
-    d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-  ></path>
-</svg>
-<button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600 ">Sign In / Register</button>
-<Register showModal={showModal} setShowModal={setShowModal} />
-</div>
-          }
-       
-
-          <div className="flex items-center space-x-2">
-            <button onClick={()=>showCart()}>
+          <div className="flex items-center space-x-1">
             <svg
               className="w-6 h-6 text-zinc-700"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-           
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
+                d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
               ></path>
-              
             </svg>
-
+            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600">
+              Sign In / Register
+            </button>
+            <Register showModal={showModal} setShowModal={setShowModal} />
+          </div>
+          <div className="flex items-center space-x-2">
+            <button onClick={() => showCart()}>
+              <svg
+                className="w-6 h-6 text-zinc-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
+                ></path>
+              </svg>
             </button>
             {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
             {/* <sub className="text-zinc-700">₹0</sub> */}
+          </div>
+          <div>
+          <HiUserCircle className=" text-3xl text-blue-600 " onClick={handleProfile}/> 
           </div>
         
         </div>
       </div>
       {/* Bottom Navbar */}
-      <div className="bg-white  border-b-[2px] flex items-center space-x-8">
-        <div className=" border-r-[3px] p-2 pr-16">
+      <div className="bg-white border-b-[2px] flex items-center space-x-8">
+        <div className="border-r-[3px] p-2 pr-16">
           <button onClick={handleNavigate} className="flex items-center space-x-1 text-zinc-700">
             <svg
               className="w-6 h-6"
@@ -124,7 +110,7 @@ user?<div>
           </button>
         </div>
         <a href="/grocery" className="text-zinc-700 font-bold">
-         Grocery
+          Grocery
         </a>
         <a href="#" className="text-zinc-700 font-bold">
           Value Packs
@@ -142,5 +128,38 @@ user?<div>
     </div>
   );
 };
+
+function HomeDeliveryStatus() {
+  return (
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
+      <div className="flex gap-2 text-gray-600">
+        <span>Earliest</span>
+        <span className="text-green-500">Home Delivery</span>
+        <span>available</span>
+      </div>
+      <div className="flex gap-2 items-center justify-center font-semibold">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-clock-8"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 8 14" />
+        </svg>
+        <span>Tomorrow</span>
+        <span>09:00AM</span>
+        <span className="mx-1">-</span>
+        <span>06:00AM</span>
+      </div>
+    </div>
+  );
+}
 
 export default Navbar;

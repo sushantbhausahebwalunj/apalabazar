@@ -1,34 +1,41 @@
-import React from 'react'
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
-function Side() {
-  return (
-    <div >
-<Sidebar className=' h-[85vh]'>
-  <Menu
-    menuItemStyles={{
-      button: {
-        // the active class will be added automatically by react router
-        // so we can use it to style the active menu item
-        [`&.active`]: {
-          backgroundColor: 'rgb(201 201 201 / 70%)',
-          color: '#b6c8d9',
-        },
-      },
-    }}
-  >
 
-    <SubMenu label="Account Details">
-      <MenuItem component={<Link to="/profile/details" />}>Profile</MenuItem>
-      <MenuItem component={<Link to="/profile/address" />}>Address</MenuItem>
-      <MenuItem component={<Link to="/profile/card" />}>Saved Card</MenuItem>
-    </SubMenu>
-    <MenuItem component={<Link to="/profile/orders" />}>Orders</MenuItem>
-   
-  </Menu>
-</Sidebar>
+import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+function SideBar({showall,setShowAll, sidebarDairy, title, setActiveTab,activeTab,setActiveSubTab }) {
+  const location = useLocation();
+  const [click,setClick] = useState(false);
+  
+
+  return (
+    <div className='min-h-screen p-3 w-52'>
+      <h2 className=''>{title}</h2>
+      <div className='ml-4 border w-full mt-3 text-sm space-y-3'>
+        {sidebarDairy.map((item) => (
+          <div
+            to={location.pathname}
+            onClick={() => {
+              setActiveTab(item.name)
+              setShowAll(!showall)
+              setClick(!click)
+            }}
+            className='flex flex-col transition-all py-1 px-2 hover:bg-green-200/90'
+            key={item.name}
+          >
+            <h2 className={`${activeTab === item.name ? showall ? 'underline underline-offset-2':'':''}`}>{item.name}</h2>
+            
+            
+            {activeTab === "All Grocery"?"": activeTab === item.name ? <div className='bg-green-200 pl-4 pr-3 transition-all  '>{item.subCatog.map((items,i) => {
+              
+                return <span key={i} onClick={() => setActiveSubTab(items)} className='flex font-normal capitalize my-3 hover:underline transition-all'>{items}</span>
+             
+            }) }</div>:""}
+            
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
 
-export default Side
+export default SideBar

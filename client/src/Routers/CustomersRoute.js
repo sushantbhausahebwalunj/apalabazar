@@ -10,8 +10,10 @@ import Dairy from '../Pages/Dairy/Dairy';
 import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
 
 import Register from '../customer/Components/Auth/Login';
-import Profile from '../Pages/Profile/Profile.js';
-import Myprofile from '../Pages/Profile/Myprofile.js';
+import Checkout from '../customer/Components/Checkout/CheckoutPage.js';
+import Profile from '../Profile/components/Profilemain/Profile.js';
+
+
 
 function CustomersRoute() {
 
@@ -24,8 +26,12 @@ function CustomersRoute() {
       <Route path="/dairy" element={<Dairy />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/product/:id" element={<ProductDetails />}></Route>
-      <Route path="/profile/*" element={<Profile/>}></Route>
-      {/* <Route path="/*" element={<Myprofile/>}></Route> */}
+
+      <Route path="/register" element={<Register />}></Route>
+      <Route path="/checkout" element={<Checkout />}></Route>
+      <Route path="/myprofile" element={<Profile/>}></Route>
+
+
       </Routes>
     </div>
   )

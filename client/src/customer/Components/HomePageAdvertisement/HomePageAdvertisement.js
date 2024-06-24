@@ -12,11 +12,11 @@ const HomePageAdvertisement = () => {
     <div className="flex justify-center items-center mt-6 min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-screen-lg px-4">
         {advertisements.map(ad => (
-          <div key={ad.id} className="advertisement-card p-2 h-96">
+          <a key={ad.id} href='#' className="advertisement-card p-2 h-96">
             <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex justify-center items-center">
               <img src={ad.imageUrl} alt={`Advertisement ${ad.id}`} className="w-full h-full object-cover" />
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>

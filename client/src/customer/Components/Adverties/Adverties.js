@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductCard = ({ imageUrl, title, description, link }) => {
   return (
-<div className='p-3 bg-gray-200 mx-1 rounded-xl space-y-1'>
+<div className='p-4 mx-1 rounded-md'>
 <a href={link}>
     <div className="flex items-center  justify-end bg-opacity-50  w-full"  >
 
@@ -17,9 +17,9 @@ const ProductCard = ({ imageUrl, title, description, link }) => {
 
 const ProductList = () => {
   return (
-    <div className="m-6 space-y-2 rounded-xl">
+    <div className="m-6  bg-gray-100 rounded-md">
 
-      <ProductCard
+      <ProductCard 
         imageUrl="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2Fnew_korean_Style_banner_desktop_4500-x-1125.jpg%3Fwidth%3D1024&w=1920&q=75"
         // title="Just Pop It In!"
         // description="Delicious Flavours | Easy To Make"

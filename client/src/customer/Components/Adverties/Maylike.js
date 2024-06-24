@@ -16,7 +16,7 @@ const ProductGrid = () => {
   return (
     <div className="p-4 mt-3 mx-auto mb-8 bg-gray-100 rounded-md w-[96vw] ">
       <h2 className="text-xl font-semibold mb-4">You may like...</h2>
-      <div className="grid grid-cols-1 h-[22vh] mb-10 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1  h-[92vh] lg:h-fit mb-10 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <ProductCard href="/gifting-solution" imgSrc="https://admin.itcstore.in/media/wysiwyg/gifting-essentials.jpg" imgAlt="Gifting Solution" />
         <ProductCard href="/pooja-rituals" imgSrc="https://admin.itcstore.in/media/wysiwyg/pooja-essentials.jpg" imgAlt="Pooja and Rituals" />
         <ProductCard href="/summer-care" imgSrc="https://admin.itcstore.in/media/wysiwyg/personal-care.jpg" imgAlt="Summer Care" title="Summer Care" />

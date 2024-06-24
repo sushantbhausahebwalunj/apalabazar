@@ -1,6 +1,6 @@
 
 import Navbar from "../customer/Components/Navbar/Navbar.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from '../customer/Components/footer/Footer';
@@ -12,6 +12,7 @@ import './HomePage.css'
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
 import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/HomePageAdvertisement.js";
 import Maylike from "../customer/Components/Adverties/Maylike.js";
+import MobNavbar from "../customer/Components/Navbar/MobileNavbar.js";
 
 function HomePage() {
   const settings = {
@@ -24,30 +25,38 @@ function HomePage() {
     autoplaySpeed: 5000,
     cssEase: "linear",
   };
+  const [viewport,setViewport] = useState(false);
+  useEffect(() => {
+    if(window.innerWidth < 620){
+      setViewport(true)
+    }else{
+      setViewport(false)
+    }
+  })
 
   return (
-    <div className="max-m-0 p-0">
-      <Navbar number={12} />
+    <div className="overflow-hidden">
+     {viewport ? <MobNavbar/> :  <Navbar number={12} />}
 
-      <div className="w-[98.6vw] mt-5  bottom-0 radius" >
+      <div className="w-[95vw] mx-auto overflow-hidden ml-5 mt-2 bottom-0 radius" >
         <Slider {...settings} className="radius ">
           <div className="w-full radius ">
             <a href="./product/1 radius">
               <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
                 <img
                   src="./skin_care.jpg"
-                  className=" object-cover h-[65vh] w-full "
+                  className=" object-fill h-[20vh] lg:h-[60vh] w-full radius px-4"
                  
                 ></img>
               </div>
             </a>
           </div>
-          <div className="w-full radius">
+          <div className="w-full radius ">
             <a href="./product/2 radius" >
               <div className="flex items-center  justify-end bg-opacity-50 rounded radius w-full">
                 <img
                   src="./chocolates.jpg"
-                  className=" object-cover h-[65vh] w-full radius px-4"
+                  className=" object-fill h-[20vh] lg:h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>
@@ -57,7 +66,7 @@ function HomePage() {
               <div className="flex items-center  justify-end bg-opacity-50 radius w-full">
                 <img
                   src="./dailyneeds.jpg"
-                  className=" object-cover h-[65vh] w-full radius px-4"
+                  className=" object-fill h-[20vh] lg:h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>
@@ -67,7 +76,7 @@ function HomePage() {
               <div className="flex items-center  justify-end bg-opacity-50 radius  w-full">
                 <img
                   src="./snacks.jpg"
-                  className=" object-cover h-[65vh] w-full radius px-4"
+                  className=" object-fill h-[20vh] lg:h-[60vh] w-full radius px-4"
                 ></img>
               </div>
             </a>

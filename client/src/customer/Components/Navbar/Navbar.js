@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Register from "../Auth/Register";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = (props) => {
+const Navbar = (props,setActiveTab) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -14,17 +14,31 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="shadow-lg">
+    <div className="shadow-lg overflow-hidden">
       {/* Top Navbar */}
-      <div className="bg-white p-6 border-b-[2px] flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+      <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
+        <a href="/" className="flex items-center space-x-4">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi_YhaXWp1A9kZxpeXYpCL0oj0764uVAWjdA&s"
             alt="Logo"
             className="h-10 rounded-md"
             crossOrigin="anonymous"
           />
-          <div className="relative flex items-center">
+          
+        </a>
+        <HomeDeliveryStatus />
+        <div className="flex items-center space-x-1">
+          <input
+            type="text"
+            placeholder="Search for Biscuits"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
+          />
+          <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
+            SEARCH
+          </button>
+        </div>
+        <div className="flex items-center space-x-7">
+          <div className="flex items-center space-x-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -87,7 +101,7 @@ const Navbar = (props) => {
         </div>
       </div>
       {/* Bottom Navbar */}
-      <div className="bg-gray-700 border-b-[2px] flex items-center space-x-8">
+      <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2  items-center space-x-8">
         <div className="border-r-[3px] p-2 pr-16">
           <button onClick={handleNavigate} className="flex items-center space-x-1 text-white font-bold">
             <svg
@@ -110,16 +124,16 @@ const Navbar = (props) => {
         <a href="/grocery" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
           Grocery
         </a>
-        <a href="#" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/valuepack" className="text-zinc-700 font-bold">
           Value Packs
         </a>
-        <a href="#" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/appliances" className="text-zinc-700 font-bold">
           Home Appliances
         </a>
-        <a href="#" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/cleaner" onClick={() => props.setActiveTab('Cleaners')} className="text-zinc-700 font-bold">
           Cleaners
         </a>
-        <a href="#" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/detergent" onClick={() => props.setActiveTab('Detergent & Fabric Care')} className="text-zinc-700 font-bold">
           Detergent & Fabric Care
         </a>
       </div>

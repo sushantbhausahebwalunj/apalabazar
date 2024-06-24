@@ -46,16 +46,17 @@ function Grocery() {
   const [showall,setShowAll] = useState(true);
 
 
-  console.log('Active SubTab:', activeSubTab);
+
 
   return (
-    <div>
+    <div className=''>
       <Navbar />
-      <div className='flex gap-6 font-semibold'>
-        <SideBar showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab} title={"Grocery"} sidebarDairy={sidebarDairy} key={'2'} />
-        
+      <div className='flex flex-col lg:flex-row  font-semibold '>
+        <SideBar  showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab} title={"Grocery"} sidebarDairy={sidebarDairy} key={'2'} />
+        <div className='overflow-hidden '>
+          
         {activeTab === 'All Grocery' ? (
-          <div className='flex flex-wrap w-full'>
+          <div className='flex  flex-wrap w-full'>
             <Dryfruits activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} />
             <Flours activeSubTab={activeSubTab} />
             <Masala activeSubTab={activeSubTab} />
@@ -70,6 +71,7 @@ function Grocery() {
         {activeTab === 'Pulses' ? <Pulses activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
         {activeTab === 'Salt & Sugar' ? <SaltSugarJaggery activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
         {activeTab === 'Cooking Oil' ? <Cookingoil activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
+        </div>
       </div>
     </div>
   );

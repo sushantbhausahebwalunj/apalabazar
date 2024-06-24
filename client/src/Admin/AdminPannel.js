@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   CssBaseline,
@@ -38,6 +38,7 @@ function AdminPanel() {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const navigate = useNavigate();
+  const [toggle,setToggle] = useState(false);
 
   const drawer = (
     <Box
@@ -110,6 +111,15 @@ function AdminPanel() {
 
   return (
     <div>
+      <nav className="transition-all w-full lg:hidden block bg-white/70 backdrop-blur-lg z-10 fixed" >
+        <svg className="ml-8 mt-2 mb-2" onClick={() => setToggle(!toggle)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-left"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+      
+      <div className={`${toggle ? 'block':'hidden'} lg:block `}>
+         {menu.map((item) => {
+            return <Link to={`${item.path}`} className="flex  mb-1 pl-2 hover:underline">{item.name}</Link>
+          })}
+        </div>
+      </nav>
       <CssBaseline />
       <Box sx={{ display: 'flex', height: '100vh' }}>
         <Drawer

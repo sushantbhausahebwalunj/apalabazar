@@ -159,9 +159,9 @@ const TrendingProducts = () => {
   ];
 
   return (
-    <div className="bg-purple-100   p-4 mt-12 mb-12 mx-6 rounded-xl">
+    <div className="bg-purple-100  p-4 mt-12 mb-12 mx-6 rounded-xl">
       <h2 className="text-lg font-semibold mb-4">Tranding Products</h2>
-      <div className="flex overflow-x-auto space-x-8 p-5 scroll">
+      <div className="flex overflow-x-auto space-x-8 p-5 scroll  ">
         {products.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}

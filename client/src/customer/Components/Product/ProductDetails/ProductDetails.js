@@ -40,7 +40,7 @@ function ProductDetails() {
 
   return (
     <>
-      <div className='hidden lg:block'>      
+      <div className=' lg:block'>      
         <Navbar  />
       </div>
       <div className='flex flex-col overflow-hidden items-center justify-center mt-12'>

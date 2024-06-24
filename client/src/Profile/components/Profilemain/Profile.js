@@ -1,15 +1,9 @@
 
-
-
-
 import React, { useState } from "react";
-import Navbar from "../../../customer/Components/Navbar/Navbar";
-
-
 const modalStyles =
   "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden";
-const inputStyles = "w-full p-2 border rounded";
-const buttonStyles = "px-4 py-2 rounded";
+const inputStyles = "w-full p-2 border rounded-lg";
+const buttonStyles = "px-4 py-2 rounded-lg";
 const linkStyles = "block p-2";
 const labelStyles = "block text-zinc-700";
 
@@ -38,27 +32,27 @@ function Profile() {
 
   return (
     <>
-    <Navbar className="m-0"/>
-      <div>
-        <div className="w-3/4 p-8">
+  
+      
+  <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-5" > 
           <h2 className="text-2xl font-bold mb-6">Profile</h2>
           <form>
-            <div className="mb-4">
+            <div className="mb-4 ">
               <label className={labelStyles}>Mobile Number</label>
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <input
                   type="text"
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
-                  className="mr-4 border-3 focus:border-0 p-2 "
+                  className="mr-4 border-3 focus:border-0 p-2 rounded-lg w-[70%]"
                 ></input>
-                <button className="text-green-500" onClick={openModal}>
-                  Change Mobile Number
+                <button className="text-white bg-blue-600 p-2 rounded-lg w-[30%]" onClick={openModal}>
+                  Change
                 </button>
               </div>
               {isModalOpen && (
-                <div id="modal" className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white p-8 rounded shadow-lg">
+                <div id="modal" className="fixed inset-0  flex items-center lg:justify-center justify-end  bg-black bg-opacity-50">
+                  <div className="bg-white p-8 rounded shadow-lg lg:w-[40vw] w-[90vw]">
                     <h2 className="text-xl font-bold mb-4">
                       Change Mobile Number
                     </h2>
@@ -76,7 +70,7 @@ function Profile() {
                             Enter OTP
                           </label>
                         </div>
-                        <div className="mb-4 text-gray-950">
+                        <div className="mb-4 text-gray-950 ">
                           {/* <InputOTP>
                             <InputOTPGroup>
                               {otp.map((value, index) => (
@@ -106,14 +100,14 @@ function Profile() {
                       <div className="flex items-center">
                         <button
                           type="button"
-                          className={`bg-green-500 text-white ${buttonStyles} mr-4`}
+                          className={`text-white bg-blue-600 p-2 rounded-lg${buttonStyles} mr-4`}
                           onClick={closeModal}
                         >
                           SAVE
                         </button>
                         <button
                           type="button"
-                          className="text-zinc-500"
+                          className="text-white bg-blue-600 p-2 rounded-lg"
                           onClick={closeModal}
                         >
                           CANCEL
@@ -156,9 +150,9 @@ function Profile() {
             <div className="flex items-center">
               <button
                 type="submit"
-                className={`bg-green-500 text-white ${buttonStyles} mr-4`}
+                className={`text-white bg-blue-600 p-2 rounded-lg ${buttonStyles} mr-4`}
               >
-                SAVE CHANGES
+                SAVE 
               </button>
               <button type="button" className="text-red-500">
                 DELETE MY ACCOUNT
@@ -166,7 +160,7 @@ function Profile() {
             </div>
           </form>
         </div>
-      </div>
+   
     </>
   );
 };

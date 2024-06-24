@@ -12,6 +12,9 @@ import ProductDetails from '../customer/Components/Product/ProductDetails/Produc
 import Register from '../customer/Components/Auth/Login';
 import Checkout from '../customer/Components/Checkout/CheckoutPage.js';
 import Profile from '../Profile/components/Profilemain/Profile.js';
+import HomeAppliances from '../Pages/HomeAppliances/HomeAppliances.js';
+import  DetergentFabricCare  from '../Pages/HomeKitchen/HomeKitchen.js';
+import ValuePack from '../Pages/Specials/Specials.js';
 
 
 
@@ -22,6 +25,10 @@ function CustomersRoute() {
       <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/grocery" element={<Grocery />}></Route>
+      <Route path="/appliances" element={<HomeAppliances />}></Route>
+      <Route path="/cleaner" element={<DetergentFabricCare />}></Route>
+      <Route path="/detergent" element={<DetergentFabricCare />}></Route>
+      <Route path="/valuepack" element={<ValuePack />}></Route>
       <Route path="/category" element={<Category />} />
       <Route path="/dairy" element={<Dairy />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>

@@ -4,6 +4,7 @@ import {
   Box,
   CssBaseline,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -12,63 +13,67 @@ import {
   Toolbar,
   useMediaQuery,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useTheme } from "@mui/material/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Route, Routes } from "react-router-dom";
 import Order from "./components/Orders/Order";
 import Profile from "./components/Profilemain/Profile";
-// import AdminDashboard from "./components/Dashboard/Dashboard";
-// import CreateProductForm from "./components/createProduct/CreateProductForm";
-// import OrdersTable from "./components/Orders/OrdersTable";
-// import ProductsTable from "./components/Products/ProductsTable";
-// import Customers from "./components/Customer/Customer";
-// import UpdateProducts from "./components/updateProduct/UpdateProducts";
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import AddIcon from '@mui/icons-material/Add';
 import Navbar from "../customer/Components/Navbar/Navbar";
+import './Myprofile.css'
+import Payment from './components/Payment/Payment.js'
+import WishList from './components/Wishlist/WishList.js'
+import { ImUser } from "react-icons/im";
+import { MdOutlinePayment } from "react-icons/md";
+import { MdElectricScooter } from "react-icons/md";
+import { FcLike } from "react-icons/fc";
 
 const menu = [
-
-  { name: "Myprofile", path: "/myprofile/profile" },
-  { name: "Orders", path: "/myprofile/order" },
-
+  { name: "Orders", path: "/myprofile/orders", icon: <MdElectricScooter className="text-2xl" /> },
+  { name: "Payment", path: "/myprofile/payment", icon: <MdOutlinePayment className="text-2xl" /> },
+  { name: "Wish List", path: "/myprofile/likes", icon: <FcLike className="text-2xl" /> },
 ];
 
 function Myprofile() {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const drawer = (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
         height: "100%",
-        boxShadow: "rgba(135, 206, 250, 0.5) 0px 3px 8px",
-        // Remove borders
-        border: "none",
-        // Tailwind CSS classes for interactive design
-        transition: "all 0.3s",
-        "&:hover": {
-          boxShadow: "rgba(135, 206, 250, 0.5) 0px 5px 15px",
-          transform: "scale(1.02)",
-        },
+        backgroundColor: "bg-blue-200",
+        overflow: "auto"
       }}
-      className="bg-white"
     >
-      {isLargeScreen && <Toolbar />}
-
       <List>
-
+        <ListItem disablePadding onClick={() => navigate('/myprofile/profile')}>
+          <ListItemButton sx={{
+            "&:hover": {
+              bgcolor: "rgba(135, 206, 250, 0.5)",
+            },
+          }} className="bg-blue-400">
+            <ListItemIcon>
+              <ImUser className="text-2xl" />
+            </ListItemIcon>
+            <ListItemText>Myprofile</ListItemText>
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <List>
         {menu.map((item) => (
           <ListItem
             sx={{
               color: "Black",
-
             }}
             key={item.name}
             disablePadding
@@ -76,11 +81,11 @@ function Myprofile() {
             className="cursor-pointer"
           >
             <ListItemButton sx={{
-
               "&:hover": {
                 bgcolor: "rgba(135, 206, 250, 0.5)",
-                transform: "scale(1.02)",
+                borderBottom: "1px solid",
               },
+              marginTop: "3px"
             }}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText>{item.name}</ListItemText>
@@ -88,22 +93,17 @@ function Myprofile() {
           </ListItem>
         ))}
       </List>
-
-      <Box sx={{ flexGrow: 1 }} />
-
       <List>
         <ListItem disablePadding>
           <ListItemButton sx={{
-
             "&:hover": {
               bgcolor: "rgba(135, 206, 250, 0.5)",
-              transform: "scale(1.02)",
             },
           }}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText>Account</ListItemText>
+            <ListItemText>Log Out</ListItemText>
           </ListItemButton>
         </ListItem>
       </List>
@@ -111,41 +111,59 @@ function Myprofile() {
   );
 
   return (
-    <div>
-              <CssBaseline />
-      <Box sx={{ display: 'flex', height: '100vh' }}>
-        <Drawer
-          variant="permanent"
-          sx={{
-            width: '15%',
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: {
-              width: '15%',
-              boxSizing: 'border-box',
-              // Ensure Tailwind CSS classes are applied correctly
-              '&:hover': {
-                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-                transform: "scale(1.02)",
-
-              },
-            },
-          }}
-          className="bg-white mt-12 "
-        >
-          {drawer}
-        </Drawer>
+    <>
+      <Navbar />
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        {!isLargeScreen && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ ml: 2, mt: 2, position: 'absolute' }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+        <Box component="nav">
+          <Drawer
+            variant={isLargeScreen ? "permanent" : "temporary"}
+            open={isLargeScreen || mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              width: { md: '240px' },
+              flexShrink: { md: 0 },
+              [`& .MuiDrawer-paper`]: { width: { md: '240px' }, boxSizing: 'border-box' },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Box>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: "rgba(135, 206, 250, 0.5)", p: 3, minHeight: '150vh' }}
+          sx={{
+            bgcolor: "rgba(135, 206, 250, 0.5)",
+            p: 3,
+            width: { sm: `calc(100% - ${240}px)` },
+minHeight:"83vh"
+          }}
         >
+          <Toolbar />
+          <div className="mt-[-40px]">
           <Routes>
-            <Route path="/profile" element={<Profile/>} />
-            <Route path="/orders" element={<Order/>} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<Order />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/likes" element={<WishList />} />
           </Routes>
+          </div>
         </Box>
       </Box>
-      </div>
-
+    </>
   );
 }
 

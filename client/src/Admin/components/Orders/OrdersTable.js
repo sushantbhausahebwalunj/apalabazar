@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, Avatar, TextField, MenuItem, Pagination, FormControl, Select, Button, IconButton } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+
 import EditIcon from '@mui/icons-material/Edit';
 
 // Dummy data for orders
@@ -24,7 +24,7 @@ const customers = [
 ];
 
 const OrdersTable = () => {
-  const theme = useTheme();
+
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState(null);

@@ -32,7 +32,7 @@ function HomePage() {
     }else{
       setViewport(false)
     }
-  })
+  },[])
 
   return (
     <div className="overflow-hidden">

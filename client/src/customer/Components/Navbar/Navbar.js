@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Register from "../Auth/Register";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = (props,setActiveTab) => {
+const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -14,31 +14,17 @@ const Navbar = (props,setActiveTab) => {
   };
 
   return (
-    <div className="shadow-lg overflow-hidden">
+    <div className="shadow-lg">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
-        <a href="/" className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi_YhaXWp1A9kZxpeXYpCL0oj0764uVAWjdA&s"
             alt="Logo"
-            className="h-10 rounded-md"
+            className="h-10"
             crossOrigin="anonymous"
           />
-          
-        </a>
-        <HomeDeliveryStatus />
-        <div className="flex items-center space-x-1">
-          <input
-            type="text"
-            placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
-          />
-          <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
-            SEARCH
-          </button>
-        </div>
-        <div className="flex items-center space-x-7">
-          <div className="flex items-center space-x-1">
+          <div className="relative flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -56,7 +42,7 @@ const Navbar = (props,setActiveTab) => {
             />
           </div>
         </div>
-       
+    
         <div className="flex items-center space-x-7">
           <div className="flex items-center space-x-2">
             <button onClick={() => showCart()}>
@@ -101,9 +87,9 @@ const Navbar = (props,setActiveTab) => {
         </div>
       </div>
       {/* Bottom Navbar */}
-      <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2  items-center space-x-8">
+      <div className="bg-white border-b-[2px] flex items-center space-x-8">
         <div className="border-r-[3px] p-2 pr-16">
-          <button onClick={handleNavigate} className="flex items-center space-x-1 text-white font-bold">
+          <button onClick={handleNavigate} className="flex items-center space-x-1">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -118,22 +104,22 @@ const Navbar = (props,setActiveTab) => {
                 d="M4 6h16M4 12h16m-7 6h7"
               ></path>
             </svg>
-            <span className="text-white">All Categories</span>
+            <span className="text-black font-bold">All Categories</span>
           </button>
         </div>
-        <a href="/grocery" className="text-white hover:text-white hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/grocery" className="text-black hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Grocery
         </a>
-        <a href="/valuepack" className="text-zinc-700 font-bold">
+        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Value Packs
         </a>
-        <a href="/appliances" className="text-zinc-700 font-bold">
+        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Home Appliances
         </a>
-        <a href="/cleaner" onClick={() => props.setActiveTab('Cleaners')} className="text-zinc-700 font-bold">
+        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Cleaners
         </a>
-        <a href="/detergent" onClick={() => props.setActiveTab('Detergent & Fabric Care')} className="text-zinc-700 font-bold">
+        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Detergent & Fabric Care
         </a>
       </div>
@@ -143,7 +129,7 @@ const Navbar = (props,setActiveTab) => {
 
 function HomeDeliveryStatus() {
   return (
-    <div className="text-xs bg-gray-200 mx-3 p-2 px-3 rounded-lg font-bold">
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg font-bold">
       <div className="flex gap-2 text-gray-800 ">
         <span>Earliest</span>
         <span className="text-green-600">Home Delivery</span>

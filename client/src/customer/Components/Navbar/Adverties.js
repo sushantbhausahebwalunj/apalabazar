@@ -30,14 +30,14 @@ const ProductList = () => {
       />
       <ProductCard
         imageUrl="chocolates.jpg"
-        // title="Just Pop It In!"
-        // description="Delicious Flavours | Easy To Make"
+        title="Just Pop It In!"
+        description="Delicious Flavours | Easy To Make"
         link="/product-detail-page-2"
       />
       <ProductCard
         imageUrl="snacks.jpg"
-        // title="Time For A Chai Break!"
-        // description="Bakery products that go well with your tea."
+        title="Time For A Chai Break!"
+        description="Bakery products that go well with your tea."
         link="/product-detail-page-3"
       />
     </div>

@@ -191,6 +191,29 @@ const Category = () => {
                 <button onClick={() => handleNavigate("/packaged-food/frozen-foods")}>Frozen Foods</button>
               </li>
             </ul>
+
+
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS7saTcRDWo1nMyJUf5jg21Q-gpPzcjnEisg&s"
+              alt="Packaged Food"
+              className="mb-2 w-20"
+            />
+            <h2 className="font-bold mb-2">Toys</h2>
+            <ul className="space-y-1 mb-4 font-extralight">
+              <li>
+                <button onClick={() => handleNavigate("/packaged-food/blocks")}>Building Sets and Blocks</button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigate("/packaged-food/educational-toys")}>Educational Toys</button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigate("/packaged-food/outdoor-toys")}>Outdoor Toys</button>
+              </li>
+              <li>
+                <button onClick={() => handleNavigate("/packaged-food/chocolates-electronic")}>Electronic Toys</button>
+              </li>
+            
+            </ul>
           </div>
           <div>
             <img

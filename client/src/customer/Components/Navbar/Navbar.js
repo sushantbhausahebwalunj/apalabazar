@@ -22,7 +22,7 @@ const [user,setUser]=useState(true)
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <img
+         <a> <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi_YhaXWp1A9kZxpeXYpCL0oj0764uVAWjdA&s"
             alt="Logo"
             className="h-10"
@@ -30,6 +30,7 @@ const [user,setUser]=useState(true)
           />
           
         </a>
+       </div>
         <HomeDeliveryStatus />
         <div className="flex items-center space-x-1">
           <input

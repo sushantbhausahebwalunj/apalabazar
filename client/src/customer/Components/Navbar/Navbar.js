@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import Register from "../Auth/Register";
+import { HiUserCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = (props) => {
+const Navbar = (props, setActiveTab) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
+const [user,setUser]=useState(true)
   const handleNavigate = () => {
     navigate("/category");
   };
   const showCart = () => {
     navigate("/cart");
+  };
+  const handleProfile = () => {
+    navigate("/Myprofile/profile");
   };
 
   return (
@@ -24,7 +28,21 @@ const Navbar = (props) => {
             className="h-10"
             crossOrigin="anonymous"
           />
-          <div className="relative flex items-center">
+          
+        </a>
+        <HomeDeliveryStatus />
+        <div className="flex items-center space-x-1">
+          <input
+            type="text"
+            placeholder="Search for Biscuits"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
+          />
+          <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
+            SEARCH
+          </button>
+        </div>
+        <div className="flex items-center space-x-7">
+          <div className="flex items-center space-x-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -35,15 +53,11 @@ const Navbar = (props) => {
             >
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
             </svg>
-            <input
-              type="text"
-              placeholder="Search for Biscuits"
-              className="border-[2px] border-zinc-200 rounded-md p-1 pl-8 w-[200px] dark:bg-white dark:text-zinc-300"
-            />
+            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600">
+              Sign In / Register
+            </button>
+            <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
-        </div>
-    
-        <div className="flex items-center space-x-7">
           <div className="flex items-center space-x-2">
             <button onClick={() => showCart()}>
               <svg
@@ -64,32 +78,12 @@ const Navbar = (props) => {
             <span className="text-yellow-500">{props.number}</span>
             <span className="text-zinc-700">₹0</span>
           </div>
-          <div className="flex bg-blue-600 p-2 px-3 rounded-md items-center space-x-1 ">
-            <svg
-              className="w-6 h-6 text-white "
-              fill="none"
-              stroke="white"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-            <button onClick={() => setShowModal(true)} className=" text-white">
-              Sign In / Register
-            </button>
-            <Register showModal={showModal} setShowModal={setShowModal} />
-          </div>
         </div>
       </div>
       {/* Bottom Navbar */}
       <div className="bg-white border-b-[2px] flex items-center space-x-8">
         <div className="border-r-[3px] p-2 pr-16">
-          <button onClick={handleNavigate} className="flex items-center space-x-1">
+          <button onClick={handleNavigate} className="flex items-center space-x-1 text-zinc-700">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -116,10 +110,10 @@ const Navbar = (props) => {
         <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
           Home Appliances
         </a>
-        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/cleaner" onClick={() => props.setActiveTab('Cleaners')} className="text-zinc-700 font-bold">
           Cleaners
         </a>
-        <a href="#" className="text-zinc-700 hover:text-black hover:font-semibold transition ease-in-out duration-1500">
+        <a href="/detergent" onClick={() => props.setActiveTab('Detergent & Fabric Care')} className="text-zinc-700 font-bold">
           Detergent & Fabric Care
         </a>
       </div>
@@ -129,17 +123,17 @@ const Navbar = (props) => {
 
 function HomeDeliveryStatus() {
   return (
-    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg font-bold">
-      <div className="flex gap-2 text-gray-800 ">
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
+      <div className="flex gap-2 text-gray-600">
         <span>Earliest</span>
         <span className="text-green-600">Home Delivery</span>
         <span>available</span>
       </div>
-      <div className="flex gap-2 mx-5 items-center font-100 text-gray-500 justify-center ">
+      <div className="flex gap-2 items-center justify-center font-semibold">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="14"
+          width="26"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"

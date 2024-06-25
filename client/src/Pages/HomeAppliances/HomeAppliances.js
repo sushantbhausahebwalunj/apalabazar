@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 
 import SideBar from '../../customer/Components/Sidebar/Sidebar';
 import Navbar from '../../customer/Components/Navbar/Navbar';
+import MobileNavbar from '../../customer/Components/Navbar/MobileNavbar';
 import { LightBatteries } from './LightBatteries/LightBatteries';
 
 const sidebarDairy = [
@@ -17,12 +18,20 @@ function HomeAppliances() {
   const [activeSubTab, setActiveSubTab] = useState('');
   const [showall,setShowAll] = useState(true);
 
-
+const [viewport,setViewport] = useState(false);
+  useEffect(() => {
+    if(window.innerWidth < 620){
+      setViewport(true)
+    }else{
+      setViewport(false)
+    }
+  },[])
 
 
   return (
     <div>
-      <Navbar />
+            {viewport ? <MobileNavbar/> :  <Navbar number={12} />}
+
       <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
         <SideBar title={"Appliances"} showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab}  sidebarDairy={sidebarDairy} key={'2'} />
         

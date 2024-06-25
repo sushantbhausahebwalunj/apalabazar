@@ -7,22 +7,134 @@ const Navbar = () => {
   const [subCatog,setsubCatog] = useState(false);
 
   const menuItems = [
-    {name:'GROCERY',types:['Dals','Pulses','Dry Fruits','DMart Grocery','Cooking Oil','Ghee & Vanaspati','Flours & Grains','Flours & Grains']},
-    {name:'DAIRY & BEVERAGES',types:['Beverages','Dairy']},
-    {name:'PACKAGED FOOD',types:['Biscuits & Cookies','Snacks & Farsans','Breakfast Cereals','Chocolates & Candies','Ketchup & Sauce','Jams & Spreads','Pasta & Noodles','Ready To Cook','Sweets','Pickles','Health Food']},
-    {name:'BEAUTY & COSMETICS',types:['Skin']},
-    {name:'BABY & KIDS',types:['Diapering','Baby Care']},
-    {name:'APPLIANCES',types:['Home Appliances']},
-    {name:'PERSONAL CARE',types:['Skin Care','Face Care','Hair Care','Lip Care','Oral Care','Sanitary Napkins','Deos & Perfumes','Shaving Needs','Baby Care','Diapering','Health & Wellness','Personal Hygiene']},
-   {name: 'SPECIALS',types:['Value Packs','Discover More']},
-    {name:'FRUITS & VEGETABLES',types:['Frozen Vegetable']},
-   {name: 'HOME & KITCHEN',types:['Detergent & Fabric Care','Cleaners','Utensil Cleaners','Freshener & Repellents','Disinfectants','Tissue Paper & Napkins','Pooja Needs','Home Utility']},
-    {name:'HOME UTILITY & ORGANISERS',types:['Cleaning / Tools / Kits']},
-   {name: 'SCHOOL SUPPLIES',types:['Stationery Sets']}
-  ];
+  {
+    name: 'GROCERY',
+    types: [
+      { name: 'Dals', path: '/grocery/' },
+      // { name: 'Dals', path: '/grocery/dals' },
+      { name: 'Pulses', path: '/grocery/' },
+      // { name: 'Pulses', path: '/grocery/pulses' },
+      { name: 'Dry Fruits', path: '/grocery/dry-fruits' },
+      { name: 'DMart Grocery', path: '/grocery/dmart-grocery' },
+      { name: 'Cooking Oil', path: '/grocery/cooking-oil' },
+      { name: 'Ghee & Vanaspati', path: '/grocery/ghee-vanaspati' },
+      { name: 'Flours & Grains', path: '/grocery/flours-grains' },
+      { name: 'Rice & Rice Products', path: '/grocery/rice-products' },
+      { name: 'Masala & Spices', path: '/grocery/masala-spices' },
+      { name: 'Salt / Sugar / Jaggery', path: '/grocery/salt-sugar-jaggery' }
+    ]
+  },
+  {
+    name: 'DAIRY & BEVERAGES',
+    types: [
+      { name: 'Beverages', path: '/dairy-beverages/beverages' },
+      { name: 'Dairy', path: '/dairy-beverages/dairy' }
+    ]
+  },
+  {
+    name: 'PACKAGED FOOD',
+    types: [
+      { name: 'Biscuits & Cookies', path: '/packaged-food/biscuits-cookies' },
+      { name: 'Snacks & Farsans', path: '/packaged-food/snacks-farsans' },
+      { name: 'Breakfast Cereals', path: '/packaged-food/breakfast-cereals' },
+      { name: 'Chocolates & Candies', path: '/packaged-food/chocolates-candies' },
+      { name: 'Ketchup & Sauce', path: '/packaged-food/ketchup-sauce' },
+      { name: 'Jams & Spreads', path: '/packaged-food/jams-spreads' },
+      { name: 'Pasta & Noodles', path: '/packaged-food/pasta-noodles' },
+      { name: 'Ready To Cook', path: '/packaged-food/ready-to-cook' },
+      { name: 'Sweets', path: '/packaged-food/sweets' },
+      { name: 'Pickles', path: '/packaged-food/pickles' },
+      { name: 'Health Food', path: '/packaged-food/health-food' },
+      { name: 'Soups', path: '/packaged-food/soups' },
+      { name: 'Mukhwas', path: '/packaged-food/mukhwas' },
+      { name: 'Bakery', path: '/packaged-food/bakery' },
+      { name: 'Frozen Foods', path: '/packaged-food/frozen-foods' }
+    ]
+  },
+  {
+    name: 'BEAUTY & COSMETICS',
+    types: [
+      { name: 'Skin', path: '/beauty-cosmetics/skin' }
+    ]
+  },
+  {
+    name: 'BABY & KIDS',
+    types: [
+      { name: 'Diapering', path: '/baby-kids/diapering' },
+      { name: 'Baby Care', path: '/baby-kids/baby-care' }
+    ]
+  },
+  {
+    name: 'APPLIANCES',
+    types: [
+      { name: 'Home Appliances', path: '/appliances/home-appliances' }
+    ]
+  },
+  {
+    name: 'PERSONAL CARE',
+    types: [
+      { name: 'Skin Care', path: '/personal-care/skin-care' },
+      { name: 'Face Care', path: '/personal-care/face-care' },
+      { name: 'Hair Care', path: '/personal-care/hair-care' },
+      { name: 'Lip Care', path: '/personal-care/lip-care' },
+      { name: 'Oral Care', path: '/personal-care/oral-care' },
+      { name: 'Sanitary Napkins', path: '/personal-care/sanitary-napkins' },
+      { name: 'Deos & Perfumes', path: '/personal-care/deos-perfumes' },
+      { name: 'Shaving Needs', path: '/personal-care/shaving-needs' },
+      { name: 'Baby Care', path: '/personal-care/baby-care' },
+      { name: 'Diapering', path: '/personal-care/diapering' },
+      { name: 'Health & Wellness', path: '/personal-care/health-wellness' },
+      { name: 'Personal Hygiene', path: '/personal-care/personal-hygiene' }
+    ]
+  },
+  {
+    name: 'SPECIALS',
+    types: [
+      { name: 'Value Packs', path: '/specials/value-packs' },
+      { name: 'Discover More', path: '/specials/discover-more' }
+    ]
+  },
+  {
+    name: 'FRUITS & VEGETABLES',
+    types: [
+      { name: 'Frozen Vegetable', path: '/fruits-vegetables/frozen-vegetable' }
+    ]
+  },
+  {
+    name: 'HOME & KITCHEN',
+    types: [
+      { name: 'Detergent & Fabric Care', path: '/home-kitchen/detergent-fabric-care' },
+      { name: 'Cleaners', path: '/home-kitchen/cleaners' },
+      { name: 'Utensil Cleaners', path: '/home-kitchen/utensil-cleaners' },
+      { name: 'Freshener & Repellents', path: '/home-kitchen/freshener-repellents' },
+      { name: 'Disinfectants', path: '/home-kitchen/disinfectants' },
+      { name: 'Tissue Paper & Napkins', path: '/home-kitchen/tissue-paper-napkins' },
+      { name: 'Pooja Needs', path: '/home-kitchen/pooja-needs' },
+      { name: 'Home Utility', path: '/home-kitchen/home-utility' }
+    ]
+  },
+  {
+    name: 'HOME UTILITY & ORGANISERS',
+    types: [
+      { name: 'Cleaning / Tools / Kits', path: '/home-utility-organisers/cleaning-tools-kits' }
+    ]
+  },
+  {
+    name: 'SCHOOL SUPPLIES',
+    types: [
+      { name: 'Stationery Sets', path: '/school-supplies/stationery-sets' }
+    ]
+  },
+  {
+    name: 'FOOTWEAR',
+    types: [
+      { name: 'Shoe Care', path: '/footwear/shoe-care' }
+    ]
+  }
+];
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md ">
       <div className=" max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center py-3">
        
@@ -30,14 +142,14 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="flex gap-2 text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
           >
-            <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+            <svg className="transition-all h-6 w-6 fill-current" viewBox="0 0 24 24">
               {isOpen ? (
                 <path fillRule="evenodd" clipRule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z" />
               ) : (
                 <path fillRule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
               )}
             </svg>
-           <span className='capitalize'> apalabazar</span>
+           <Link to={"/"} className='capitalize'> apalabazar</Link>
           </button>
           <div className='flex gap-6'>
         <SearchIcon/>
@@ -46,22 +158,21 @@ const Navbar = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="px-2 pt-2 pb-4 ">
-          <div className="text-sm font-medium text-gray-700 mb-2">Home & Living</div>
+        <div className={`px-2  pt-2 absolute z-10 bg-white/70 min-h-screen border backdrop-blur-lg pb-4 transition-all ${isOpen?'-translate-x-0':'-translate-x-96'}`}>
           {menuItems.map((item, index) => (
             <Link
               key={index}
               href="#"
-              className="block px-2 py-1 text-sm text-gray-600 hover:bg-gray-100"
+              className="transition-all block px-2 py-3 text-sm text-gray-600 hover:bg-gray-100"
               onClick={()=> {
                 setOpenCatog(item.name)
                 setsubCatog(!subCatog)
               }}
             >
-              {subCatog ? openCatog === item.name ? <div className='flex justify-between font-bold'>{item.name}<DownArrow/></div>:<div className='flex justify-between font-bold'>{item.name}<RightArrow/></div>:<div className='flex justify-between font-bold'>{item.name}<RightArrow/></div>}
+              {subCatog ? openCatog === item.name ? <div className='transition-all flex justify-between font-bold'>{item.name}<DownArrow/></div>:<div className='flex justify-between font-bold'>{item.name}<RightArrow/></div>:<div className='flex justify-between font-bold'>{item.name}<RightArrow/></div>}
               {subCatog && item.types.map((cato) => {
                 if(item.name === openCatog){
-                    return <Link className='flex  mb-3 ml-3' to={"#"}>{cato}</Link>
+                    return <Link className='transition-all flex  mb-3 ml-3' to={cato.path}>{cato.name}</Link>
                 }else{
                     return null;
                 }

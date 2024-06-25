@@ -10,6 +10,7 @@
 }
 body{
     margin:0px 10px;
+
 }
 .scroll::-webkit-scrollbar {
     display: none;  /* WebKit browsers */

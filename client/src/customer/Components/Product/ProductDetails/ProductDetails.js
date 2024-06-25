@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { useLocation } from 'react-router-dom';
 import { FrozenData } from '../../../../Pages/FrozenFood/constant';
 import Navbar from '../../Navbar/Navbar';
+import MobNavbar from "../../Navbar/MobileNavbar"
 import Footer from '../../footer/Footer';
 import { useCartContext } from '../../../../Usecontext/cartContext';
 
@@ -37,11 +38,18 @@ function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
+const [viewport,setViewport] = useState(false);
+  useEffect(() => {
+    if(window.innerWidth < 620){
+      setViewport(true)
+    }else{
+      setViewport(false)
+    }
+  },[])
   return (
     <>
       <div className=' lg:block'>      
-        <Navbar  />
+        {viewport ? <MobNavbar/> :  <Navbar number={12} />}
       </div>
       <div className='flex flex-col overflow-hidden items-center justify-center mt-12'>
         <div className='rounded-3xl bg-gradient-to-br w-full from-violet-500 to-orange-300 p-[1px]'>

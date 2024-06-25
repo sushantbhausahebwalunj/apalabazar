@@ -29,8 +29,9 @@ function Specials() {
   return (
     <div>
       <Navbar setActiveTab={setActiveTab}/>
-      <div className='flex  font-semibold'>
-        <SideBar title={"Specials"}  showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab}  sidebarDairy={sidebarDairy} key={'2'} />
+      <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
+          <SideBar title={"Specials"}  showall={showall} setShowAll={setShowAll} setActiveSubTab={setActiveSubTab} setActiveTab={setActiveTab} activeTab={activeTab}  sidebarDairy={sidebarDairy} key={'2'} />
+        <div className='overflow-hidden'>
         
         {/* {activeTab === 'Value & Packs' ? (
           <div className='flex flex-wrap w-full'>
@@ -40,6 +41,7 @@ function Specials() {
 
         {activeTab === 'Value & Packs' ? <ValuePack showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
         {activeTab === 'Discover More' ? <DiscoverMore showall={showall} activeSubTab={activeSubTab} setActiveTab={setActiveSubTab} /> : null}
+        </div>
       
     </div>
     </div>

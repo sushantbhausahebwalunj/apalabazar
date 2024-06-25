@@ -67,9 +67,10 @@ function Dairy() {
   return (
     <div>
       <Navbar />
-      <div className='flex gap-6'>
+      <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
         <SideBar setActiveTab={setActiveTab} activeTab={activeTab} title={"Dairy"} sidebarDairy={sidebarDairy} key={'2'} />
-        {activeTab === "All Dairy Products" ? <div className='flex flex-wrap w-full'>
+        <div className='overflow-hidden'>
+          {activeTab === "All Dairy Products" ? <div className='flex flex-wrap w-full'>
           <Butter />
           <Cheese />
           <Dahi />
@@ -77,6 +78,7 @@ function Dairy() {
           <Milk />
           <Yogurt />
         </div> : null}
+        </div>
 
         {activeTab === "Butter" ? <Butter /> : null}
         {activeTab === "Cheese" ? <Cheese /> : null}

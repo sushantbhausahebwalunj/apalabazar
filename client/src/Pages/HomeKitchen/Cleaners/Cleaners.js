@@ -59,7 +59,7 @@ export function Cleaners({showall, activeSubTab, setActiveTab }) {
 
 
   return (
-    <div className='flex flex-wrap w-full'>
+    <div className='flex flex-col lg:flex-row gap-6 font-semibold'>
       {
         CleanersData.map((data, index) => {
          

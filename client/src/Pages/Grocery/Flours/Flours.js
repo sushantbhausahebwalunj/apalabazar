@@ -27,7 +27,7 @@ const FloursData = [
      image: ashirvaadatta ,
     mrp:"₹385" ,
     price:"₹338",
-   discount:"₹12",
+   discount:"12",
     weight:"5 kg",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -40,7 +40,7 @@ const FloursData = [
      image: chanabesan ,
     mrp:"₹149" ,
     price:"₹111",
-   discount:"₹26",
+   discount:"26",
     weight:"1 kg",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -53,7 +53,7 @@ const FloursData = [
      image: cornflour ,
     mrp:"₹50" ,
     price:"₹41",
-   discount:"₹18",
+   discount:"18",
     weight:"500 g",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -65,7 +65,7 @@ const FloursData = [
      image: attachakki,
     mrp:"₹85" ,
     price:"₹61",
-   discount:"₹27",
+   discount:"27",
     weight:"1 kg",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -79,7 +79,7 @@ const FloursData = [
      image: fortunemaida ,
     mrp:"₹50" ,
     price:"₹39",
-   discount:"₹9",
+   discount:"9",
     weight:"500 g",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -92,7 +92,7 @@ const FloursData = [
      image: bajraatta ,
     mrp:"₹50" ,
     price:"₹40",
-   discount:"₹10",
+   discount:"10",
     weight:"500 g",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -106,7 +106,7 @@ const FloursData = [
      image: brownrice ,
     mrp:"₹625" ,
     price:"₹625",
-   discount:"₹19",
+   discount:"19",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -120,7 +120,7 @@ const FloursData = [
      image: jowarflour ,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -133,7 +133,7 @@ const FloursData = [
      image: maize,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -146,7 +146,7 @@ const FloursData = [
      image: sattuatta ,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -159,7 +159,7 @@ const FloursData = [
      image: soojirawa ,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -173,7 +173,7 @@ const FloursData = [
      image: brokenwheat ,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -185,7 +185,7 @@ const FloursData = [
      image: readymixragi,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 
@@ -197,7 +197,7 @@ const FloursData = [
      image: riceflour,
     mrp:"₹160" ,
     price:"₹139",
-   discount:"₹13",
+   discount:"13",
     weight:"1 L",
      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
 

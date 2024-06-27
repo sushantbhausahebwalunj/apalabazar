@@ -23,8 +23,6 @@ function App() {
         <Route path="/*" element={<CustomersRoute />} />
         <Route path="/admin/*" element={<AdminRouters />} />
         <Route path= "/myprofile/*" element={<MyprofileRouters/>}  />
-      
-      
       </Routes>
     </div>
   );

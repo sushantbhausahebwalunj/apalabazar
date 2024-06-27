@@ -4,17 +4,16 @@ import HomePage from '../Pages/HomePage';
 import Grocery from "../Pages/Grocery/Grocery"
 import Cart from '../customer/Components/Cart/Cart.js';
 import Category from "../customer/Components/Navbar/Category.js";
-
 import Dairy from '../Pages/Dairy/Dairy';
-
 import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
-
 import Register from '../customer/Components/Auth/Login';
-import Checkout from '../customer/Components/Checkout/CheckoutPage.js';
 import Profile from '../Profile/components/Profilemain/Profile.js';
 import HomeAppliances from '../Pages/HomeAppliances/HomeAppliances.js';
 import  DetergentFabricCare  from '../Pages/HomeKitchen/HomeKitchen.js';
 import ValuePack from '../Pages/Specials/Specials.js';
+import Checkoutpage from '../Profile/components/Orders/Checkoutpage.js';
+import Checkout from '../Profile/components/Orders/Checkoutpage.js';
+import SearchDashboard from '../customer/Components/SerchPage/Searchpage.js';
 
 
 
@@ -33,7 +32,7 @@ function CustomersRoute() {
       <Route path="/dairy" element={<Dairy />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/product/:id" element={<ProductDetails />}></Route>
-
+      <Route path="/searchpage" element={<SearchDashboard/>}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/checkout" element={<Checkout />}></Route>
       <Route path="/myprofile" element={<Profile/>}></Route>

@@ -50,8 +50,8 @@ const CreateProductForm = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-4">Upload Images</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <img src="http://localhost:3000/static/media/aashirvaad-sugar-release-control-atta-img.91f1fa3d5871754b0a5e.webp" alt="product-image-1" className="w-full h-full object-cover rounded-md" />
-            <img src="http://localhost:3000/static/media/fortune-atta-chakki-fresh-img.f5fae881a8a19202a873.webp" alt="product-image-2" className="w-full h-full object-cover rounded-md" />
+            <img src="https://cdn.dmart.in/images/products/JUN120001408xx11JUN24_5_P.jpg" alt="product-image-1" className="w-full h-full object-cover rounded-md" />
+            <img src="https://cdn.dmart.in/images/products/LReadyMixCTL337xx310521_5_P.jpg" alt="product-image-2" className="w-full h-full object-cover rounded-md" />
             <div className="flex items-center justify-center border-2 border-dashed border-input rounded-md">
               <span className="text-muted-foreground">Drop your images here or <a href="#" className="text-primary">click to browse</a></span>
             </div>

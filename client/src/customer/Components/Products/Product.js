@@ -43,7 +43,8 @@ const FrozenSnacks = () => {
       mrp: "140",
       price: 90,
       discount: "48 ",
-      weight: "320 gm (0.29 / 1 gm)"
+      weight: "320 gm (0.29 / 1 gm)",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
     },
     {
       id:2,
@@ -52,7 +53,8 @@ const FrozenSnacks = () => {
       mrp: "140",
       price: 35,
       discount: "48 ",
-      weight: "320 gm (0.29 / 1 gm)"
+      weight: "320 gm (0.29 / 1 gm)",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
     },
     {
       id:3,
@@ -61,16 +63,18 @@ const FrozenSnacks = () => {
       mrp: "140",
       price: 34,
       discount: "48 ",
-      weight: "320 gm (0.29 / 1 gm)"
+      weight: "320 gm (0.29 / 1 gm)",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
     },
     {
       id:4,
       name: "Godrej Sticks",
       image: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSuBKAW_uvGz3F2y2eJGWwsMuXDcT6w0b8z0_dUgc8MvE5xFtHo",
       mrp: "140",
-      price:87,
+      price: 87,
       discount: "48 ",
-      weight: "320 gm (0.29 / 1 gm)"
+      weight: "320 gm (0.29 / 1 gm)",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
     },
     {
       id:5,
@@ -79,7 +83,8 @@ const FrozenSnacks = () => {
       mrp: "140",
       price: 64,
       discount: "48 ",
-      weight: "320 gm (0.29 / 1 gm)"
+      weight: "320 gm (0.29 / 1 gm)",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
     },
    
   ];
@@ -97,4 +102,3 @@ const FrozenSnacks = () => {
 };
 
 export default FrozenSnacks;
-

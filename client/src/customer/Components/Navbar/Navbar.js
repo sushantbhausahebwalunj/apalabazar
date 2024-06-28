@@ -16,14 +16,17 @@ const [user,setUser]=useState(true)
   const handleProfile = () => {
     navigate("/Myprofile/profile");
   };
+  const handleSearch = () => {
+    navigate("/searchpage");
+  };
 
   return (
     <div className="shadow-lg">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-         <a> <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi_YhaXWp1A9kZxpeXYpCL0oj0764uVAWjdA&s"
+        <a href="/" className="flex items-center space-x-4">
+          <img
+            src="https://placehold.co/100x40"
             alt="Logo"
             className="h-10"
             crossOrigin="anonymous"
@@ -32,34 +35,18 @@ const [user,setUser]=useState(true)
         </a>
        </div>
         <HomeDeliveryStatus />
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center">
           <input
             type="text"
             placeholder="Search for Biscuits"
             className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
           />
-          <button className="bg-green-600 text-white p-2 rounded-r-lg font-sans">
+          <button onClick={handleSearch} className="bg-blue-500 border-[2px] border-blue-500  text-white p-2 rounded-r-lg font-sans">
             SEARCH
           </button>
         </div>
-        <div className="flex items-center space-x-7">
-          <div className="flex items-center space-x-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search absolute left-2"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-            <button onClick={() => setShowModal(true)} className="text-zinc-700 hover:text-blue-600">
-              Sign In / Register
-            </button>
-            <Register showModal={showModal} setShowModal={setShowModal} />
-          </div>
-          <div className="flex items-center space-x-2">
+        <div className="flex">
+        <div className="flex items-center space-x-2">
             <button onClick={() => showCart()}>
               <svg
                 className="w-6 h-6 text-zinc-700"
@@ -76,10 +63,44 @@ const [user,setUser]=useState(true)
                 ></path>
               </svg>
             </button>
-            <span className="text-yellow-500">{props.number}</span>
-            <span className="text-zinc-700">₹0</span>
+            {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
+            {/* <sub className="text-zinc-700">₹0</sub> */}
+          </div>
+       { user?
+        <div>
+          <HiUserCircle
+            className=" text-3xl text-blue-600 "
+            onClick={handleProfile}
+          />
+        </div>
+        :
+        <div className="flex items-center space-x-7">
+          <div className="flex items-center space-x-1">
+            <svg
+              className="w-6 h-6 text-zinc-700"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
+            </svg>
+            <button
+              onClick={() => setShowModal(true)}
+              className="text-zinc-700 hover:text-blue-600"
+            >
+              Sign In / Register
+            </button>
+            <Register showModal={showModal} setShowModal={setShowModal} />
           </div>
         </div>
+}
+</div>
       </div>
       {/* Bottom Navbar */}
       <div className="bg-white border-b-[2px] flex items-center space-x-8">
@@ -127,7 +148,7 @@ function HomeDeliveryStatus() {
     <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
       <div className="flex gap-2 text-gray-600">
         <span>Earliest</span>
-        <span className="text-green-600">Home Delivery</span>
+        <span className="text-green-500">Home Delivery</span>
         <span>available</span>
       </div>
       <div className="flex gap-2 items-center justify-center font-semibold">

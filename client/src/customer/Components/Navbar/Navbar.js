@@ -36,9 +36,9 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="shadow-lg bg-white">
+    <div className="shadow-lg bg-blue-600">
       {/* Top Navbar */}
-      <div className="p-5 flex items-center justify-between">
+      <div className="p-7 flex items-center justify-between">
         <div className="flex items-center  space-x-4">
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi_YhaXWp1A9kZxpeXYpCL0oj0764uVAWjdA&s"
@@ -105,7 +105,7 @@ const Navbar = (props) => {
         <div className="flex items-center  space-x-4">
           <button onClick={() => showCart()} className="flex flex-row mx-5  mt-2">
             <svg
-              className="w-8 h-8  text-gray-700"
+              className="w-8 h-8  text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -122,11 +122,11 @@ const Navbar = (props) => {
               ></path>
                 
             </svg>
-            <span className="text-Gray-500 ">Cart</span>
+            <span className="text-white ">Cart</span>
           </button>
          
       
-          <button onClick={() => setShowModal(true)} className="flex items-center space-x-1 bg-blue-600 text-white p-2 rounded-md">
+          <button onClick={() => setShowModal(true)} className="flex items-center space-x-1 bg-white text-black font-md p-2 rounded-md">
             <svg
               className="w-6 h-6"
               fill="none"

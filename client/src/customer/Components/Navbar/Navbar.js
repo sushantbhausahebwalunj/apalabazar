@@ -1,16 +1,38 @@
 import React, { useState } from "react";
 import Register from "../Auth/Register";
 import { useNavigate } from "react-router-dom";
+import { HiUserCircle } from "react-icons/hi";
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { ImUser } from "react-icons/im";
+import { MdOutlinePayment } from "react-icons/md";
+import { MdElectricScooter } from "react-icons/md";
+import { FcLike } from "react-icons/fc";
+
+
+const solutions = [
+  { name: 'Profile', description: 'Get a better understanding of your traffic', href: '/myprofile/profile', icon: ImUser },
+  { name: 'Payment', description: 'Speak directly to your customers', href: '/myprofile/payment', icon: MdOutlinePayment },
+  { name: 'Orders', description: "Your customers' data will be safe and secure", href: '/myprofile/orders', icon: MdElectricScooter },
+  { name: 'Wishlist', description: 'Connect with third-party tools', href: '/myprofile/likes', icon:  FcLike  },
+]
 
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  const [user,setUser]=useState(true )
   const handleNavigate = () => {
     navigate("/category");
   };
   const showCart = () => {
     navigate("/cart");
+  };
+  const handleProfile = () => {
+    navigate("/Myprofile/profile");
+  };
+  const handleSearch = () => {
+    navigate("/searchpage");
   };
 
   return (
@@ -42,6 +64,44 @@ const Navbar = (props) => {
             />
           </div>
         </div>
+
+        { true?
+       <div className="flex items-center ">
+        
+
+          <Popover className="relative">
+      <PopoverButton className="inline-flex items-center border-0 gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+          <HiUserCircle
+            className=" text-3xl text-blue-600 "
+          /> Profile
+        <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+      </PopoverButton>
+
+      <PopoverPanel
+        transition
+        className="absolute  left-1/2 float-right z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+      >
+        <div className=" max-w-md flex-auto overflow-hidden rounded-3xl mr-28 bg-white lg:w-[35vh] text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+          <div className="p-3">
+            {solutions.map((item) => (
+              <div key={item.name} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-200 cursor-pointer"  onClick={() => navigate(item.href)}>
+                <div className="mt-1 flex h-7 w-14 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                  <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                </div>
+                <div className=" content-center">
+                  <button className="font-semibold text-gray-900">
+                    {item.name}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+        </div>
+      </PopoverPanel>
+    </Popover>
+       </div>
+        :
         <div className="flex items-center  space-x-4">
           <button onClick={() => showCart()} className="flex flex-row mx-5  mt-2">
             <svg
@@ -85,7 +145,10 @@ const Navbar = (props) => {
           </button>
           <Register showModal={showModal} setShowModal={setShowModal} />
         </div>
-      </div>
+}
+
+</div>
+   
       {/* Bottom Navbar */}
       <div className="bg-white border-t-[1px] border-gray-300 p-3 flex items-center space-x-4">
         <button onClick={handleNavigate} className="flex items-center mx-3  space-x-1 text-gray-700 font-bold">

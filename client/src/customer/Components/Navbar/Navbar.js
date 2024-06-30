@@ -2,11 +2,27 @@ import React, { useState } from "react";
 import Register from "../Auth/Register";
 import { HiUserCircle } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { ImUser } from "react-icons/im";
+import { MdOutlinePayment } from "react-icons/md";
+import { MdElectricScooter } from "react-icons/md";
+import { FcLike } from "react-icons/fc";
+
+
+const solutions = [
+  { name: 'Profile', description: 'Get a better understanding of your traffic', href: '/myprofile/profile', icon: ImUser },
+  { name: 'Payment', description: 'Speak directly to your customers', href: '/myprofile/payment', icon: MdOutlinePayment },
+  { name: 'Orders', description: "Your customers' data will be safe and secure", href: '/myprofile/orders', icon: MdElectricScooter },
+  { name: 'Wishlist', description: 'Connect with third-party tools', href: '/myprofile/likes', icon:  FcLike  },
+]
+
 
 const Navbar = (props, setActiveTab) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-const [user,setUser]=useState(true)
+
+const [user,setUser]=useState(true )
   const handleNavigate = () => {
     navigate("/category");
   };
@@ -21,7 +37,8 @@ const [user,setUser]=useState(true)
   };
 
   return (
-    <div className="shadow-lg overflow-hidden">
+
+    <div className="shadow-lg ">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <a href="/" className="flex items-center space-x-4">
@@ -46,13 +63,40 @@ const [user,setUser]=useState(true)
         <div className="flex">
         { user?
         <div>
-          <button>
+        
+
+          <Popover className="relative">
+      <PopoverButton className="inline-flex items-center border-0 gap-x-1 text-sm font-semibold leading-6 text-gray-900">
           <HiUserCircle
             className=" text-3xl text-blue-600 "
-            onClick={handleProfile}
-          />
-          </button>
+          /> Profile
+        <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+      </PopoverButton>
+
+      <PopoverPanel
+        transition
+        className="absolute  left-1/2 float-right z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+      >
+        <div className=" max-w-md flex-auto overflow-hidden rounded-3xl bg-white lg:w-[35vh] text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+          <div className="p-3">
+            {solutions.map((item) => (
+              <div key={item.name} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-200 cursor-pointer"  onClick={() => navigate(item.href)}>
+                <div className="mt-1 flex h-7 w-14 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                  <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                </div>
+                <div className=" content-center">
+                  <button className="font-semibold text-gray-900">
+                    {item.name}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
         </div>
+      </PopoverPanel>
+    </Popover>
+       </div>
         :
         <div className="flex items-center space-x-7">
           <div className="flex items-center space-x-1">
@@ -80,10 +124,10 @@ const [user,setUser]=useState(true)
           </div>
         </div>
 }
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center mx-6">
             <button onClick={() => showCart()}>
               <svg
-                className="w-6 h-6 text-zinc-700"
+                className="w-7 h-7 text-zinc-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -97,8 +141,8 @@ const [user,setUser]=useState(true)
                 ></path>
               </svg>
             </button>
-            {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
-            {/* <sub className="text-zinc-700">₹0</sub> */}
+            {/* <sup className="text-orange-500 bg-blue-500 px-2 ml-[-10px] rounded-full text-base ">3</sup>
+          */}
           </div>
 
 </div>

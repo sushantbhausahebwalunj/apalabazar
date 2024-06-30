@@ -1,11 +1,10 @@
 import express from 'express';
-import Category from '../models/category.js'; // Note: Ensure the file extension is included
+import Category from '../models/category.js'; 
 import slugify from 'slugify';
 
 const router = express.Router();
 
-router.get('/category/create', (req, res) => {
-    console.log('hallo' + req);
+router.post('/create', (req, res) => {
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name)
@@ -16,12 +15,13 @@ router.get('/category/create', (req, res) => {
     }
 
     const cat = new Category(categoryObj);
-    cat.save((error, category) => {
-        if (error) return res.status(400).json({ error });
-        if (category) {
-            return res.status(201).json({ category });
-        }
-    });
+    cat.save()
+        .then(category => {
+            res.status(201).json({ category });
+        })
+        .catch(error => {
+            res.status(400).json({ error });
+        });
 });
 
 export default router;

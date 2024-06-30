@@ -1,133 +1,109 @@
-import React, { useState, useEffect } from 'react';
-import './SearchDashboard.css';
-import axios from 'axios'; // Assuming you have axios installed for API requests
+// import React, { useState, useEffect } from 'react';
 
-const SearchDashboard = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const resultsPerPage = 10;
+// const products = [
+//   {
+//     id: 1,
+//     name: 'Saffola Oats',
+//     category: 'Food Products',
+//     price: 150,
+//     brand: 'Saffola',
+//     rating: 4.5,
+//     offer: '10% off',
+//   },
+//   // ... add more products with rating and offer properties
+// ];
 
-    // Simulated product database
-    const productDatabase = [
-        { id: 1, name: 'iPhone 13', brand: 'Apple', category: 'Electronics' },
-        { id: 2, name: 'Galaxy S21', brand: 'Samsung', category: 'Electronics' },
-        { id: 3, name: 'MacBook Air', brand: 'Apple', category: 'Electronics' },
-        { id: 4, name: 'Yoga Laptop', brand: 'Lenovo', category: 'Electronics' },
-        { id: 5, name: 'XPS 13', brand: 'Dell', category: 'Electronics' },
-        { id: 6, name: 'Inspiron 15', brand: 'Dell', category: 'Electronics' },
-        { id: 7, name: 'Pixel 6', brand: 'Google', category: 'Electronics' },
-        { id: 8, name: 'PlayStation 5', brand: 'Sony', category: 'Gaming' },
-        { id: 9, name: 'Xbox Series X', brand: 'Microsoft', category: 'Gaming' },
-        { id: 10, name: 'Switch', brand: 'Nintendo', category: 'Gaming' },
-        // Add more products as needed
-    ];
+// const priceRanges = [
+//   { label: 'Below ₹500', min: 0, max: 500 },
+//   { label: '₹500 - ₹1000', min: 500, max: 1000 },
+//   { label: '₹1000 and Above', min: 1000, max: Infinity },
+// ];
 
-    useEffect(() => {
-        if (searchQuery.trim() === '') {
-            setSearchResults([]);
-            return;
-        }
+// function SideFilter() {
+//   const [selectedCategory, setSelectedCategory] = useState('all');
+//   const [selectedPriceRange, setSelectedPriceRange] = useState(priceRanges[0]);
+//   const [brands, setBrands] = useState([]); // Stores unique brands
+//   const [searchBrand, setSearchBrand] = useState(''); // Stores user-entered brand search term
+//   const [minRating, setMinRating] = useState(0); // Stores minimum rating filter
+//   const [hasOffer, setHasOffer] = useState(false); // Filter for products with offers
 
-        setLoading(true);
-        axios.get('https://api.example.com/search?q=${encodeURIComponent(searchQuery)')
-            .then(response => {
-                setSearchResults(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-                setLoading(false);
-            });
-    }, [searchQuery]);
+//   useEffect(() => {
+//     const uniqueBrands = [...new Set(products.map((product) => product.brand))];
+//     setBrands(uniqueBrands);
+//   }, []); // Empty dependency array to run only once
 
-    const handleSearch = (event) => {
-        event.preventDefault();
-        // Perform search logic here if needed
-        setSearchResults([]); // Clear previous results
-    };
+//   const filteredBrands = brands.filter((brand) =>
+//     brand.toLowerCase().includes(searchBrand.toLowerCase())
+//   );
 
-    const fetchResults = (query) => {
-        const lowerCaseQuery = query.toLowerCase();
-        return productDatabase.filter(product => 
-            product.name.toLowerCase().includes(lowerCaseQuery) || 
-            product.brand.toLowerCase().includes(lowerCaseQuery) ||
-            product.category.toLowerCase().includes(lowerCaseQuery)
-        );
-    };
+//   const filterProducts = (category, priceRange, brand, rating, hasOffer) => {
+//     let filteredProducts = products.slice(); // Copy products to avoid mutation
+//     if (category !== 'all') {
+//       filteredProducts = filteredProducts.filter(
+//         (product) => product.category === category
+//       );
+//     }
+//     if (priceRange.max !== Infinity) {
+//       filteredProducts = filteredProducts.filter(
+//         (product) => product.price >= priceRange.min && product.price < priceRange.max
+//       );
+//     } else {
+//       filteredProducts = filteredProducts.filter(
+//         (product) => product.price >= priceRange.min
+//       );
+//     }
+//     if (brand !== 'all') {
+//       filteredProducts = filteredProducts.filter((product) => product.brand === brand);
+//     }
+//     if (rating > 0) {
+//       filteredProducts = filteredProducts.filter((product) => product.rating >= rating);
+//     }
+//     if (hasOffer) {
+//       filteredProducts = filteredProducts.filter((product) => product.offer);
+//     }
+//     return filteredProducts;
+//   };
 
-    const displayResults = (results) => {
-        const start = (currentPage - 1) * resultsPerPage;
-        const end = start + resultsPerPage;
-        return results.slice(start, end);
-    };
+//   const handleCategoryChange = (event) => {
+//     setSelectedCategory(event.target.value);
+//   };
 
-    const createPagination = (totalResults) => {
-        const totalPages = Math.ceil(totalResults / resultsPerPage);
-        return Array.from({ length: totalPages }, (_, i) => i + 1);
-    };
+//   const handlePriceRangeChange = (event) => {
+//     setSelectedPriceRange(priceRanges.find((range) => range.label === event.target.value));
+//   };
 
-    const goToPage = (page) => {
-        setCurrentPage(page);
-    };
+//   const handleBrandSearch = (event) => {
+//     setSearchBrand(event.target.value);
+//   };
 
-    const showSuggestions = (query) => {
-        const lowerCaseQuery = query.toLowerCase();
-        return productDatabase.filter(product => 
-            product.name.toLowerCase().includes(lowerCaseQuery)
-        ).slice(0, 5); // limit to 5 suggestions
-    };
+//   const handleMinRatingChange = (event) => {
+//     setMinRating(parseFloat(event.target.value));
+//   };
 
-    const selectSuggestion = (suggestion) => {
-        setSearchQuery(suggestion);
-        setSearchResults(fetchResults(suggestion));
-    };
+//   const handleHasOfferChange = (event) => {
+//     setHasOffer(event.target.checked);
+//   };
 
-    return (
-        <div className="search-container">
-            <form id="search-form" onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    id="search-input"
-                    placeholder="Search for products, brands and more"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onInput={(e) => setSearchResults(fetchResults(e.target.value))}
-                />
-                <button type="submit">Search</button>
-            </form>
-            <div id="suggestions">
-                {showSuggestions(searchQuery).map((suggestion, index) => (
-                    <div key={index} onClick={() => selectSuggestion(suggestion.name)}>
-                        {suggestion.name}
-                    </div>
-                ))}
-            </div>
+//   const filteredProducts = filterProducts(
+//     selectedCategory,
+//     selectedPriceRange,
+//     brands.includes('all') ? 'all' : '',
+//     minRating,
+//     hasOffer
+//   );
 
-            <div id="results-container">
-                <h3>Search Results</h3>
-                <div id="results">
-                    {displayResults(searchResults).map(result => (
-                        <div key={result.id}>
-                            <p>{result.name} by {result.brand} in {result.category}</p>
-                        </div>
-                    ))}
-                </div>
-                <div id="pagination">
-                    {createPagination(searchResults.length).map(page => (
-                        <button
-                            key={page}
-                            className="pagination-button"
-                            onClick={() => goToPage(page)}
-                        >
-                            {page}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default SearchDashboard;
+//   return (
+//     <div className="side-filter">
+//       <h2>Filters</h2>
+//       <select value={selectedCategory} onChange={handleCategoryChange}>
+//         <option value="all">All Categories</option>
+//         {categories.map((category) => (
+//           <option key={category} value={category}>
+//             {category}
+//           </option>
+//         ))}
+//       </select>
+//       <br />
+//       <select value={selectedPriceRange.label} onChange={handlePriceRangeChange}>
+//         {priceRanges.map((range) => (
+//           <option key={range.label} value={range.label}>

@@ -58,4 +58,11 @@ const getUserProfileByToken=async(token)=>{
         
     }
 }
-export default {createUser, findUserbyEmail, findUserbyId};
+
+
+
+export default {
+    createUser, 
+    findUserbyEmail, 
+    findUserbyId
+};

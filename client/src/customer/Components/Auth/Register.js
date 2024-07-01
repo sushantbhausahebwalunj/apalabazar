@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import register from "../../Asset/register.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import logo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -105,7 +105,7 @@ const Register = ({ showModal, setShowModal }) => {
               </p>
             </div>
             <img
-              src={"client\public\Register\register.png"}
+              src={logo}
               alt="Illustration of a woman shopping"
               className="max-w-full bg-cover h-[300px] w-[400px]"
             />

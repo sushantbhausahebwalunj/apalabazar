@@ -15,8 +15,8 @@ const sendOTPEmail = async (email, otp) => {
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'zoila48@ethereal.email',
-            pass: 'Ek2jYerjSvqUGyN2wF'
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
@@ -91,18 +91,22 @@ export const verifyOTP = async (req, res) => {
             console.error('JWT_SECRET environment variable is not set.');
             return res.status(500).json({ message: 'Internal server error', status: false });
         }
-        
+
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
-        
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // set to true in production
+        });
+
         return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error', status: false });
     }
 };
-
 
 // Login user
 export const loginUser = async (req, res) => {
@@ -136,6 +140,11 @@ export const loginUser = async (req, res) => {
             expiresIn: '1h',
         });
 
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // set to true in production
+        });
+
         return res.status(200).json({ message: 'Login successful', status: true, token, data: user });
     } catch (error) {
         console.error(error);
@@ -144,34 +153,32 @@ export const loginUser = async (req, res) => {
 };
 
 // Session check endpoint
-export const checkSession = async (req, res) => { 
+export const checkSession = async (req, res) => {
     try {
-    // Assuming you're using cookies to store the access_token
-    const accessToken = req.cookies.access_token;
+        // Assuming you're using cookies to store the access_token
+        const accessToken = req.cookies.access_token;
 
-    if (!accessToken) {
-      return res.status(401).json({ status: false, message: "Access token is missing or invalid" });
+        if (!accessToken) {
+            return res.status(401).json({ status: false, message: 'Access token is missing or invalid' });
+        }
+
+        // Verify the token
+        const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
+
+        // Fetch user details based on the decoded token
+        const user = await User.findById(decodedToken.id); // Adjusted to use the 'id' field
+
+        if (!user) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
+
+        // If user is found and token is valid
+        return res.status(200).json({ status: true, user });
+    } catch (error) {
+        console.error('Error checking session:', error);
+        return res.status(500).json({ status: false, message: 'Internal Server Error' });
     }
-
-    // Verify the token (example using jwt)
-    const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
-
-    // Fetch user details based on the decoded token
-    const user = await User.findById(decodedToken.id); // Adjusted to use the 'id' field
-
-    if (!user) {
-      return res.status(404).json({ status: false, message: "User not found" });
-    }
-
-    // If user is found and token is valid
-    return res.status(200).json({ status: true, user });
-
-  } catch (error) {
-    console.error('Error checking session:', error);
-    return res.status(500).json({ status: false, message: "Internal Server Error" });
-  }
 };
-  
 
 // Sign out user
 export const signOut = (req, res) => {

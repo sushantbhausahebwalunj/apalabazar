@@ -36,6 +36,8 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:5454/api/auth/login', { email, password });
       if (response.data.status) {
+        // Store the token in localStorage
+        localStorage.setItem('authToken', response.data.token);
         toast.success("Login successful");
         navigate("/");
       } else {
@@ -48,6 +50,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">

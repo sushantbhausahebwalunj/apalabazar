@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
+=======
+import Category from "../models/category.model.js";
+import Product from "../models/product.model.js";
+
+>>>>>>> 5304722923db24a92e01e2d60bed2c2799d66516
 
 // Create a new product
 async function createProduct(reqData) {

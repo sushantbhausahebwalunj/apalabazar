@@ -15,8 +15,8 @@ const sendOTPEmail = async (email, otp) => {
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'graciela3@ethereal.email',
-            pass: 'TsUQHcycQaQHf6EcuS'
+            user: 'zoila48@ethereal.email',
+            pass: 'Ek2jYerjSvqUGyN2wF'
         }
     });
 
@@ -95,7 +95,7 @@ export const verifyOTP = async (req, res) => {
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
-
+        
         return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
     } catch (error) {
         console.error(error);
@@ -142,6 +142,24 @@ export const loginUser = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', status: false });
     }
 };
+
+// Session check endpoint
+export const checkSession = (req, res) => {
+    const token = req.cookies.access_token;
+  
+    if (!token) {
+      return res.status(200).json({ status: false });
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.status(200).json({ status: false });
+      }
+  
+      return res.status(200).json({ status: true, user });
+    });
+  };
+  
 
 // Sign out user
 export const signOut = (req, res) => {

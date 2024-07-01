@@ -27,7 +27,7 @@ const Navbar = (props) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get(`http://localhost:5454/api/auth/session`, { withCredentials: true });
+        const response = await axios.get('http://localhost:5454/api/auth/session', { withCredentials: true });
         if (response.data.status) {
           dispatch(setUser(response.data.user));
         } else {
@@ -37,9 +37,10 @@ const Navbar = (props) => {
         console.error('Error checking session:', error);
       }
     };
-
+  
     checkSession();
   }, [dispatch]);
+  
 
   const handleProfileClick = () => {
     if (currentUser.role === 'ADMIN') {

@@ -1,6 +1,12 @@
 import connectDB from './src/database/mongo.db.js';
 import app from './app.js';
+import { config } from 'dotenv';
+
 const PORT = 5454;
+
+config({
+  path: './.env'
+})
 
 
 

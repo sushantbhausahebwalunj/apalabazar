@@ -1,14 +1,14 @@
 import connectDB from './src/database/mongo.db.js';
 import app from './app.js';
 const PORT = 5454;
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: './.env',
+});
 
 
 
-
-
-// "mongodb+srv://shivamofficial285:VhAqQlSd7UO4mSO7@apalabazar.jcypil6.mongodb.net/";
-// const MONGO = "mongodb+srv://apalabazar:IAKQKP3lF4hcyKg2@cluster0.k8mosmp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-// mongodb+srv://apalabazar:IAKQKP3lF4hcyKg2@cluster0.k8mosmp.mongodb.net/
 
 connectDB()
 
@@ -16,7 +16,7 @@ connectDB()
 .then(() => {
 
   app.listen(PORT, () => {
-    console.log(`⚙️  ⚙️   Server is running on port ${PORT} successfully 🎉  ➡️  ✈️`);
+    console.log(`⚙️  ⚙️   Server is running on port ${PORT} successfully 🎉  ➡️  ✈️  \n \t check health at http://localhost:${PORT}/`);
   });
 
 })

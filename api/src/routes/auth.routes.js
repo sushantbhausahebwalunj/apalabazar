@@ -1,11 +1,19 @@
 import express from 'express';
+import {upload} from "../middlewares/multer.middleware.js"
 import { loginUser, registerUser, signOut, verifyOTP } from '../controller/auth.controller.js';
 
 const router = express.Router();
 
-router.post('/register', registerUser);
+
+router.route('/register').post(
+    upload.none(),
+    registerUser
+);
+
 router.post('/verify-otp', verifyOTP);
-router.post('/login', loginUser);
+
+router.post('/login', upload.none(), loginUser);
+
 router.get('/signout', signOut);
 
 export default router;

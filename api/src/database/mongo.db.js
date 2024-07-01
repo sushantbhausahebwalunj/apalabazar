@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO = "mongodb://localhost:27017/apalabazar";
+const MONGO = process.env.MONGODB_URL || "mongodb://localhost:27017/apalabazar";
 
 
 const connectDB = async() => {

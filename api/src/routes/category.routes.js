@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyAdmin } from '../middelwares/verifyAdmin.js';
+import { verifyAdmin } from '../middlewares/verifyAdmin.js';
 import { createCategory, deleteCategory, updateCategory, viewCategories, viewCategory } from '../controller/category.controller.js';
 
 const router = express.Router();

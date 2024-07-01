@@ -29,14 +29,14 @@ function HomePage() {
   };
 
   const [viewport, setViewport] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
 
   useEffect(() => {
     const handleResize = () => {
       setViewport(window.innerWidth < 620);
-      setIsMobile(window.innerWidth < 500);
+      setIsMobile(window.innerWidth < 620);
     };
-
+    handleResize()
     window.addEventListener('resize', handleResize);
 
     return () => {

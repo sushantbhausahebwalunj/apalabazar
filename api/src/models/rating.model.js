@@ -3,12 +3,13 @@ import mongoose, { Schema } from "mongoose";
 const ratingSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        ref: 'user',
+        // required: true,
       },
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'products',
+        required: true,
       },
       rating: {
         type: Number,

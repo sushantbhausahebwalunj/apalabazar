@@ -1,5 +1,6 @@
 import connectDB from './src/database/mongo.db.js';
 import app from './app.js';
+import 'dotenv';
 const PORT = 5454;
 
 

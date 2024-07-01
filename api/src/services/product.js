@@ -1,72 +1,61 @@
-<<<<<<< HEAD
-const Category = require("../models/category.model");
-const Product = require("../models/product.model");
-=======
 import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 
->>>>>>> 5304722923db24a92e01e2d60bed2c2799d66516
 
 // Create a new product
 async function createProduct(reqData) {
-  let topLevel = await Category.findOne({ name: reqData.topLavelCategory });
+  let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
 
   if (!topLevel) {
-    const topLavelCategory = new Category({
-      name: reqData.topLavelCategory,
+    topLevel = new Category({
+      name: reqData.topLevelCategory,
       level: 1,
     });
-
-    topLevel = await topLavelCategory.save();
   }
 
   let secondLevel = await Category.findOne({
-    name: reqData.secondLavelCategory,
-    parentCategory: topLevel._id,
+    name: reqData.secondLevelCategory,
+    parentId: topLevel._id,
   });
 
   if (!secondLevel) {
-    const secondLavelCategory = new Category({
-      name: reqData.secondLavelCategory,
-      parentCategory: topLevel._id,
+    secondLevel = new Category({
+      name: reqData.secondLevelCategory,
+      parentId: topLevel._id,
       level: 2,
     });
-
-    secondLevel = await secondLavelCategory.save();
   }
 
   let thirdLevel = await Category.findOne({
-    name: reqData.thirdLavelCategory,
-    parentCategory: secondLevel._id,
+    name: reqData.thirdLevelCategory,
+    parentId: secondLevel._id,
   });
 
   if (!thirdLevel) {
-    const thirdLavelCategory = new Category({
-      name: reqData.thirdLavelCategory,
-      parentCategory: secondLevel._id,
+    thirdLevel = new Category({
+      name: reqData.thirdLevelCategory,
+      parentId: secondLevel._id,
       level: 3,
     });
-
-    thirdLevel = await thirdLavelCategory.save();
   }
 
   const product = new Product({
     title: reqData.title,
-    color: reqData.color,
     description: reqData.description,
+    price: reqData.price,
     discountedPrice: reqData.discountedPrice,
     discountPersent: reqData.discountPersent,
-    imageUrl: reqData.imageUrl,
-    brand: reqData.brand,
-    price: reqData.price,
-    sizes: reqData.size,
     quantity: reqData.quantity,
+    brand: reqData.brand,
+    ratings: reqData.ratings,
+    reviews: reqData.reviews,
+    numRatings: reqData.numRatings,
     category: thirdLevel._id,
+    createdAt: reqData.createdAt,
+    updatedAt: reqData.updatedAt,
   });
 
-  const savedProduct = await product.save();
-
-  return savedProduct;
+  return await product.save();
 }
 // Delete a product by ID
 async function deleteProduct(productId) {
@@ -89,7 +78,9 @@ async function updateProduct(productId, reqData) {
 
 // Find a product by ID
 async function findProductById(id) {
-  const product = await Product.findById(id).populate("category").exec();
+  console.log(id)
+  const product = await Product.findById(id);
+  // .populate("category").exec();
 
   if (!product) {
     throw new Error("Product not found with id " + id);
@@ -176,8 +167,7 @@ async function createMultipleProduct(products) {
     await createProduct(product);
   }
 }
-
-module.exports = {
+export {
   createProduct,
   deleteProduct,
   updateProduct,

@@ -16,20 +16,19 @@ const gadgets = [
     discount: 'Min. 40% Off',
     imageUrl: 'https://cdn2.hubspot.net/hubfs/259552/semaine2.gif',
   },
-  
 ];
 
 const Gadgets = () => {
   return (
     <div className="rounded-md">
       <div className="flex flex-wrap m-2">
-        {gadgets.slice(1, 3).map((gadget, index) => (
-          <div key={index} className={`w-full sm:w-${index === 0 ? '1/3 lg:1/3' : '2/3 lg:w-2/3'} p-4`}>
+        {gadgets.slice(0, 2).map((gadget, index) => (
+          <div key={index} className={`w-full sm:w-${index === 0 ? '1/3 lg:w-1/3' : '2/3 lg:w-2/3'} p-4`}>
             <div className="bg-white border rounded-lg shadow-lg overflow-hidden">
               <img
                 src={gadget.imageUrl}
                 alt={gadget.title}
-                className="w-full h-[600px] object-cover transform  sm:hover:scale-[1.5] transition duration-300"
+                className="w-full h-[600px] object-cover transform sm:hover:scale-[1.5] transition duration-300"
               />
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{gadget.title}</h3>
@@ -37,13 +36,10 @@ const Gadgets = () => {
               </div>
             </div>
           </div>
-        )).reverse()}
+        ))}
       </div>
     </div>
   );
 };
-
-
-
 
 export default Gadgets;

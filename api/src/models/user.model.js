@@ -9,6 +9,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         required: true,
     },
+    
     userName:{
         type:String,
         required:true,
@@ -31,10 +32,12 @@ const userSchema=new mongoose.Schema({
     mobile:{
         type:String,
     },
+
     address:[{
        type:mongoose.Schema.Types.ObjectId,
        ref:"addresses" 
     }],
+
     paymentInformation:[
         {
             type:mongoose.Schema.Types.ObjectId,

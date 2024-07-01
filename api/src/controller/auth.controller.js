@@ -154,6 +154,35 @@ export const loginUser = async (req, res) => {
     }
 };
 
+// Session check endpoint
+export const checkSession = async (req, res) => { 
+    try {
+    // Assuming you're using cookies to store the access_token
+    const accessToken = req.cookies.access_token;
+
+    if (!accessToken) {
+      return res.status(401).json({ status: false, message: "Access token is missing or invalid" });
+    }
+
+    // Verify the token (example using jwt)
+    const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
+
+    // Fetch user details based on the decoded token
+    const user = await User.findById(decodedToken.id); // Adjusted to use the 'id' field
+
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+
+    // If user is found and token is valid
+    return res.status(200).json({ status: true, user });
+
+  } catch (error) {
+    console.error('Error checking session:', error);
+    return res.status(500).json({ status: false, message: "Internal Server Error" });
+  }
+};
+  
 
 // Sign out user
 export const signOut = (req, res) => {

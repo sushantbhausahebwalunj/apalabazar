@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 
-const MONGO = process.env.MONGODB_URL || "mongodb://localhost:27017/apalabazar";
-
 
 const connectDB = async() => {
     try {
         
         const connection = await mongoose.connect(
-            process.env.MONGODB_URI || MONGO,
+            process.env.MONGO,
             { useNewUrlParser: true, useUnifiedTopology: true }
         );
 

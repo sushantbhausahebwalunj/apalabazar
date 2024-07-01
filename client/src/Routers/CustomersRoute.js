@@ -6,7 +6,7 @@ import Cart from '../customer/Components/Cart/Cart.js';
 import Category from "../customer/Components/Navbar/Category.js";
 import Dairy from '../Pages/Dairy/Dairy';
 import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
-import Register from '../customer/Components/Auth/Login';
+import Login from '../customer/Components/Auth/Login';
 import Profile from '../Profile/components/Profilemain/Profile.js';
 import HomeAppliances from '../Pages/HomeAppliances/HomeAppliances.js';
 import  DetergentFabricCare  from '../Pages/HomeKitchen/HomeKitchen.js';
@@ -33,7 +33,7 @@ function CustomersRoute() {
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/product/:id" element={<ProductDetails />}></Route>
       <Route path="/searchpage" element={<SearchDashboard/>}></Route>
-      <Route path="/register" element={<Register />}></Route>
+      <Route path="/login" element={<Login />}></Route>
       <Route path="/checkout" element={<Checkout />}></Route>
       <Route path="/myprofile" element={<Profile/>}></Route>
 

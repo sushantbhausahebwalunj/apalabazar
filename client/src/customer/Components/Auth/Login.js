@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import loginIllustration from "../../Asset/register.png"; // Adjust the path to your illustration
+import React, { useState } from "react"; // Adjust the path to your illustration
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import Register from '../assets/register.png';
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
 
@@ -60,7 +60,7 @@ const Login = () => {
             </p>
           </div>
           <img
-            src={loginIllustration}
+            src={Register}
             alt="Illustration of a person logging in"
             className="max-w-full bg-cover h-[300px] w-[400px]"
           />

@@ -1,28 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Register from "../Auth/Register";
 import { HiUserCircle } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { setUser, clearUser } from '../../../Redux/User/userSlice';
+import { useSelector, useDispatch } from "react-redux";
 
 const Navbar = (props) => {
-  const { currentUser } = useSelector((state) => state.user);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser, isAuthenticated } = useSelector((state) => state.user);
   
   const handleNavigate = () => {
     navigate("/category");
+  };
+
+  const handleSearch = () => {
+    navigate("/searchpage");
   };
   
   const showCart = () => {
     navigate("/cart");
   };
-  
-  const handleProfile = () => {
-    navigate("/Myprofile/profile");
-  };
-  
-  const handleSearch = () => {
-    navigate("/searchpage");
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5454/api/auth/session`, { withCredentials: true });
+        if (response.data.status) {
+          dispatch(setUser(response.data.user));
+        } else {
+          dispatch(clearUser());
+        }
+      } catch (error) {
+        console.error('Error checking session:', error);
+      }
+    };
+
+    checkSession();
+  }, [dispatch]);
+
+  const handleProfileClick = () => {
+    if (currentUser.role === 'ADMIN') {
+      navigate('/admin');
+    } else {
+      navigate('/myprofile/profile');
+    }
   };
 
   return (
@@ -67,9 +91,9 @@ const Navbar = (props) => {
                 d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
               ></path>
             </svg>
-            {currentUser ? (
+            {isAuthenticated ? (
               <button
-                onClick={handleProfile}
+                onClick={handleProfileClick}
                 className="text-white font-medium"
               >
                 Profile
@@ -160,7 +184,7 @@ const Navbar = (props) => {
 
 function HomeDeliveryStatus() {
   return (
-    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg ">
+    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
       <div className="flex gap-2 text-gray-600">
         <span>Earliest</span>
         <span className="text-blue-500">Home Delivery</span>

@@ -69,7 +69,7 @@ async function updateProduct(productId, reqData) {
 }
 
 async function findProductById(id) {
-  const product = await Product.findById(id).populate("category").exec();
+  const product = await Product.findById(id)
 
   if (!product) {
     throw new Error("Product not found with id " + id);
@@ -79,10 +79,14 @@ async function findProductById(id) {
 }
 
 async function getAllProducts(reqQuery) {
+
+  // console.log("sllo"+reqQuery)
   let { category, quantity, price, discount, pageSize } = reqQuery;
 
   pageSize = pageSize || 10;
-  let query = Product.find().populate("category");
+  let query = Product.find();
+  // .populate("category");
+  
 
   if (category) {
     const existCategory = await Category.findOne({ name: category });

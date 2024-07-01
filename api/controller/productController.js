@@ -14,7 +14,11 @@ const findProd = async (req, res) => {
   // const productId = new mongoose.Types.ObjectId('req.body'); // Convert to ObjectId
 //const product = await Product.findById(req.body);
     try {
-      const product = await findProductById(req.body);
+
+      console.log(req.params)
+      const {id}=req.params;
+      const product = await findProductById(id);
+
       return res.status(201).send(product);
     } catch (error) {
       return res.status(500).send({ error: error.message });
@@ -43,7 +47,7 @@ const updateProd = async (req, res) => {
 
 const getAllProds = async (req, res) => {
   try {
-    const products = await getAllProducts(req.query);
+    const products = await getAllProducts(req.params);
     return res.status(201).send(products);
   } catch (error) {
     return res.status(500).send({ error: error.message });

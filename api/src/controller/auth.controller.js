@@ -11,13 +11,14 @@ dotenv.config();
 
 // Utility function to send OTP email
 const sendOTPEmail = async (email, otp) => {
+
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: 'zoila48@ethereal.email',
-            pass: 'Ek2jYerjSvqUGyN2wF'
-        }
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'coty.nienow@ethereal.email',
+        pass: 'uXGAssUhrpX3Xn74dk'
+    }
     });
 
     const mailOptions = {
@@ -37,6 +38,7 @@ const generateOTP = () => {
 
 // Register and send OTP
 export const registerUser = async (req, res) => {
+
     const { email } = req.body;
 
     if (!email) {
@@ -44,8 +46,10 @@ export const registerUser = async (req, res) => {
     }
 
     try {
+
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
+
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists', status: false });
         }
@@ -54,12 +58,17 @@ export const registerUser = async (req, res) => {
         await OTP.create({ email, otp });
         await sendOTPEmail(email, otp);
 
-        return res.status(200).json({ message: 'OTP sent successfully', status: true });
-    } catch (error) {
+        return res
+        .status(200)
+        .json({ message: 'OTP sent successfully', status: true });
+    } 
+    catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error', status: false });
+        return res.status(500).json({ message: error.message, status: false });
     }
 };
+
+
 
 // Verify OTP and create user
 export const verifyOTP = async (req, res) => {
@@ -97,7 +106,9 @@ export const verifyOTP = async (req, res) => {
         });
         
         return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
-    } catch (error) {
+    } 
+    
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error', status: false });
     }
@@ -143,23 +154,6 @@ export const loginUser = async (req, res) => {
     }
 };
 
-// Session check endpoint
-export const checkSession = (req, res) => {
-    const token = req.cookies.access_token;
-  
-    if (!token) {
-      return res.status(200).json({ status: false });
-    }
-  
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.status(200).json({ status: false });
-      }
-  
-      return res.status(200).json({ status: true, user });
-    });
-  };
-  
 
 // Sign out user
 export const signOut = (req, res) => {

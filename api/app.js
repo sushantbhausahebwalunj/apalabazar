@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import CategoryRoutes from './routes/category.js';
-import Product from './models/product.model.js';
-import ProductRoutes from './routes/product.js'
+import allRouter from './src/Router/router.js';
 
 const app = express();
 
@@ -12,8 +10,9 @@ app.use(cors())
 
 
 
-app.use('/api/category',CategoryRoutes);  
-app.use('/api/product', ProductRoutes);  
+app.use('/api',allRouter);
+
+
 
 
 

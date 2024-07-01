@@ -1,4 +1,4 @@
-import connectDB from './database/mongo.db.js';
+import connectDB from './src/database/mongo.db.js';
 import app from './app.js';
 const PORT = 5454;
 

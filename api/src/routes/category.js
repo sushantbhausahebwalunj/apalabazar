@@ -2,9 +2,9 @@ import express from 'express';
 import Category from '../models/category.js'; 
 import slugify from 'slugify';
 
-const router = express.Router();
+const CategoryRouter = express.Router();
 
-router.post('/create', (req, res) => {
+CategoryRouter.post('/create', (req, res) => {
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name)
@@ -24,4 +24,4 @@ router.post('/create', (req, res) => {
         });
 });
 
-export default router;
+export default CategoryRouter;

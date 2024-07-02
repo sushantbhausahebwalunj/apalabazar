@@ -1,10 +1,10 @@
 import express from "express";
-import { addToCart, deleteUser, getUser, updateUser } from "../controller/user.controller.js";
+import { deleteUser, getUser, updateUser } from "../controller/user.controller.js";
 import { verifyToken } from "../middlewares/verifyUser.js";
-import { upload } from "../middlewares/multer.middleware.js"
-
+import cartRouter from "./cart.routes.js";
 
 const userRouter = express.Router();
+
 
 userRouter.post('/update/:id', verifyToken, updateUser)
 userRouter.delete('/delete/:id', verifyToken, deleteUser)
@@ -12,12 +12,7 @@ userRouter.get('/:id', verifyToken, getUser)
 
 
 
-userRouter.route('/addToCart').post(
-    verifyToken,
-    upload.none(),
-    addToCart
-)
-   
+userRouter.use('/cart', cartRouter);
 
 
 

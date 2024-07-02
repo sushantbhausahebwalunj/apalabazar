@@ -5,9 +5,20 @@ import OTP from '../models/otp.model.js';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import { ApiResponse } from '../utils/ApiResponse.js';
 
 // Load environment variables
 dotenv.config();
+
+
+///  cookies options 
+
+const cookiesOptions = {
+
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+};
 
 // Utility function to send OTP email
 const sendOTPEmail = async (email, otp) => {
@@ -117,6 +128,7 @@ export const verifyOTP = async (req, res) => {
 
 // Login user
 export const loginUser = async (req, res) => {
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -143,16 +155,22 @@ export const loginUser = async (req, res) => {
             return res.status(500).json({ message: 'Internal server error', status: false });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
+        const token = user.generateUserToken();
 
-        return res.status(200).json({ message: 'Login successful', status: true, token, data: user });
-    } catch (error) {
+        return res
+        .status(200)
+        .cookie("userToken", token, cookiesOptions)
+        .json(new ApiResponse(200, 'User logged in successfully', user));
+    } 
+    
+    catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error', status: false });
+        return res
+        status(500)
+        .json({ message: 'Internal server error', status: false });
     }
 };
+
 
 // Session check endpoint
 export const checkSession = async (req, res) => { 

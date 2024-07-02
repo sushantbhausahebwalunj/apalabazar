@@ -35,19 +35,24 @@ const productSchema = new mongoose.Schema({
   reviews: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'reviews',
-  }],
-  numRatings: {
-    type: Number,
-    default: 0,
   },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'categories',
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+],
+numRatings: {
+  type: Number,
+  default: 0,
+},
+category: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'categories',
+},
+createdAt: {
+  type: Date,
+  default: Date.now,
+},
+updatedAt: {
+  type: Date,
+  default: Date.now,
+},
 });
 
 const Product = mongoose.model("products", productSchema);

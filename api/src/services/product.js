@@ -4,7 +4,7 @@ import Product from "../models/product.model.js";
 
 // Create a new product
 async function createProduct(reqData) {
-  let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
+  let topLevel = await Category.findOne({ name: reqData.category });
 
   if (!topLevel) {
     topLevel = new Category({
@@ -80,7 +80,7 @@ async function updateProduct(productId, reqData) {
 async function findProductById(id) {
   console.log(id)
   const product = await Product.findById(id);
-  // .populate("category").exec();
+  
 
   if (!product) {
     throw new Error("Product not found with id " + id);
@@ -103,7 +103,8 @@ async function getAllProducts(reqQuery) {
     pageSize,
   } = reqQuery;
   (pageSize = pageSize || 10), (pageNumber = pageNumber || 1);
-  let query = Product.find().populate("category");
+  let query = Product.find();
+  // .populate("category");
 
 
   if (category) {

@@ -4,7 +4,7 @@ import {
     deleteProd,
     updateProd,
     getAllProds,
-    findProd
+    findProd 
 
 } from '../controller/productController.js';
 

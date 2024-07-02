@@ -1,5 +1,5 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+import 'dotenv';
+import jwt from 'jsonwebtoken';
 const SECERET_KEY=process.env.SECERET_KEY
 
 const generateToken=(userId)=>{
@@ -14,4 +14,4 @@ const getUserIdFromToken=(token)=>{
 }
 
 
-module.exports={generateToken,getUserIdFromToken};
+export {generateToken,getUserIdFromToken};

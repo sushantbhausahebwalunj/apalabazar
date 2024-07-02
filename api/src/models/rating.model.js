@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const ratingSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'users',
         // required: true,
       },
       product: {

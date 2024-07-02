@@ -15,7 +15,7 @@ const createRating= (req, res) => {
 
 const getProductsRating=async (req, res) => {
   try {
-    const productId = req.params.productId;
+    const productId = req.body.productId;
     const ratings =await ratingService.getProductsRating(productId);
     res.status(200).json(ratings);
   } catch (error) {

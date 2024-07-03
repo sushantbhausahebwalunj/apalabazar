@@ -5,19 +5,31 @@ import OTP from '../models/otp.model.js';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import { ApiResponse } from '../utils/ApiResponse.js';
 
 // Load environment variables
 dotenv.config();
 
+
+///  cookies options 
+
+const cookiesOptions = {
+
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+};
+
 // Utility function to send OTP email
 const sendOTPEmail = async (email, otp) => {
+
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: 'zoila48@ethereal.email',
-            pass: 'Ek2jYerjSvqUGyN2wF'
-        }
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'coty.nienow@ethereal.email',
+        pass: 'uXGAssUhrpX3Xn74dk'
+    }
     });
 
     const mailOptions = {
@@ -37,6 +49,7 @@ const generateOTP = () => {
 
 // Register and send OTP
 export const registerUser = async (req, res) => {
+
     const { email } = req.body;
 
     if (!email) {
@@ -44,8 +57,10 @@ export const registerUser = async (req, res) => {
     }
 
     try {
+
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
+
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists', status: false });
         }
@@ -54,12 +69,17 @@ export const registerUser = async (req, res) => {
         await OTP.create({ email, otp });
         await sendOTPEmail(email, otp);
 
-        return res.status(200).json({ message: 'OTP sent successfully', status: true });
-    } catch (error) {
+        return res
+        .status(200)
+        .json({ message: 'OTP sent successfully', status: true });
+    } 
+    catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error', status: false });
+        return res.status(500).json({ message: error.message, status: false });
     }
 };
+
+
 
 // Verify OTP and create user
 export const verifyOTP = async (req, res) => {
@@ -97,7 +117,9 @@ export const verifyOTP = async (req, res) => {
         });
         
         return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
-    } catch (error) {
+    } 
+    
+    catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error', status: false });
     }
@@ -106,6 +128,7 @@ export const verifyOTP = async (req, res) => {
 
 // Login user
 export const loginUser = async (req, res) => {
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -132,16 +155,22 @@ export const loginUser = async (req, res) => {
             return res.status(500).json({ message: 'Internal server error', status: false });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
+        const token = user.generateUserToken();
 
-        return res.status(200).json({ message: 'Login successful', status: true, token, data: user });
-    } catch (error) {
+        return res
+        .status(200)
+        .cookie("userToken", token, cookiesOptions)
+        .json(new ApiResponse(200, 'User logged in successfully', user));
+    } 
+    
+    catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error', status: false });
+        return res
+        status(500)
+        .json({ message: 'Internal server error', status: false });
     }
 };
+
 
 // Session check endpoint
 export const checkSession = async (req, res) => { 

@@ -1,6 +1,7 @@
 import  { createProduct, deleteProduct, updateProduct, findProductById, getAllProducts } from '../product/product.js';
 import Product from '../models/product.model.js';
 import mongoose from 'mongoose';
+
 const createProd = async (req, res) => {
   try {
     const product = await createProduct(req.body);

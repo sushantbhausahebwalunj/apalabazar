@@ -2,11 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import allRouter from './src/Router/router.js';
-
+import morgan from 'morgan';
 const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.use(morgan('dev'));
 
 
 

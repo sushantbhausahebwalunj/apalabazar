@@ -1,0 +1,124 @@
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+const sharedClasses = {
+  cardContainer: 'h-[100vh] bg-gray-200 bg-card text-card-foreground',
+  flexContainer: 'bg-white w-[100%] p-3 mb-3 flex justify-between items-center',
+  image: 'w-12 h-12 mr-2',
+  inlineBlock: 'bg-primary text-primary-foreground px-2 py-1 rounded inline-block',
+  reviewContainer: 'p-5 mr-3 h-[60vh] bg-white w-[30%] p-4 bg-muted text-muted-foreground rounded',
+  ratingContainer: 'h-[86.6vh] p-5 bg-white w-2/3 pl-4',
+  starRating: 'flex space-x-1 text-yellow-500',
+  submitButton: 'bg-accent bg-blue-500 hover:bg-blue-600 text-accent-foreground px-6 py-2 rounded hover:bg-accent/80',
+};
+
+const RatingsAndReviews = () => {
+  const { id } = useParams();
+  const [rating, setRating] = useState(4);
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = async () => {
+    const review = {
+      productId: '6684fa9c8376353fe129c536',
+      review: description
+    };
+    const ratingData = {
+      productId:'6684fa9c8376353fe129c536',
+      rating: rating
+    };
+
+    try {
+      const [createRating, createReview] = await Promise.all([
+        axios.post('http://localhost:5454/api/rating/create', ratingData),
+        axios.post('http://localhost:5454/api/review/create', review)
+      ]);
+
+      if (createRating.data.status) {
+        console.log("Rating created successfully");
+      } else {
+        console.log("There is some problem creating rating");
+      }
+
+      if (createReview.data.status) {
+        console.log("Review created successfully");
+      } else {
+        console.log("There is some problem creating review");
+      }
+    } catch (error) {
+      console.error('Error in creation:', error);
+    }
+  };
+
+  return (
+    <div className={sharedClasses.cardContainer}>
+      <div className={sharedClasses.flexContainer}>
+        <h2 className="text-xl font-semibold">Ratings & Reviews</h2>
+        <div className="flex items-center">
+          <img src="https://placehold.co/50x50" alt="Casual Shoes For Men Sneakers" className={sharedClasses.image} />
+          <div>
+            <p className="font-semibold">Casual Shoes For Men Sneakers</p>
+            <div className={sharedClasses.inlineBlock}>3.5 ★ (136)</div>
+          </div>
+        </div>
+      </div>
+      <div className="flex">
+        <div className={sharedClasses.reviewContainer}>
+          <h3 className="font-semibold mb-2">What makes a good review</h3>
+          <div className="mb-4">
+            <h4 className="font-semibold">Have you used this product?</h4>
+            <p>Your review should be about your experience with the product.</p>
+          </div>
+          <div className="mb-4">
+            <h4 className="font-semibold">Why review a product?</h4>
+            <p>Your valuable feedback will help fellow shoppers decide!</p>
+          </div>
+          <div>
+            <h4 className="font-semibold">How to review a product?</h4>
+            <p>Your review should include facts. An honest opinion is always appreciated. If you have an issue with the product or service, please contact us from the help centre.</p>
+          </div>
+        </div>
+        <div className={sharedClasses.ratingContainer}>
+          <div className="mb-4 h-30">
+            <h3 className="font-semibold mb-2">Rate this product</h3>
+            <div className="flex items-center">
+              <div className={sharedClasses.starRating}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    onClick={() => setRating(star)}
+                    className={star <= rating ? 'text-yellow-500 cursor-pointer' : 'text-zinc-300 cursor-pointer'}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="ml-2 font-bold text-green-600">
+                {rating === 1 ? "Very Bad" : rating === 2 ? "Bad" : rating === 3 ? "Good" : rating === 4 ? "Very Good" : "Best"}
+              </p>
+            </div>
+            <p className="text-sm text-muted-foreground">Your rating has been saved</p>
+          </div>
+          <div className="mb-4">
+            <h3 className="font-semibold mb-2">Review this product</h3>
+            <div className="mb-2">
+              <label htmlFor="description" className="block text-blue-600">Description</label>
+              <textarea
+                id="description"
+                className="w-full p-2 border border-blue-600 rounded"
+                placeholder="Description..."
+                value={description}
+                rows={7}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+              {!description && <p className="text-red-600 text-sm">Description cannot be empty</p>}
+            </div>
+          </div>
+          <button className={sharedClasses.submitButton} onClick={handleSubmit}>SUBMIT</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RatingsAndReviews;

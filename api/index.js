@@ -1,7 +1,12 @@
 import connectDB from './src/database/mongo.db.js';
 import app from './app.js';
-import 'dotenv';
+import { config } from 'dotenv';
+
 const PORT = 5454;
+
+config({
+  path: './.env'
+})
 
 // "mongodb+srv://shivamofficial285:VhAqQlSd7UO4mSO7@apalabazar.jcypil6.mongodb.net/";
 // const MONGO = "mongodb+srv://apalabazar:IAKQKP3lF4hcyKg2@cluster0.k8mosmp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";

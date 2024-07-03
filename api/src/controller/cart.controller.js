@@ -153,6 +153,8 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 
         const cart = await CartItem.findOne({product: productId});
 
+        const detail = await CartItem.find({userId: id});
+
         if (!cart) {
             return res
             .status(404)
@@ -163,7 +165,7 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 
         return res
             .status(200)
-            .json(new ApiResponse(200, 'Cart items retrieved successfully', cartItems));
+            .json(new ApiResponse(200, 'Cart items retrieved successfully', detail));
 
     } 
     

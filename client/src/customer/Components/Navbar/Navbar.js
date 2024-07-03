@@ -28,7 +28,7 @@ const Navbar = (props) => {
 
 
   const handleProfileClick = () => {
-    if (currentUser.role === 'ADMIN') {
+    if (localStorage.getItem('role') === "ADMIN") {
       navigate('/admin');
     } else {
       navigate('/myprofile/profile');

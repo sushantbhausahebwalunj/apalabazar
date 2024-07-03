@@ -45,7 +45,7 @@ numRatings: {
 },
 category: {
   type: mongoose.Schema.Types.ObjectId,
-  ref: 'categories',
+  ref: 'Category',
 },
 createdAt: {
   type: Date,

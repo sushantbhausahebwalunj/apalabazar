@@ -15,8 +15,8 @@ const sendOTPEmail = async (email, otp) => {
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            user: 'else.conroy78@ethereal.email',
+            pass: 'Nf3D3pFKhzsCMK3uVy'
         }
     });
 
@@ -155,7 +155,6 @@ export const loginUser = async (req, res) => {
 // Session check endpoint
 export const checkSession = async (req, res) => {
     try {
-        // Assuming you're using cookies to store the access_token
         const accessToken = req.cookies.access_token;
 
         if (!accessToken) {
@@ -166,13 +165,12 @@ export const checkSession = async (req, res) => {
         const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
 
         // Fetch user details based on the decoded token
-        const user = await User.findById(decodedToken.id); // Adjusted to use the 'id' field
+        const user = await User.findById(decodedToken.id);
 
         if (!user) {
             return res.status(404).json({ status: false, message: 'User not found' });
         }
 
-        // If user is found and token is valid
         return res.status(200).json({ status: true, user });
     } catch (error) {
         console.error('Error checking session:', error);

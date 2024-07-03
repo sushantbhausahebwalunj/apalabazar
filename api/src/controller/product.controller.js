@@ -31,14 +31,15 @@ export const createProduct = async (req, res) => {
       title, description, price, discountedPrice, discountPercent, quantity, brand, imageUrl, category, slug
     });
 
-    const savedProduct = await product.save();
+    if (ratings) {
+      product.ratings = ratings;
+    }
 
-    if (Array.isArray(ratings)) {
-      await Rating.insertMany(ratings.map(r => ({ ...r, product: savedProduct._id })));
+    if (reviews) {
+      product.reviews = reviews;
     }
-    if (Array.isArray(reviews)) {
-      await Review.insertMany(reviews.map(r => ({ ...r, product: savedProduct._id })));
-    }
+
+    const savedProduct = await product.save();
 
     return res.status(201).send({ message: "Product created successfully", status: true, data: savedProduct });
   } catch (error) {
@@ -52,7 +53,7 @@ export const viewProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await Product.findById(id).populate('category').populate('ratings').populate('reviews');
+    const product = await Product.findById(id).populate('category ratings reviews');
     if (!product) {
       return res.status(404).send({ message: "Product not found", status: false });
     }
@@ -92,14 +93,15 @@ export const updateProduct = async (req, res) => {
       return res.status(404).send({ message: "Product not found", status: false });
     }
 
-    if (Array.isArray(ratings)) {
-      await Rating.deleteMany({ product: id });
-      await Rating.insertMany(ratings.map(r => ({ ...r, product: id })));
+    if (ratings) {
+      updatedProduct.ratings = ratings;
     }
-    if (Array.isArray(reviews)) {
-      await Review.deleteMany({ product: id });
-      await Review.insertMany(reviews.map(r => ({ ...r, product: id })));
+
+    if (reviews) {
+      updatedProduct.reviews = reviews;
     }
+
+    await updatedProduct.save();
 
     return res.status(200).send({ message: "Product updated successfully", status: true, data: updatedProduct });
   } catch (error) {
@@ -132,7 +134,7 @@ export const deleteProduct = async (req, res) => {
 // View all products
 export const viewProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate('category').populate('ratings').populate('reviews');
+    const products = await Product.find().populate('category ratings reviews');
     return res.status(200).send({ message: "Products retrieved successfully", status: true, data: products });
   } catch (error) {
     console.error(error);

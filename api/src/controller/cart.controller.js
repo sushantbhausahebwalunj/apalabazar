@@ -319,6 +319,7 @@ const addAddress = asyncHandler(async(req, res) => {
             district,
             mobile,
             extraMobile,
+            user: id,
             
 
         });

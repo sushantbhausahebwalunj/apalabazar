@@ -28,19 +28,20 @@ const addToCart = asyncHandler(async (req, res) => {
         }
 
 
-        const findCart = await Cart.findOne({_id: id});
+        // const findCart = await Cart.findOne({_id: id});
 
+            // console.log("findCart => ", findCart);
         
-        const items = findCart.cartItems;
+        // const items = findCart.cartItems;
 
-        const length = items.length;
+        // const length = items.length;
 
         let totalPrice = 0;
 
-        items.map((item) => {
+        // items.map((item) => {
 
-            totalPrice += item.price;
-        });
+        //     totalPrice += item.price;
+        // });
 
 
 
@@ -49,22 +50,25 @@ const addToCart = asyncHandler(async (req, res) => {
             quantity: 1,
             price: product.price,
             discountedPrice: product.discountedPrice,
+            userId: id, 
+            product: product._id,
+            size: product.size,
             createdAt: new Date(),
             updatedAt: new Date()
         });
 
       
 
-        const cart = await Cart.create({
-            totalPrice: totalPrice,
-            totalItem: length,
+        // const cart = await Cart.create({
+        //     totalPrice: totalPrice,
+        
  
-        })
+        // })
 
    
         return res
         .status(200)
-        .json(new ApiResponse(200, 'Product added to cart successfully', cartItem, cart));
+        .json(new ApiResponse(200, 'Product added to cart successfully', cartItem));
     } 
     
     catch (error) {
@@ -133,7 +137,9 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 
     const { id } = req.user;
 
-    const { productId } = req.params;
+    const { productId } = req.query;
+
+    console.log("productId => ", productId);
 
     const user = await User.findById(id);
 
@@ -145,7 +151,7 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 
     try {
 
-        const cart = await CartItem.findOne({_id: productId});
+        const cart = await CartItem.findOne({product: productId});
 
         if (!cart) {
             return res
@@ -176,7 +182,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
 
     const { id } = req.user;
 
-    const { productId } = req.params;
+    const { itemId } = req.query;
 
     const user = await User.findById(id);
 
@@ -188,17 +194,18 @@ const removeOneCart = asyncHandler(async (req, res) => {
 
     try {
 
+        // const item = await CartItem.findOne({product: productId});
 
-        const cartItems = await CartItem.findOne({_id: productId});
 
-        if (!cartItems) {
-            return res
-                .status(404)
-                .json(new ApiResponse(404, 'Cart item not found', null));
-        }
+        const cartItems = await CartItem.findByIdAndRemove({_id: itemId});
+
+
+        // if (!cartItems) {
+        //     return res
+        //         .status(404)
+        //         .json(new ApiResponse(404, 'Cart item not found', null));
+        // }
         
-        await cartItems.remove();
-        await cartItems.save();
 
        return res
             .status(200)
@@ -287,6 +294,8 @@ const addAddress = asyncHandler(async(req, res) => {
 
     const user = await User.findById(id)
 
+    console.log("user => ", user);
+
     if(!user) {
         return res
             .status(401)
@@ -307,9 +316,12 @@ const addAddress = asyncHandler(async(req, res) => {
             zipCode,
             district,
             mobile,
-            extraMobile
+            extraMobile,
+            
 
         });
+
+        console.log("address user => ", address.user);
 
 
         await address.save();
@@ -460,7 +472,7 @@ const getAllAddress = asyncHandler(async(req, res) => {
 
     console.log("req.user => ", req.user);
 
-    const user = await User.findById(id).populate('user');
+    const user = await User.findById({id});
     if(!user) {
         return res
             .status(401)
@@ -470,7 +482,7 @@ const getAllAddress = asyncHandler(async(req, res) => {
 
 
     try {
-        const address = await Address.find({user: id});
+        const address = await Address.find({user: id}).populate('user');
 
         if (!address) {
             return res

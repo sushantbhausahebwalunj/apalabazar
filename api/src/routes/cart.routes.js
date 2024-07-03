@@ -10,7 +10,7 @@ const cartRouter = express.Router();
 ///// cart routes defined here
 
 /// add cart routes 
-cartRouter.route("/addCart/:productId").post(
+cartRouter.route("/addCart").post(
     
     verifyToken,
     upload.none(),
@@ -27,7 +27,7 @@ cartRouter.route("/getCartDetails").get(
 
 
 //// get one cart item by id
-cartRouter.route("/getItemsInfo/:productId").get(
+cartRouter.route("/getItemsInfo").get(
     verifyToken,
     getCartItemsById
 );
@@ -35,7 +35,7 @@ cartRouter.route("/getItemsInfo/:productId").get(
 
 
 /// remove one cart item by id
-cartRouter.route("/remove/:productId").delete(
+cartRouter.route("/removeCartItem").delete(
     verifyToken,
     removeOneCart
 );

@@ -58,8 +58,8 @@ const AddressSchema= new mongoose.Schema({
     },
 
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        type: mongoose.Schema.Types.ObjectId,  // id  
+        ref: "User",
     
     },
 
@@ -73,6 +73,6 @@ const AddressSchema= new mongoose.Schema({
     }
 })
 
-const Address = mongoose.model("address", AddressSchema);
+const Address = mongoose.model("Address", AddressSchema);
 
 export default Address;

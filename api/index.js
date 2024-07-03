@@ -22,7 +22,8 @@ app.get("/",(req,res)=>{
 // "mongodb+srv://shivamofficial285:VhAqQlSd7UO4mSO7@apalabazar.jcypil6.mongodb.net/";
 // const MONGO = "mongodb+srv://apalabazar:IAKQKP3lF4hcyKg2@cluster0.k8mosmp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 // mongodb+srv://apalabazar:IAKQKP3lF4hcyKg2@cluster0.k8mosmp.mongodb.net/
-const MONGO = "mongodb://localhost:27017/apalabazar";
+// const MONGO = "mongodb://localhost:27017/apalabazar";
+const MONGO="mongodb+srv://vivekshejole:sak111%40%40%40@atlascluster.myznaku.mongodb.net/Apala_Bazarr"
 mongoose.connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("MongoDB Connected");

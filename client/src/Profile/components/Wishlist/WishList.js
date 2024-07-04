@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const productCardClasses = "flex flex-col md:flex-row items-start p-4 border rounded-lg shadow-sm";
+const productCardClasses = "flex flex-col md:flex-row hover:bg-gray-100 items-start p-5 border rounded-md shadow-sm";
 const imageClasses = "w-24 h-24 object-cover rounded-lg";
 const priceClasses = "text-xl font-semibold";
 const discountClasses = "line-through text-zinc-500 ml-2";
@@ -83,8 +83,8 @@ const WishList = () => {
 
   return (
     <div className="mx-auto bg-white p-4 rounded-lg shadow overflow-scroll sidebar">
-        <h2 className="text-2xl font-semibold mb-4">My Wishlist ({products.length})</h2>
-      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold m-4">My Wishlist ({products.length})</h2>
+      <div className="space-y-4 m-4">
         {products.map(product => (
           <ProductCard
             key={product.id}

@@ -14,7 +14,7 @@ function cartReducer(state, action) {
         qty:1,
         discount:product.discount,
         weight:product.weight
-      }
+      } 
         // Ensure state is an array
         if (!Array.isArray(state)) {
             state = [];

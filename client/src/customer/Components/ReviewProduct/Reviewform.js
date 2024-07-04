@@ -33,11 +33,6 @@ const navigate = useNavigate();
         review: description,
         rating: rating,
     };
-    // const ratingData = {
-    //     productId: '6681471814f7e19e6b77579d',
-    //     rating: rating,
-    //     user:null,
-    // };
 
     try {
         const resp = await Promise.all([
@@ -46,12 +41,7 @@ const navigate = useNavigate();
               headers: {
                   'Authorization': `Bearer ${token}`
               }
-          }),
-          //  axios.post('http://localhost:5454/api/rating/create', ratingData, {
-          //       headers: {
-          //           'Authorization': `Bearer ${token}`
-          //       }
-          //   })
+          })
         ]);
 console.log(resp)
         if(resp[0].status==201){

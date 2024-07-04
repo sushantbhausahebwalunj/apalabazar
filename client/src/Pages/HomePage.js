@@ -16,7 +16,10 @@ import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/
 import Maylike from "../customer/Components/Adverties/Maylike.js";
 import MobNavbar from "../customer/Components/Navbar/MobileNavbar.js";
 
+
 function HomePage() {
+
+
   const settings = {
     dots: true,
     infinite: true,

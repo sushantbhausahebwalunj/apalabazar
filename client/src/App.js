@@ -5,6 +5,8 @@ import AdminRouters from './Routers/AdminRouters';
 import MyprofileRouters from './Routers/MyprofileRouters';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ function App() {
 
   return (
     <div className="">
+      <ToastContainer />
       <Routes>
         <Route path="/*" element={<CustomersRoute />} />
         <Route path="/admin/*" element={<AdminRouters />} />

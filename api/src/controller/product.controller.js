@@ -53,7 +53,24 @@ export const viewProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await Product.findById(id).populate('category ratings reviews');
+    // Fetch product details including populated ratings and reviews
+    const product = await Product.findById(id)
+      .populate({
+        path: 'ratings',
+        populate: {
+          path: 'user', // Assuming ratings have a user reference
+          select: 'name email' // Adjust fields as necessary
+        }
+      })
+      .populate({
+        path: 'reviews',
+        populate: {
+          path: 'user', // Assuming reviews have a user reference
+          select: 'name email' // Adjust fields as necessary
+        }
+      })
+      .populate('category');
+
     if (!product) {
       return res.status(404).send({ message: "Product not found", status: false });
     }
@@ -61,7 +78,7 @@ export const viewProduct = async (req, res) => {
     return res.status(200).send({ message: "Product retrieved successfully", status: true, data: product });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({ message: "Internal server error", status: false });
+    return res.status(500).send({ message: "Internal server error", status: false, error: error.message });
   }
 };
 

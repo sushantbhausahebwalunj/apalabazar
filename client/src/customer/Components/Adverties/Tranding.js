@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
           MRP <span className="line-through">{product.price}</span> <span className="font-semibold">{product.discountedPrice}</span>
         </div>
         <div>
-          DMart <span className="font-semibold">{product.discountedPrice}</span>
+          Sale <span className="font-semibold">{product.discountedPrice}</span>
         </div>
       </div>
       <div className="text-green-600 text-xs sm:text-sm font-semibold mb-1 sm:mb-2">{product.discountPercent}% off</div>
@@ -74,8 +74,10 @@ const Trending = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 5000,
     slidesToShow: isMobile ? 1 : 3,
+    autoplay: true,
+    autoplaySpeed: 1000,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
@@ -90,7 +92,8 @@ const Trending = () => {
   }
 
   return (
-    <div className="trending-products">
+    <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg overflow-hidden">
+      <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
       <Slider {...settings}>
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />

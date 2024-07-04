@@ -14,6 +14,7 @@ import ValuePack from '../Pages/Specials/Specials.js';
 import Checkoutpage from '../Profile/components/Orders/Checkoutpage.js';
 import Checkout from '../Profile/components/Orders/Checkoutpage.js';
 import SearchDashboard from '../customer/Components/SerchPage/Searchpage.js';
+import RatingsAndReviews from '../customer/Components/ReviewProduct/Reviewform.js';
 
 
 
@@ -31,11 +32,12 @@ function CustomersRoute() {
       <Route path="/category" element={<Category />} />
       <Route path="/dairy" element={<Dairy />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
-      <Route path="/product/:id" element={<ProductDetails />}></Route>
+      <Route path="product/:id" element={<ProductDetails />}></Route>
       <Route path="/searchpage" element={<SearchDashboard/>}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/checkout" element={<Checkout />}></Route>
       <Route path="/myprofile" element={<Profile/>}></Route>
+      <Route path="/review/:id" element={<RatingsAndReviews/>}></Route>
 
 
       </Routes>

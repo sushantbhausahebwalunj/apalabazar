@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 
 const PORT = 5454;
 import dotenv from 'dotenv';
-
 dotenv.config({
   path: './.env',
 });

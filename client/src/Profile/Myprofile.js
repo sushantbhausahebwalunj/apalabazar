@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   CssBaseline,
@@ -143,23 +144,27 @@ function Myprofile() {
             {drawer}
           </Drawer>
         </Box>
-        <Box
+        <Box 
           component="main"
           sx={{
-            bgcolor: "rgba(135, 206, 250, 0.5)",
+            backgroundColor: "rgba(135, 206, 250, 0.5)",
             p: 3,
             width: { sm: `calc(100% - ${240}px)` },
-minHeight:"83vh"
+            minHeight: "83vh",
+            backgroundImage: `url('https://i.pinimg.com/736x/73/52/ea/7352ea23e22e5f2417d2ffc9eb84f2a4.jpg')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
+
           <Toolbar />
           <div className="mt-[-40px]">
-          <Routes>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/orders" element={<Order />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/likes" element={<WishList />} />
-          </Routes>
+            <Routes>
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/orders" element={<Order />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/likes" element={<WishList />} />
+            </Routes>
           </div>
         </Box>
       </Box>

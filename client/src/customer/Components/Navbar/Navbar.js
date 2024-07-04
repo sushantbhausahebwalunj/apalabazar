@@ -14,6 +14,10 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
+  // Check if authToken is present
+  const authToken = localStorage.getItem('authToken');
+  const isAuthenticated = !!authToken;
+
   const handleNavigate = () => {
     navigate("/category");
   };
@@ -25,7 +29,6 @@ const Navbar = (props) => {
   const showCart = () => {
     navigate("/cart");
   };
-
 
   const handleProfileClick = () => {
     if (localStorage.getItem('role') === "ADMIN") {
@@ -42,13 +45,17 @@ const Navbar = (props) => {
   };
 
   const handleMouseEnter = (event) => {
-    const { top, left, height } = event.currentTarget.getBoundingClientRect();
-    setDropdownPosition({ top: top + height, left });
-    setHoverDropdown(true);
+    if (isAuthenticated) {
+      const { top, left, height } = event.currentTarget.getBoundingClientRect();
+      setDropdownPosition({ top: top + height, left });
+      setHoverDropdown(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    setHoverDropdown(false);
+    if (isAuthenticated) {
+      setHoverDropdown(false);
+    }
   };
 
   return (
@@ -98,7 +105,7 @@ const Navbar = (props) => {
                   d="M5.121 17.804A8.966 8.966 0 0112 15c2.485 0 4.735.994 6.379 2.621M15 10a3 3 0 11-6 0 3 3 0 016 0z"
                 ></path>
               </svg>
-              {localStorage.getItem('authToken') ? (
+              {isAuthenticated ? (
                 <button
                   onClick={handleProfileClick}
                   className="text-white font-medium flex items-center"
@@ -129,41 +136,41 @@ const Navbar = (props) => {
               )}
               <Register showModal={showModal} setShowModal={setShowModal} />
             </div>
-            {hoverDropdown && (
-                <div
-                  className="fixed bg-white shadow-lg  space-y-2  w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
-                  style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
+            {isAuthenticated && hoverDropdown && (
+              <div
+                className="fixed bg-white shadow-lg space-y-2 w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
+                style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
+              >
+                <button
+                  onClick={() => navigate('/myprofile')}
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
-                  <button
-                    onClick={() => navigate('/myprofile')}
-                    className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
-                  >
-                    <FaUser className="mr-2" />
-                    My Profile
-                  </button>
-                  <button
-                    onClick={() => navigate('/wishlist')}
-                    className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
-                  >
-                    <FaHeart className="mr-2" />
-                    Wishlist
-                  </button>
-                  <button
-                    onClick={() => navigate('/orders')}
-                    className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
-                  >
-                    <FaBox className="mr-2" />
-                    Orders
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
-                  >
-                    <FaSignOutAlt className="mr-2" />
-                    Logout
-                  </button>
-                </div>
-              )}
+                  <FaUser className="mr-2" />
+                  My Profile
+                </button>
+                <button
+                  onClick={() => navigate('/wishlist')}
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                >
+                  <FaHeart className="mr-2" />
+                  Wishlist
+                </button>
+                <button
+                  onClick={() => navigate('/orders')}
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                >
+                  <FaBox className="mr-2" />
+                  Orders
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                >
+                  <FaSignOutAlt className="mr-2" />
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex items-center space-x-2">
             <button onClick={showCart}>

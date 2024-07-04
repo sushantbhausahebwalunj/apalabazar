@@ -6,7 +6,7 @@ import { fetchCategories, createCategory, updateCategory, deleteCategory } from 
 const sharedClasses = {
   border: 'border-[1px] border-gray-400',
   primary: 'border-[1px] border-black text-gray-700',
-  secondary: 'bg-blue-500 font-medium',
+  secondary: 'bg-blue-500 font-medium', 
   muted: 'hover:bg-[--muted]',
 };
 

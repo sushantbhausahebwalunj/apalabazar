@@ -17,7 +17,7 @@ function ProductDetails() {
   const { productDetails, status, error } = useSelector((state) => state.products);
   const { addTocart } = useCartContext();
 
-  const [tab, setTab] = useState("Description");
+  const [tab, setTab] = useState("Reviews");
   const [viewport, setViewport] = useState(window.innerWidth < 620);
 
   useEffect(() => {
@@ -104,8 +104,8 @@ function ProductDetails() {
                     </button>
                   </div>
                   <div className='mt-4 px-4'>
-                    {tab === 'Description' && <div dangerouslySetInnerHTML={{ __html: productDetails?.description }} />
-                    }
+                  <div dangerouslySetInnerHTML={{ __html: productDetails?.description }} />
+                    
                   </div>
                 </div>
               </div>
@@ -114,7 +114,7 @@ function ProductDetails() {
 
         </div>
         <nav className='flex justify-start items-center gap-12 select-none mt-12'>
-          <ul onClick={() => setTab("Reviews & Ratings ")} className={`cursor-pointer  transition-all ${tab === "Review & Ratings" ? 'border-b-2 border-green-600 p-2' : ''}`}>Reviews & Ratings</ul>
+          <ul onClick={() => setTab("Reviews")} className={`cursor-pointer  transition-all ${tab === "Review & Ratings" ? 'border-b-2 border-green-600 p-2' : ''}`}>Reviews & Ratings</ul>
           <ul onClick={() => setTab("Country of Origin")} className={`cursor-pointer transition-all ${tab === "Country of Origin" ? 'border-b-2 border-green-600 p-2' : ''}`}>Country of Origin</ul>
           <ul onClick={() => setTab("Disclaimer")} className={`cursor-pointer transition-all ${tab === "Disclaimer" ? 'border-b-2 border-green-600 p-2' : ''}`}>Disclaimer</ul>
         
@@ -150,7 +150,7 @@ function ProductDetails() {
             </p>
           </div>}
  
-          {tab === "Reviews & Ratings " && 
+          {tab === "Reviews" && 
             
             <Reviews/>}
         </div>

@@ -15,7 +15,7 @@ const Reviews = React.memo(() => {
   useEffect(() => {
     const getReview = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5454/api/review/product/668599899130c794c500979e`, {
+        const resp = await axios.get(`http://localhost:5454/api/review/product/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

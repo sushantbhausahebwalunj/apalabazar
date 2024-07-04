@@ -209,9 +209,8 @@ const FrozenSnacks = () => {
   };
 
   return (
-    <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-      <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2>
-      {isMobile ? (
+    <div>
+     {isMobile ? (
         <>
           <div className="flex flex-wrap justify-start gap-3 sm:gap-3 p-3 sm:p-3">
             {visibleProducts.map((product, index) => (

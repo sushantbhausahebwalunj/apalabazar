@@ -29,7 +29,7 @@ const navigate = useNavigate();
     setError(null);
 
     const review = {
-        productId:'668599899130c794c500979e',
+        productId:id,
         review: description,
         rating: rating,
     };

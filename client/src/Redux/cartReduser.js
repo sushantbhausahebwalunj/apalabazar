@@ -4,17 +4,17 @@ function cartReducer(state, action) {
     if (action.type === "ADD") {
         let {product} = action.payload;
       //  console.log(action.payload)
-
       const newprod={
-        id:product.id,
-        image:product.image,
-        mrp:product.mrp,
-        name:product.name,
-        price:product.price,
+        id:product.id ||product._id,
+        image:product.image||product.imageUrl,
+        mrp:product.mrp||product.price,
+        name:product.name||product.title,
+        price:product.price||product.discountedPrice,
         qty:1,
-        discount:product.discount,
+        discount:product.discount||product.discountPercent,
         weight:product.weight
-      } 
+      }
+
         // Ensure state is an array
         if (!Array.isArray(state)) {
             state = [];
@@ -34,3 +34,14 @@ function cartReducer(state, action) {
 
 export default cartReducer;
 
+// const cartReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'ADD':
+//       return [...state, action.payload.product];
+//     // Add other cases as needed
+//     default:
+//       return state;
+//   }
+// };
+
+// export default cartReducer;

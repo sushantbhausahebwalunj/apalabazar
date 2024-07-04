@@ -1,27 +1,33 @@
-import { createContext, useReducer,useContext } from "react";
+import { createContext, useReducer, useContext, useEffect } from "react";
 import reducer from '../Redux/cartReduser'
 
 const CartContext = createContext();
 
+const CartProvider = ({ children }) => {
+  const initialState = JSON.parse(localStorage.getItem('cart')) || [];
 
-const CartProvider = ({children})=>{
- 
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    const initialState=localStorage.getItem('cart')
- 
+  const addTocart = (product) => {
+    console.log(product);
+    alert("Product added successfully");
+    dispatch({ type: "ADD", payload: { product } });
+  };
 
-    const [state,dispatch] = useReducer(reducer,initialState)
- 
-    const addTocart=(product)=>{
-        alert("Product added succefully")
-dispatch({type:"ADD",payload:{product}});
- };
+  // Use useEffect to update localStorage whenever state changes
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state));
+  }, [state]);
 
-    return (<CartContext.Provider value={{...state,addTocart}}>{children}</CartContext.Provider>)
+  return (
+    <CartContext.Provider value={{ ...state, addTocart }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
-const useCartContext = ()=>{
-    return useContext(CartContext)
-}
+const useCartContext = () => {
+  return useContext(CartContext);
+};
 
-export {CartProvider,useCartContext};
+export { CartProvider, useCartContext };

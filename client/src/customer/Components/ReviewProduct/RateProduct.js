@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Reviews = () => {
+const Reviews = React.memo(() => {
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]); 
   const { id } = useParams();
   const token = localStorage.getItem('authToken');
 
-  const handleRating = () => {
+  const handleRating = useCallback(() => {
     navigate(`/review/${id}`);
-  };
+  }, [navigate, id]);
 
   useEffect(() => {
     const getReview = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5454/api/review/product/668599899130c794c500979e`, {
+        const resp = await axios.get(`http://localhost:5454/api/review/product/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -26,10 +26,8 @@ const Reviews = () => {
       }
     };
     getReview(); // Call the function to fetch reviews
-  }, []);
+  }, [token]);
 
-  console.log(reviews)
-  
   return (
     <div className="p-4">
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
@@ -97,11 +95,6 @@ const Reviews = () => {
       </div>
 
       <div className="space-y-4">
-
-
-
-
-        <div className="space-y-4">
         {reviews.map((review) => (
           <div key={review._id} className="border-b pb-4">
             <div className="flex items-center space-x-2 mb-2">
@@ -122,40 +115,10 @@ const Reviews = () => {
             </div>
             <div className="text-zinc-600 mb-2 flex justify-between">
               <span>{review.user.userName}</span>
-              <span>Data:{new Date(review.createdAt).toLocaleDateString()}</span>
+              <span>Date: {new Date(review.createdAt).toLocaleDateString()}</span>
             </div>
-            </div>
+          </div>
         ))}
-      </div>
-
-        {/* <div className="border-b pb-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <div className="flex items-center bg-green-500 text-white px-2 py-1 rounded">
-              <span className="text-lg font-semibold">5★</span>
-            </div>
-            <span className="font-semibold">Nice shoes</span>
-          </div>
-          <div className="text-zinc-600 mb-2">
-            <span>Flipkart Customer</span>
-            <span>· 11 months ago</span>
-          </div>
-          <div className="text-zinc-500 text-sm">Certified Buyer, Jagatsinghapur</div>
-
-        </div>
-
-        <div className="border-b pb-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <div className="flex items-center bg-yellow-500 text-white px-2 py-1 rounded">
-              <span className="text-lg font-semibold">3★</span>
-            </div>
-            <span className="font-semibold">Quality is ok but not fit well</span>
-          </div>
-          <div className="text-zinc-600 mb-2">
-            <span>Apoorva Nirwan</span>
-            <span>· 5 months ago</span>
-          </div>
-          <div className="text-zinc-500 text-sm">Certified Buyer, Sikar</div>
-        </div> */}
       </div>
 
       <div className="mt-4">
@@ -163,6 +126,6 @@ const Reviews = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Reviews;

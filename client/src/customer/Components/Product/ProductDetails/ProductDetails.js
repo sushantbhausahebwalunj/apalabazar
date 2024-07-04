@@ -55,9 +55,9 @@ function ProductDetails() {
       <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
         <div className='shadow-lg mt-5 bg-white w-full'>
           <div className='flex flex-col rounded-3xl mt-10 lg:flex-row items-center justify-center'>
-            <div className='w-3/4 lg:w-[700px] lg:h-[600px] my-6 lg:my-0 mx-12'>
+            <div className='w-3/4 lg:w-[700px] lg:h-[800px] my-6 lg:my-0 mx-12'>
               <Slider {...settings}>
-                <div className='w-full h-full'>
+                <div className=' absolute w-full h-full'>
                   <img
                     src={productDetails?.imageUrl}
                     alt={productDetails?.title}

@@ -100,9 +100,11 @@ function HomePage() {
       </div>
      
 
-      {!isMobile && <TrendingProducts />}
+      {!isMobile && <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
+        <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Tranding Products</h2><TrendingProducts /></div>}
       <GadgetSection />
-      {!isMobile && <FrozenSnacks />}
+      {!isMobile &&    <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
+        <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2><TrendingProducts /></div>}
       <div className="flex"></div>
       <ProductComponent />
       <GadgetSection />

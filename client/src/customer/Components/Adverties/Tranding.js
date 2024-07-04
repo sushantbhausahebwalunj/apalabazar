@@ -92,13 +92,13 @@ const Trending = () => {
   }
 
   return (
-    <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg overflow-hidden">
-      <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
+  <div>
       <Slider {...settings}>
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </Slider>
+
     </div>
   );
 };

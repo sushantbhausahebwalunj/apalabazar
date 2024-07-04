@@ -99,7 +99,7 @@ function ProductDetails() {
                   <StarIcon />
                   <StarIcon />
                 </div>
-                <hr className='my-6' />
+                <hr className='my-6' w-10 />
                 <div className='flex gap-2 items-center'>
                   <div className='flex text-black text-2xl font-bold rounded-lg items-center '>
                     <p>₹400</p>

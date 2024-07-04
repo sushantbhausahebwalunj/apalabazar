@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import { useLocation } from 'react-router-dom';
-import { FrozenData } from '../../../../Pages/FrozenFood/constant';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../Navbar/Navbar';
-import MobNavbar from "../../Navbar/MobileNavbar"
+import MobNavbar from "../../Navbar/MobileNavbar";
 import Footer from '../../footer/Footer';
-import './slick.css'
+import './slick.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProduct } from '../../../../Redux/Product/productSlice'; // Update the import path as needed
 import { useCartContext } from '../../../../Usecontext/cartContext';
+import { StarIcon } from '@heroicons/react/solid';
 import Reviews from '../../ReviewProduct/RateProduct';
 
 function ProductDetails() {
+  const dispatch = useDispatch();
+  const { id } = useParams(); // Use useParams to get the product ID
+  const { productDetails, status, error } = useSelector((state) => state.products);
   const { addTocart } = useCartContext();
-  const pathname = useLocation();
+
   const [tab, setTab] = useState("Description");
-  const [productData, setProductData] = useState({
-    name: "",
-    url: "",
-    mrp: "",
-    price: "",
-    discount: "",
-    image: [],
-    description: "",
-  });
+  const [viewport, setViewport] = useState(window.innerWidth < 620);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(fetchProduct(id)); // Fetch product details based on ID
+  }, [dispatch, id]);
 
-    FrozenData.map((item) => {
-      if (item.url === pathname.pathname) {
-        setProductData({ ...item });
-      }
-    });
-  }, [pathname.pathname]);
+  useEffect(() => {
+    const handleResize = () => setViewport(window.innerWidth < 620);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const settings = {
     dots: true,
@@ -40,126 +38,89 @@ function ProductDetails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const [viewport, setViewport] = useState(false);
-  useEffect(() => {
-    if (window.innerWidth < 620) {
-      setViewport(true)
-    } else {
-      setViewport(false)
-    }
-  }, [])
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
-      <div className=' lg:block '>
+      <div className='lg:block'>
         {viewport ? <MobNavbar /> : <Navbar number={12} />}
       </div>
-      <div className='flex flex-col overflow-hidden items-center justify-center mt-5'>
-        <div className='shadow-lg mt-5 bg-white w-full '>
+      <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
+        <div className='shadow-lg mt-5 bg-white w-full'>
           <div className='flex flex-col rounded-3xl mt-10 lg:flex-row items-center justify-center'>
-            <div className='w-3/4 lg:w-[399px] lg:h-[300px] my-6 lg:my-0 mx-12'>
+            <div className='w-3/4 lg:w-[700px] lg:h-[600px] my-6 lg:my-0 mx-12'>
               <Slider {...settings}>
-                <div className="flex justify-center items-center w-[400px] h-[300px]">
+                <div className='w-full h-full'>
                   <img
-                    src="https://www.apple.com/newsroom/images/product/iphone/standard/apple_iphone-12_new-design_10132020_big.jpg.large.jpg"
-                    className=' object-cover w-80'
-                    alt="Image 1"
+                    src={productDetails?.imageUrl}
+                    alt={productDetails?.title}
+                    className='w-full h-full object-cover'
                   />
                 </div>
-                <div className="flex justify-center items-center w-[400px] h-[300px]">
-                  <img
-                    src="https://www.reliancedigital.in/medias/iPhone-11-64GB-RED-491901640-i-2-1200Wx1200H?context=bWFzdGVyfGltYWdlc3w5NjQzNHxpbWFnZS9qcGVnfGltYWdlcy9oM2QvaDZmLzk0MjE4OTkyNjgxMjYuanBnfDU3ZGNiMTZiMDVmODJmZDg1NmFkZmQyZGQyYWEzN2VkZDZmYzY5ZTBmYTZkNDlhZTIxN2RhNDI3NGFkNDUwMGE"
-                    className='  object-cover w-80'
-                    alt="Image 2"
-                  />
-                </div>
-                <div className="flex justify-center items-center w-[400px] h-[300px]">
-                  <img
-                    src="https://www.maplestore.in/cdn/shop/files/iPhone_14_ProductRED_PDP_Image_Position-1A__WWEN_047b75d1-4b57-4c60-a742-314efb83b487_1445x.jpg?v=1701815105"
-                    className=' object-cover w-80'
-                    alt="Image 3"
-                  />
-                </div>
+                {/* Add more slides here if needed */}
               </Slider>
-
             </div>
-            <div className='w-screen lg:w-full p-1 backdrop-blur-xl pl-8 z-10 relative'>
-              <h2 className='text-2xl mb-4 font-thin'>{productData.productTitle}</h2>
-
-
-              <div className='rounded-lg p-2'>
-                <h2 className='font-semibold text-xl'>{productData.name}</h2>
-
-                <div className='rounded-lg p-2   '>
-                  <p className=' font-bold text-xl'>IPHONE 15 PRO </p>
-
-                </div>
-                <div className='flex gap-1'>
-                  <StarIcon />
-                  <StarIcon />
-                  <StarIcon />
-                  <StarIcon />
-                  <StarIcon />
-                </div>
-                <hr className='my-6' w-10 />
-                <div className='flex gap-2 items-center'>
-                  <div className='flex text-black text-2xl font-bold rounded-lg items-center '>
-                    <p>₹400</p>
-
+            <div className='lg:ml-5 flex flex-col w-full'>
+              <div className='flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0'>
+                <div className='flex flex-col space-y-3 max-h-max'>
+                  <h1 className='text-xl lg:text-3xl font-semibold'>
+                    {productDetails?.title}
+                  </h1>
+                  <div className='flex items-center'>
+                    <StarIcon className='h-6 w-6 text-yellow-500' />
+                    <span className='text-yellow-500 ml-2'>
+                      {productDetails?.numRatings || 3} Ratings
+                    </span>
                   </div>
-
-                  <div className=' px-2 rounded-lg '>
-                    <div class="relative">
-                      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                        <div class="w-full border-t border-gray-400"></div>
-                      </div>
-                      <div class="relative flex justify-center">
-                        <span class=" text-gray-400">₹600</span>
-                      </div>
-                    </div>
+                  <h2 className='text-lg font-semibold'>
+                    ₹{productDetails?.discountedPrice}
+                    <span className='text-sm line-through ml-2'>
+                      ₹{productDetails?.price}
+                    </span>
+                  </h2>
+                  <div className='flex flex-row items-center'>
+                    <button
+                      className='bg-green-600 text-white px-4 py-2 rounded-lg'
+                      onClick={() => addTocart(productDetails)}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
-                <div className='flex justify-between my-3 rounded-md'>
-                  <button className='bg-green-100 text-green-600 px-3 py-1 rounded-md'> 100% Saved {productData.discount}</button>
+                <div className='lg:mt-6 flex flex-col w-full'>
+                  <div className='flex items-center border-b '>
+                    <button
+                      className={`py-2 px-4 text-lg font-medium ${tab === 'Description' ? 'border-b-2 border-blue-500' : ''}`}
+                      onClick={() => setTab('Description')}
+                    >
+                      Description
+                    </button>
+                  </div>
+                  <div className='mt-4 px-4'>
+                    {tab === 'Description' && <div dangerouslySetInnerHTML={{ __html: productDetails?.description }} />
+                    }
+                  </div>
                 </div>
-                <div className='flex hover:scale-[103%] transition-all justify-between my-6 p-[2px] w-fit rounded-lg bg-gradient-to-br from-violet-500 to-orange-300'>
-                  <button onClick={() => addTocart(productData)} className='bg-green-400   w-32 text-black p-2 rounded-md'>Add to Cart</button>
-                </div>
-               
-                <hr className='my-6' />
               </div>
-
             </div>
-
           </div>
 
         </div>
         <nav className='flex justify-start items-center gap-12 select-none mt-12'>
-          <ul onClick={() => setTab("Description")} className={`cursor-pointer select-none transition-all ${tab === "Description" ? 'border-b-2 border-green-600 p-2' : ''}`}>Description</ul>
-          <ul onClick={() => setTab("Reviews & Ratings ")} className={`cursor-pointer transition-all ${tab === "Review & Ratings" ? 'border-b-2 border-green-600 p-2' : ''}`}>Reviews & Ratings</ul>
+          <ul onClick={() => setTab("Reviews & Ratings ")} className={`cursor-pointer  transition-all ${tab === "Review & Ratings" ? 'border-b-2 border-green-600 p-2' : ''}`}>Reviews & Ratings</ul>
           <ul onClick={() => setTab("Country of Origin")} className={`cursor-pointer transition-all ${tab === "Country of Origin" ? 'border-b-2 border-green-600 p-2' : ''}`}>Country of Origin</ul>
           <ul onClick={() => setTab("Disclaimer")} className={`cursor-pointer transition-all ${tab === "Disclaimer" ? 'border-b-2 border-green-600 p-2' : ''}`}>Disclaimer</ul>
         
         </nav>
+        
         <div className='w-[80vw] mt-5  rounded-lg overflow-hidden p-6'>
-          {tab === "Description" && <div class=" font-bold mb-4 flex flex-col">
-
-
-            <p class="mb-10">This document is an electronic record in terms of Information Technology Act, 2000 and rules there under as applicable and the amended provisions pertaining to electronic records in various statutes as amended by the Information Technology Act, 2000. This electronic record is generated by a computer system and does not require any physical or digital signatures.Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.</p>
-            <img src='https://www.apple.com/v/iphone/home/bu/images/meta/iphone__ky2k6x5u6vue_og.png'></img>
-
-            <p class="mb-10 mt-10">This document is published in accordance with the provisions of Rule 3 (1) of the Information Technology (Intermediaries guidelines) Rules, 2011 that require publishing the rules and regulations, privacy policy and Terms of Use for access or usage of www.flipkart.com website.Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.</p>
-            <img src='https://www.apple.com/newsroom/images/product/iphone/standard/apple_iphone-12_new-design_10132020_big.jpg.large.jpg'></img>
-
-            <p class="mb-10 mt-10">The domain name www.flipkart.com (hereinafter referred to as "Website") is owned by Flipkart Internet Private Limited a company incorporated under the Companies Act, 1956 with its registered office at Vaishnavi Summit, Ground Floor, 7th Main, 80 feet Road, 3rd Block, Koramangala Industrial Layout, Next to Wipro office, Corporation Ward No. 68, Koramangala, Bangalore - 560 034, Karnataka, India (hereinafter referred to as "Flipkart").Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.</p>
-            <img src='https://www.reliancedigital.in/medias/iPhone-11-64GB-RED-491901640-i-2-1200Wx1200H?context=bWFzdGVyfGltYWdlc3w5NjQzNHxpbWFnZS9qcGVnfGltYWdlcy9oM2QvaDZmLzk0MjE4OTkyNjgxMjYuanBnfDU3ZGNiMTZiMDVmODJmZDg1NmFkZmQyZGQyYWEzN2VkZDZmYzY5ZTBmYTZkNDlhZTIxN2RhNDI3NGFkNDUwMGE'></img>
-
-            <p class="mb-10 mt-10">Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.</p>
-            <img src='https://fdn.gsmarena.com/imgroot/news/21/04/iphone-13-product-red-renders/-1200/gsmarena_002.jpg'></img>
-
-            <p class="mb-10 mt-10 font-sm text-red-500">Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.Your use of the Website and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Website including the applicable policies which are incorporated herein by way of reference. If You transact on the Website, You shall be subject to the policies that are applicable to the Website for such transaction. By mere use of the Website, You shall be contracting with Flipkart Internet Private Limited and these terms and conditions including the policies constitute Your binding obligations, with Flipkart.</p>
-
-
-          </div>}
           {tab === "Disclaimer" && <div class=" w-[80vw]  rounded-lg overflow-hidden p-6">
             <h2 class="text-2xl font-bold mb-4">Apala Bazaar Terms of Use</h2>
             <div class="text-gray-700">
@@ -189,21 +150,13 @@ function ProductDetails() {
             </p>
           </div>}
  
-          {tab === "Reviews & Ratings " &&
+          {tab === "Reviews & Ratings " && 
             
             <Reviews/>}
         </div>
       </div>
       <Footer />
     </>
-  );
-}
-
-function StarIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="orange" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-star">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
   );
 }
 

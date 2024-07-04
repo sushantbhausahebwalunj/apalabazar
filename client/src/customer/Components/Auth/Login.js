@@ -1,10 +1,11 @@
-import React, { useState } from "react"; // Adjust the path to your illustration
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import Register from '../assets/register.png';
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../axiosConfig";
+import { jwtDecode } from "jwt-decode"; // Import jwtDecode correctly
 
 const sharedClasses = {
   textZinc: "text-zinc-500",
@@ -23,6 +24,19 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('role');
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+      }
+    }
+  }, [navigate]);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -37,12 +51,10 @@ const Login = () => {
     try {
       const response = await axiosInstance.post(`/auth/login`, { email, password }, { withCredentials: true });
       if (response.data.status) {
-        // Store the token and role in localStorage
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('role', response.data.data.role);
         toast.success("Login successful");
-        
-        // Navigate based on user role
+
         if (response.data.data.role === 'ADMIN') {
           navigate('/admin');
         } else {
@@ -126,7 +138,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      {/* Place ToastContainer here to catch all toast notifications */}
       <ToastContainer position="bottom-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );

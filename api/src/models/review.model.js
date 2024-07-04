@@ -3,7 +3,11 @@ import mongoose, { Schema } from "mongoose";
 const reviewSchema = new Schema({
   review: {
     type: String,
-    required: true,
+    // required: true,
+  },
+  rating: {
+    type: Number,
+    // required: true,
   },
   product: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +16,7 @@ const reviewSchema = new Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   createdAt: {

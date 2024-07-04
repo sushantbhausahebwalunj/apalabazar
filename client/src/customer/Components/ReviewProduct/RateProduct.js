@@ -1,15 +1,35 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Reviews = () => {
   const navigate = useNavigate();
-  const {id} = useParams();
-  // console.log(id)
-  const handleRating = ()=>{
-    navigate(`/review/${id}`)
-  }
+  const [reviews, setReviews] = useState([]); 
+  const { id } = useParams();
+  const token = localStorage.getItem('authToken');
 
+  const handleRating = () => {
+    navigate(`/review/${id}`);
+  };
+
+  useEffect(() => {
+    const getReview = async () => {
+      try {
+        const resp = await axios.get(`http://localhost:5454/api/review/product/668599899130c794c500979e`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setReviews(resp.data); // Save response in state
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getReview(); // Call the function to fetch reviews
+  }, []);
+
+  console.log(reviews)
+  
   return (
     <div className="p-4">
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
@@ -18,11 +38,11 @@ const Reviews = () => {
           <div className="flex items-center bg-green-500 text-white px-2 py-1 rounded">
             <span className="text-lg font-semibold">4★</span>
           </div>
-          <span className="text-zinc-600">819 ratings and 37 reviews</span>
+          <span className="text-zinc-600">{reviews.length} ratings and reviews</span>
         </div>
         <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleRating}>Rate Product</button>
       </div>
-{/* 
+
       <div className="flex flex-col lg:flex-row justify-between mb-4">
         <div className="mb-4 lg:mb-0">
           <h3 className="font-semibold mb-2">What our customers felt:</h3>
@@ -74,36 +94,41 @@ const Reviews = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className="space-y-4">
-        <div className="border-b pb-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <div className="flex items-center bg-green-500 text-white px-2 py-1 rounded">
-              <span className="text-lg font-semibold">4★</span>
-            </div>
-            <span className="font-semibold">Wow amazing 😍</span>
-          </div>
-          <div className="flex flex-wrap space-x-2 mb-2">
-            <img
-              src="https://placehold.co/50x50"
-              alt="Review image 1"
-              className="w-12 h-12 object-cover rounded mb-2"
-            />
-            <img
-              src="https://placehold.co/50x50"
-              alt="Review image 2"
-              className="w-12 h-12 object-cover rounded mb-2"
-            />
-          </div>
-          <div className="text-zinc-600 mb-2">
-            <span>Chandini Sangchoju</span>
-            <span>· 10 months ago</span>
-          </div>
-          <div className="text-zinc-500 text-sm">Certified Buyer, Itanagar</div>
-        </div>
 
-        <div className="border-b pb-4">
+
+
+
+        <div className="space-y-4">
+        {reviews.map((review) => (
+          <div key={review._id} className="border-b pb-4">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className={`flex items-center text-white px-2 py-1 rounded ${review.rating >= 4 ? 'bg-green-500' : review.rating === 3 ? 'bg-yellow-500' : 'bg-red-500'}`}>
+                <span className="text-lg font-semibold">{review.rating}★</span>
+              </div>
+              <span className="font-semibold">{review.review}</span>
+            </div>
+            <div className="flex flex-wrap space-x-2 mb-2">
+              {review.images && review.images.length > 0 && review.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Review image ${index + 1}`}
+                  className="w-12 h-12 object-cover rounded mb-2"
+                />
+              ))}
+            </div>
+            <div className="text-zinc-600 mb-2 flex justify-between">
+              <span>{review.user.userName}</span>
+              <span>Data:{new Date(review.createdAt).toLocaleDateString()}</span>
+            </div>
+            </div>
+        ))}
+      </div>
+
+        {/* <div className="border-b pb-4">
           <div className="flex items-center space-x-2 mb-2">
             <div className="flex items-center bg-green-500 text-white px-2 py-1 rounded">
               <span className="text-lg font-semibold">5★</span>
@@ -130,7 +155,7 @@ const Reviews = () => {
             <span>· 5 months ago</span>
           </div>
           <div className="text-zinc-500 text-sm">Certified Buyer, Sikar</div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-4">

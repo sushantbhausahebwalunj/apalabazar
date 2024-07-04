@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const sharedClasses = {
@@ -14,42 +14,54 @@ const sharedClasses = {
 };
 
 const RatingsAndReviews = () => {
+const navigate = useNavigate();
   const { id } = useParams();
   const [rating, setRating] = useState(4);
   const [description, setDescription] = useState('');
+  const [error, setError] = useState(null);
 
+  const token = localStorage.getItem('authToken');
   const handleSubmit = async () => {
+    if (!description) {
+        setError("Description cannot be empty");
+        return;
+    }
+    setError(null);
+
     const review = {
-      productId: '6684fa9c8376353fe129c536',
-      review: description
+        productId:'668599899130c794c500979e',
+        review: description,
+        rating: rating,
     };
-    const ratingData = {
-      productId:'6684fa9c8376353fe129c536',
-      rating: rating
-    };
+    // const ratingData = {
+    //     productId: '6681471814f7e19e6b77579d',
+    //     rating: rating,
+    //     user:null,
+    // };
 
     try {
-      const [createRating, createReview] = await Promise.all([
-        axios.post('http://localhost:5454/api/rating/create', ratingData),
-        axios.post('http://localhost:5454/api/review/create', review)
-      ]);
-
-      if (createRating.data.status) {
-        console.log("Rating created successfully");
-      } else {
-        console.log("There is some problem creating rating");
-      }
-
-      if (createReview.data.status) {
-        console.log("Review created successfully");
-      } else {
-        console.log("There is some problem creating review");
-      }
+        const resp = await Promise.all([
+          
+          axios.post('http://localhost:5454/api/review/create', review, {
+              headers: {
+                  'Authorization': `Bearer ${token}`
+              }
+          }),
+          //  axios.post('http://localhost:5454/api/rating/create', ratingData, {
+          //       headers: {
+          //           'Authorization': `Bearer ${token}`
+          //       }
+          //   })
+        ]);
+console.log(resp)
+        if(resp[0].status==201){
+          navigate(`/product/${id}`)
+        }
+  
     } catch (error) {
-      console.error('Error in creation:', error);
+        console.error('Error in creation:', error);
     }
-  };
-
+};
   return (
     <div className={sharedClasses.cardContainer}>
       <div className={sharedClasses.flexContainer}>
@@ -111,7 +123,7 @@ const RatingsAndReviews = () => {
                 rows={7}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
-              {!description && <p className="text-red-600 text-sm">Description cannot be empty</p>}
+              {error && <p className="text-red-600 text-sm">{error}</p>}
             </div>
           </div>
           <button className={sharedClasses.submitButton} onClick={handleSubmit}>SUBMIT</button>

@@ -1,5 +1,5 @@
 import express from "express";
-import authenticate from "../middelwares/authenticat.js";
+import authenticate from "../middleware/authenticat.js";
 const router = express.Router();
 import {
     createRating,

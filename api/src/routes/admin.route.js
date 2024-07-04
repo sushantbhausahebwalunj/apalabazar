@@ -9,6 +9,6 @@ const adminRouter = express.Router();
 
 adminRouter.use('/category', categoryRouter);  
 adminRouter.use('/product', productRouter);  
-
+ 
 
 export default adminRouter;

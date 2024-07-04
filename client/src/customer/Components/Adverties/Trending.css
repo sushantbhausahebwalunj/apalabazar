@@ -1,3 +1,11 @@
+
+.slick-list {
+height: 50vh;
+
+}
+
+
+
 @media (max-width: 480px) {
     .product-card {
       width: calc((50% - 10px) - 5px); /* Adjust based on your spacing */

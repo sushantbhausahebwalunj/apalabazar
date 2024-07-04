@@ -7,6 +7,7 @@ import MobNavbar from "../../Navbar/MobileNavbar"
 import Footer from '../../footer/Footer';
 import './slick.css'
 import { useCartContext } from '../../../../Usecontext/cartContext';
+import Reviews from '../../ReviewProduct/RateProduct';
 
 function ProductDetails() {
   const { addTocart } = useCartContext();
@@ -60,21 +61,21 @@ function ProductDetails() {
                 <div className="flex justify-center items-center w-[400px] h-[300px]">
                   <img
                     src="https://www.apple.com/newsroom/images/product/iphone/standard/apple_iphone-12_new-design_10132020_big.jpg.large.jpg"
-                    className=' object-cover'
+                    className=' object-cover w-80'
                     alt="Image 1"
                   />
                 </div>
                 <div className="flex justify-center items-center w-[400px] h-[300px]">
                   <img
                     src="https://www.reliancedigital.in/medias/iPhone-11-64GB-RED-491901640-i-2-1200Wx1200H?context=bWFzdGVyfGltYWdlc3w5NjQzNHxpbWFnZS9qcGVnfGltYWdlcy9oM2QvaDZmLzk0MjE4OTkyNjgxMjYuanBnfDU3ZGNiMTZiMDVmODJmZDg1NmFkZmQyZGQyYWEzN2VkZDZmYzY5ZTBmYTZkNDlhZTIxN2RhNDI3NGFkNDUwMGE"
-                    className='  object-cover'
+                    className='  object-cover w-80'
                     alt="Image 2"
                   />
                 </div>
                 <div className="flex justify-center items-center w-[400px] h-[300px]">
                   <img
                     src="https://www.maplestore.in/cdn/shop/files/iPhone_14_ProductRED_PDP_Image_Position-1A__WWEN_047b75d1-4b57-4c60-a742-314efb83b487_1445x.jpg?v=1701815105"
-                    className=' object-cover'
+                    className=' object-cover w-80'
                     alt="Image 3"
                   />
                 </div>
@@ -134,8 +135,10 @@ function ProductDetails() {
         </div>
         <nav className='flex justify-start items-center gap-12 select-none mt-12'>
           <ul onClick={() => setTab("Description")} className={`cursor-pointer select-none transition-all ${tab === "Description" ? 'border-b-2 border-green-600 p-2' : ''}`}>Description</ul>
+          <ul onClick={() => setTab("Reviews & Ratings ")} className={`cursor-pointer transition-all ${tab === "Review & Ratings" ? 'border-b-2 border-green-600 p-2' : ''}`}>Reviews & Ratings</ul>
           <ul onClick={() => setTab("Country of Origin")} className={`cursor-pointer transition-all ${tab === "Country of Origin" ? 'border-b-2 border-green-600 p-2' : ''}`}>Country of Origin</ul>
           <ul onClick={() => setTab("Disclaimer")} className={`cursor-pointer transition-all ${tab === "Disclaimer" ? 'border-b-2 border-green-600 p-2' : ''}`}>Disclaimer</ul>
+        
         </nav>
         <div className='w-[80vw] mt-5  rounded-lg overflow-hidden p-6'>
           {tab === "Description" && <div class=" font-bold mb-4 flex flex-col">
@@ -185,6 +188,10 @@ function ProductDetails() {
               <span class="font-semibold">Address:</span> 123 Main Street, Pune City, India 220223
             </p>
           </div>}
+ 
+          {tab === "Reviews & Ratings " &&
+            
+            <Reviews/>}
         </div>
       </div>
       <Footer />

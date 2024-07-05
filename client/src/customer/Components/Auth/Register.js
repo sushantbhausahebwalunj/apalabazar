@@ -1,125 +1,254 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import logo from '../assets/register.png';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const sharedClasses = {
+  textZinc: "text-zinc-500",
+  hoverTextZinc: "hover:text-zinc-700",
+  darkTextZinc: "dark:text-zinc-500",
+  darkHoverTextZinc: "dark:hover:text-zinc-100",
+  bgZinc: "bg-zinc-300",
+  borderZinc: "border-zinc-300",
+  darkBgInput: "dark:bg-input",
+  darkBorderZinc: "dark:border-zinc-600",
+};
 
 const Register = ({ showModal, setShowModal }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    mobileNumber: "",
-    otp: "",
-    address: "",
-    gender: "",
-  });
+  const navigate = useNavigate();
+  const [contactMethod, setContactMethod] = useState("email");
+  const [contactValue, setContactValue] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const closeModal = () => {
+    setShowModal(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleContactChange = (e) => {
+    setContactValue(e.target.value);
+  };
+
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
+
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSendOTP = async (e) => {
     e.preventDefault();
-    // Handle form submission
+    setLoading(true);
+    try {
+      const response = await axios.post(`http://localhost:5454/api/auth/register`, { [contactMethod]: contactValue });
+      if (response.data.status) {
+        setOtpSent(true);
+        toast.success("OTP sent successfully! Please check your " + (contactMethod === "phone" ? "phone" : "email") + ".");
+      } else {
+        toast.error("Failed to send OTP");
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      toast.error("An error occurred while sending OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const payload = {
+        [contactMethod]: contactValue,
+        otp,
+        userName,
+        password,
+      };
+      console.log("Sending payload:", payload); // Log the payload for debugging
+
+      const response = await axios.post('http://localhost:5454/api/auth/verify-otp', payload);
+      if (response.data.status) {
+        toast.success("OTP verified successfully. User created.");
+        navigate('/login'); // Redirect to login page upon successful user creation
+      } else {
+        toast.error("Failed to verify OTP");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      toast.error("An error occurred while verifying OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <>
-      {showModal ? (
-        <div className="fixed inset-0  bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className=" bg-gray-300 w-11/12 max-w-4xl h-5/6 rounded-lg overflow-scroll flex">
-            <div
-              className="w-1/2 bg-cover bg-center"
-              style={{ backgroundImage: `url('./registration.png')` }}
-            ></div>
-            <div className="w-1/2 p-8 relative">
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute text-2xl top-4 right-4 text-gray-600 hover:text-gray-900"
-              >
-                &times;
-              </button>
-              <h2 className="text-2xl font-bold mb-6">Register</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-gray-700">First Name</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">Last Name</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">Mobile Number</label>
-                  <input
-                    type="text"
-                    name="mobileNumber"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">OTP</label>
-                  <input
-                    type="text"
-                    name="otp"
-                    value={formData.otp}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">Address</label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">Gender</label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-2 px-4 bg-green-500 text-white font-bold rounded hover:bg-green-600"
-                >
-                  Register
-                </button>
-              </form>
+    showModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
+        <div className="bg-white dark:bg-card bg-opacity-95 w-full lg:max-w-4xl h-[600px] mx-auto rounded-lg shadow-lg flex flex-col md:flex-row">
+          
+          <div className="bg-green-100 p-8 flex-1 hidden lg:flex items-center flex-col justify-between">
+            <div className='text-primary-foreground p-6 rounded-lg max-w-sm'>
+              <h2 className='text-3xl font-bold text-gray-700 mb-4'>Register</h2>
+              <p className='text-muted-foreground text-gray-600'>
+                Create your account to start shopping!
+              </p>
             </div>
+            <img
+              src={logo}
+              alt="Illustration of a woman shopping"
+              className="max-w-full bg-cover h-[300px] w-[400px]"
+            />
+          </div>
+          <div className="p-8 flex-1">
+            <div className="flex justify-between items-center mb-4">
+              {!otpSent && (
+                <img src="./apala bazar.png" alt="Logo" className="max-w-20" />
+              )}
+              <button
+                onClick={closeModal}
+                className={`${sharedClasses.textZinc} ${sharedClasses.hoverTextZinc} ${sharedClasses.darkTextZinc} ${sharedClasses.darkHoverTextZinc}`}
+              >
+                <img
+                  aria-hidden="true"
+                  alt="close-icon"
+                  src="https://openui.fly.dev/openui/24x24.svg?text=✖️"
+                />
+              </button>
+            </div>
+            <h2 className="text-xl font-semibold mb-3">
+              {otpSent ? "Verify OTP" : "Register"}
+            </h2>
+            {!otpSent && (
+              <button
+                onClick={() => setContactMethod(contactMethod === "phone" ? "email" : "phone")}
+                className="mt-4 text-blue-500 hover:text-blue-600 mb-2"
+              >
+                {contactMethod === "phone" ? "Register with Email" : "Register with Phone"}
+              </button>
+            )}
+            <form onSubmit={otpSent ? handleVerifyOTP : handleSendOTP}>
+              <div className="mb-4">
+                <label
+                  htmlFor={contactMethod}
+                  className={`block ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc} mb-2`}
+                >
+                  Enter your {contactMethod === "phone" ? "10 digit mobile number" : "email"}
+                </label>
+                <input
+                  type="text"
+                  id={contactMethod}
+                  value={contactValue}
+                  onChange={handleContactChange}
+                  className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                  placeholder={contactMethod === "phone" ? "+91" : "example@example.com"}
+                  required
+                />
+              </div>
+              {otpSent && (
+                <>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="otp"
+                      className={`block ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc} mb-2`}
+                    >
+                      Enter OTP
+                    </label>
+                    <input
+                      type="text"
+                      id="otp"
+                      value={otp}
+                      onChange={handleOtpChange}
+                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="username"
+                      className={`block ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc} mb-2`}
+                    >
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      id="userName"
+                      value={userName}
+                      onChange={handleUserNameChange}
+                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="password"
+                      className={`block ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc} mb-2`}
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      required
+                    />
+                  </div>
+                </>
+              )}
+              <p
+                className={`text-sm ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc} mb-4`}
+              >
+                By continuing, you agree to our{" "}
+                <a href="#" className="text-green-600 dark:text-green-400">
+                  Terms & Conditions
+                </a>
+                ,{" "}
+                <a href="#" className="text-green-600 dark:text-green-400">
+                  Refunds Policy
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-green-600 dark:text-green-400">
+                  Privacy Policy
+                </a>
+              </p>
+              <button
+                type="submit"
+                className={`w-full py-2 ${sharedClasses.bgZinc} ${sharedClasses.textZinc} rounded ${loading ? "cursor-not-allowed" : ""}`}
+                disabled={loading}
+              >
+                {loading ? "SENDING..." : otpSent ? "VERIFY OTP" : "CONTINUE"}
+              </button>
+            </form>
+            {!otpSent && (
+              <div className="mt-4">
+                <p className={`text-sm ${sharedClasses.textZinc} ${sharedClasses.darkTextZinc}`}>
+                  Existing User?{" "}
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="text-blue-500 hover:text-blue-600"
+                  >
+                    Login
+                  </button>
+                </p>
+              </div>
+            )}
           </div>
         </div>
-      ) : null}
-    </>
+        <ToastContainer position="bottom-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      </div>
+    )
   );
 };
 

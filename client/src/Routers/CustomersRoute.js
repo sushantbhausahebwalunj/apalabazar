@@ -15,6 +15,7 @@ import Checkoutpage from '../Profile/components/Orders/Checkoutpage.js';
 import Checkout from '../Profile/components/Orders/Checkoutpage.js';
 import SearchDashboard from '../customer/Components/SerchPage/Searchpage.js';
 import RatingsAndReviews from '../customer/Components/ReviewProduct/Reviewform.js';
+import SearchPage from '../Pages/SearchPage.js';
 
 
 
@@ -38,7 +39,7 @@ function CustomersRoute() {
       <Route path="/checkout" element={<Checkout />}></Route>
       <Route path="/myprofile" element={<Profile/>}></Route>
       <Route path="/review/:id" element={<RatingsAndReviews/>}></Route>
-
+      <Route path="/search/:name" element={<SearchPage/>}></Route>
 
       </Routes>
     </div>

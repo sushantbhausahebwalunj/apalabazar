@@ -14,24 +14,9 @@ import './HomePage.css'
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
 import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/HomePageAdvertisement.js";
 import Maylike from "../customer/Components/Adverties/Maylike.js";
-import MobNavbar from "../customer/Components/Navbar/MobileNavbar.js";
 
 
 function HomePage() {
-
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 2000,
-    cssEase: "linear",
-  };
-
-  const [viewport, setViewport] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
 
   useEffect(() => {
@@ -47,9 +32,34 @@ function HomePage() {
     };
   }, []);
 
+  const [viewport, setViewport] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setViewport(window.innerWidth < 620);
+      setIsMobile(window.innerWidth < 620);
+    };
+    handleResize()
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+  };
+
+
   return (
     <div className="overflow-hidden bg-gray-100">
-      {viewport ? <MobNavbar /> : <Navbar number={12} />}
+      <Navbar/>
       <div className="w-[95vw] mx-auto overflow-hidden mt-5 rounded-md">
         <Slider {...settings} className="rounded-md">
           <div className="w-full rounded-md">

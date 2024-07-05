@@ -6,8 +6,6 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 const productCardClasses = 'bg-white rounded-lg p-1 sm:p-4 flex-shrink-0 mb-3 mt-5 mx-2 sm:mx-4 w-20 h-[180px] border border-gray-300 sm:w-60 sm:h-[320px] transition-transform duration-300 hover:scale-105';
-
-
 const imageClasses = 'w-full h-[60px] object-contain mb-2 sm:h-32';
 const buttonClasses = 'bg-green-500 text-white text-4xs py-2 px-2 rounded-lg w-full sm:text-xs';
 
@@ -211,9 +209,8 @@ const FrozenSnacks = () => {
   };
 
   return (
-    <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-      <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2>
-      {isMobile ? (
+    <div>
+     {isMobile ? (
         <>
           <div className="flex flex-wrap justify-start gap-3 sm:gap-3 p-3 sm:p-3">
             {visibleProducts.map((product, index) => (

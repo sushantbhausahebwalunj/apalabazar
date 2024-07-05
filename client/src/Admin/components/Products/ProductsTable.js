@@ -1,98 +1,169 @@
-import React from 'react';
-
-const inputClasses = "border border-input rounded p-1";
-const buttonClasses = "p-2 border border-border rounded";
-const textClasses = "text-xs text-gray-600";
-const hoverClasses = "hover:bg-gray-100 ";
-const destructiveClasses = "text-destructive";
-const primaryClasses = "bg-primary text-primary-foreground";
-const accentClasses = "text-accent";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts, deleteProduct, updateProduct } from "../../../Redux/Product/productSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import UpdateProductModal from "./UpdateProductModal"; // Import the modal component
+import { Link } from "react-router-dom";
 
 const ProductTable = () => {
-  // Dummy data for products
-  const products = [
-    {
-      id: 1,
-      name: 'DogFood, Chicken & Cheese Liver Recipe',
-      productId: '#778392',
-      price: '$1,629.50',
-      quantity: 20,
-      sale: 20,
-      stock: 'Out of Stock',
-      startDate: '01/01/2023'
-    },
-    {
-      id: 2,
-      name: 'CatFood, Salmon & Tuna Recipe',
-      productId: '#778393',
-      price: '$1,329.00',
-      quantity: 15,
-      sale: 10,
-      stock: 'In Stock',
-      startDate: '02/15/2023'
-    },
-    // Add more dummy data as needed
-  ];
+  const dispatch = useDispatch();
+  const productsState = useSelector((state) => state.products);
+  const { products, status } = productsState || {};
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId)).then((response) => {
+      if (response.error) {
+        toast.error("Failed to delete product");
+      } else {
+        toast.success("Product deleted successfully");
+      }
+    });
+  };
+
+  const handleUpdate = (product) => {
+    setSelectedProduct(product);
+    setShowUpdateModal(true);
+  };
+
+  const closeUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedProduct(null);
+  };
+
+  const updateProductHandler = async (updatedProductData) => {
+    dispatch(updateProduct({ id: selectedProduct._id, productData: updatedProductData }))
+      .then((response) => {
+        if (response.error) {
+          toast.error("Failed to update product");
+        } else {
+          toast.success("Product updated successfully");
+          closeUpdateModal();
+        }
+      });
+  };
+
+  // Function to truncate description
+  const truncateDescription = (text, wordLimit) => {
+    const words = text.split(' ');
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(' ') + '...';
+  };
 
   return (
-    <div className='my-8 mx-4 h-screen'>
-      <div className="p-4 bg-white rounded-lg">
-      <div className="flex justify-between items-center mb-12">
-        <div className="flex items-center space-x-2">
-          <span className={textClasses}>Showing</span>
-          <input type="text" className={inputClasses} placeholder="10" />
-          <span className={textClasses}>entries</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <input type="text" className={inputClasses} placeholder="Search here..." />
-          <button className={buttonClasses + " " + primaryClasses}>Search</button>
-        </div>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-border">
-          <thead className={textClasses + " bg-gray-400 text-white"}>
+    <div className="p-6 bg-card text-card-foreground rounded-lg max-w-9xl mx-auto">
+      <ToastContainer />
+      <h1 className="text-2xl font-semibold mb-4">All Grocery Products</h1>
+      {status === "loading" ? (
+        <p>Loading...</p>
+      ) : (
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="p-2 border-b border-border">Product</th>
-              <th className="p-2 border-b border-border">Product ID</th>
-              <th className="p-2 border-b border-border">Price</th>
-              <th className="p-2 border-b border-border">Quantity</th>
-              <th className="p-2 border-b border-border">Sale</th>
-              <th className="p-2 border-b border-border">Stock</th>
-              <th className="p-2 border-b border-border">Start Date</th>
-              <th className="p-2 border-b border-border">Action</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Image
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Title
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Description
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Category
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Price
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Discounted Price
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Discount Percent
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Quantity
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
-          <tbody>
-            {products.map(product => (
-              <tr key={product.id} className={hoverClasses}>
-                <td className="p-4 border-b border-border">{product.name}</td>
-                <td className="p-2 border-b border-border">{product.productId}</td>
-                <td className="p-2 border-b border-border">{product.price}</td>
-                <td className="p-2 border-b border-border">{product.quantity}</td>
-                <td className="p-2 border-b border-border">{product.sale}</td>
-                <td className={"p-2 border-b border-border " + (product.stock === 'Out of Stock' ? destructiveClasses : '')}>{product.stock}</td>
-                <td className="p-2 border-b border-border">{product.startDate}</td>
-                <td className="p-2 border-b border-border">
-                  <button className={accentClasses + " hover:underline"}>View</button>
-                  <button className={accentClasses + " hover:underline"}>Edit</button>
-                  <button className={destructiveClasses + " hover:underline"}>Delete</button>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {products && products.length > 0 ? (
+              products.map((product) => (
+                <tr key={product._id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <img
+                      src={product.imageUrl}
+                      alt={product.title}
+                      className="h-16 w-16 object-cover"
+                    />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link to={`/product/${product._id}`} className="hover:text-blue-500 text-black ">
+                      {product.title}
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4 text-xs whitespace-wrap">
+                    {truncateDescription(product.description, 15)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {product.category.name} {/* Added category column */}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    ₹{product.price}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    ₹{product.discountedPrice}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {product.discountPercent}%
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {product.quantity}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                    <button
+                      className="text-indigo-600 hover:text-indigo-900"
+                      onClick={() => handleUpdate(product)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-red-600 hover:text-red-900"
+                      onClick={() => handleDelete(product._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9" className="px-6 py-4 text-center">
+                  No products available
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-      </div>
-      <div className="flex justify-between items-center mt-4">
-        <span className={textClasses}>Showing 1 to 10 of {products.length} entries</span>
-        <div className="flex items-center space-x-2">
-          {Array.from({ length: Math.ceil(products.length / 10) }, (_, index) => (
-            <button key={index} className={buttonClasses}>{index + 1}</button>
-          ))}
-        </div>
-      </div>
+      )}
+      {showUpdateModal && selectedProduct && (
+        <UpdateProductModal
+          product={selectedProduct}
+          onClose={closeUpdateModal}
+          onUpdate={updateProductHandler}
+        />
+      )}
     </div>
-    </div>
-    
   );
 };
 

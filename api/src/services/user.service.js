@@ -1,5 +1,5 @@
-import User from "../../models/user.model";
-import bcrypt from 'bcrypt';
+import User from "../models/user.model.js";
+import bcrypt from 'bcrypt'; 
 
 
 const createUser= async(userData)=>{
@@ -61,7 +61,7 @@ const getUserProfileByToken=async(token)=>{
 
 
 
-export default {
+export {
     createUser, 
     findUserbyEmail, 
     findUserbyId

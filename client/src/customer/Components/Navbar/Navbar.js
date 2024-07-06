@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Register from "../Auth/Register";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import { setUser, clearUser } from '../../../Redux/User/userSlice';
 import { useSelector, useDispatch } from "react-redux";
 import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa"; // Importing React Icons
+import { setUser, clearUser } from '../../../Redux/User/userSlice';
 
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
+  const [hoverProfile, setHoverProfile] = useState(false); // Track profile hover state
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,14 +48,29 @@ const Navbar = (props) => {
     if (isAuthenticated) {
       const { top, left, height } = event.currentTarget.getBoundingClientRect();
       setDropdownPosition({ top: top + height, left });
+      setHoverProfile(true); // Track profile hover state
       setHoverDropdown(true);
     }
   };
 
   const handleMouseLeave = () => {
     if (isAuthenticated) {
-      setHoverDropdown(false);
+      setTimeout(() => {
+        if (!hoverProfile && !hoverDropdown) {
+          setHoverDropdown(false);
+        }
+      }, 100);
     }
+  };
+
+  const handleDropdownMouseEnter = () => {
+    setHoverDropdown(true);
+    setHoverProfile(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    setHoverDropdown(false);
+    setHoverProfile(false);
   };
 
   return (
@@ -140,6 +155,8 @@ const Navbar = (props) => {
               <div
                 className="fixed bg-white shadow-lg space-y-2 w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
                 style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
+                onMouseEnter={handleDropdownMouseEnter}
+                onMouseLeave={handleDropdownMouseLeave}
               >
                 <button
                   onClick={() => navigate('/myprofile')}

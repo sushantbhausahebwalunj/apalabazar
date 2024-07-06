@@ -3,41 +3,55 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import MobNavBar from '../Navbar/MobileNavbar';
 import { FaCircleInfo } from "react-icons/fa6";
-import { useNavigate, useNavigation } from "react-router-dom";
-const CartItem = ({ unik, imageSrc, productName, price, savings, qty, setQty, decreaseQuantity, increaseQuantity, removeItem }) => {
+import { useNavigate } from "react-router-dom";
+
+const CartItem = ({ unik, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem }) => {
   return (
-    <tr className="border-b">
-      <td className="py-4 px-4 flex items-center">
-        <img src={imageSrc} alt="Product Image" className="w-16 h-16 mr-4" />
+    <tr className="border-b ">
+      <td className="py-2 px-2 sm:py-4 sm:px-4 flex items-center">
+        <img src={imageSrc} alt="Product Image" className="w-12 h-12 sm:w-16 sm:h-16 mr-2 sm:mr-4" />
         <div>
-          <span className="bg-blue-100 text-blue-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Home Delivery Only</span>
-          <p className="font-medium">{productName}</p>
-          <p className="text-sm text-zinc-500">Variant: <span className="font-semibold">320gm</span></p>
+          <span className="bg-green-300 text-black text-xs sm:text-xs w-20 sm:w-28 font-semibold mr-2 px-1 sm:px-2.5 py-0.5 rounded">Home Delivery Only</span>
+          <p className="text-sm sm:text-base font-medium">{productName}</p>
+          <p className="text-xs sm:text-md text-zinc-500">
+            Variant: <span className="font-semibold">320gm</span>
+          </p>
         </div>
+
       </td>
-      <td className="py-4 px-4 text-center">{price}</td>
-      <td className="py-4 px-4 text-center text-blue-500">{savings}</td>
-      <td className="py-4 px-4 text-center">
-        <button className="bg-blue-500 text-white px-2 py-1 rounded-l" onClick={() => decreaseQuantity(unik)}>-</button>
-        <input type="number" value={qty} readOnly min="1" className="w-12 text-center border-t border-b" />
-        <button className="bg-blue-500 text-white px-2 py-1 rounded-r" onClick={() => increaseQuantity(unik)}>+</button>
+      <td className="py-2 px-2 sm:py-4 sm:px-4 text-center">₹{price}</td>
+      <td className="py-2 px-2 sm:py-4 text-center fond-bold text-green-500">{savings}</td>
+      <td className="py-2 px-2 sm:py-4 text-center items-center">
+
+        <div className="flex flex-row">
+
+        <div className="flex flex-col sm:flex-row items-center justify-center">
+          <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 px-1 sm:px-2 py-1 rounded-t sm:rounded-l mb-1 sm:mb-0 " onClick={() =>decreaseQuantity(unik)}>-</button>
+          <input type="number" value={qty} readOnly min="1" className="w-12 sm:w-12 text-center border mb-1 sm:mb-0 " />
+          <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8  sm:px-2 py-1 rounded-b sm:rounded-r mb-1 sm:mb-0 " onClick={() => increaseQuantity(unik)}>+</button>
+        </div>
+        <div className="flex items-center justify-center mt-1">
+          <button className="text-red-500 mx-3" onClick={() => removeItem(unik)}>
+            <BsFillTrashFill className="text-xl" />
+          </button>
+        </div>
+        </div>
+       
       </td>
-      <td className="py-4 px-4 text-center align-middle">
-        <button className="text-red-500" onClick={() => removeItem(unik)}>
-          <BsFillTrashFill className="text-xl" />
-        </button>
-      </td>
+
     </tr>
   );
-}
+};
 
 const Cart = () => {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
-const checkOut =()=>{
-  navigate('/checkout')
-}
+
+  const checkOut = () => {
+    navigate('/checkout');
+  };
+
   useEffect(() => {
     async function getItems() {
       const cartItems = await JSON.parse(localStorage.getItem('cart')) || [];
@@ -80,30 +94,36 @@ const checkOut =()=>{
     calculateTotal(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
   };
-  const [viewport,setViewport] = useState(false);
+
+  const [viewport, setViewport] = useState(false);
+
   useEffect(() => {
-    if(window.innerWidth < 620){
-      setViewport(true)
-    }else{
-      setViewport(false)
-    }
-  },[])
+    const handleResize = () => {
+      setViewport(window.innerWidth < 620);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div>
-      {viewport ? <MobNavBar/> :  <Navbar number={12} />}
+    <div className=" h-[800px]">
+      {viewport ? <MobNavBar /> : <Navbar number={12} />}
       <div className="container mx-auto p-4">
         <div className="flex flex-col lg:flex-row">
+          
           <div className="w-full lg:w-3/4">
-            <h2 className="text-xl font-semibold mb-4">My Cart ({items.length} item(s))</h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white border">
-                <thead>
-                  <tr>
-                    <th className="py-2 px-4 border-b">Product</th>
-                    <th className="py-2 px-4 border-b">You Pay</th>
-                    <th className="py-2 px-4 border-b">You Save</th>
-                    <th className="py-2 px-4 border-b">No. of items</th>
-                    <th className="py-2 px-4 border-b"></th>
+          <h3 className="text-lg  mb-4">Cart / <span className="text-green-500 font-semibold">Checkout</span> / Confirmation ({items.length} items)</h3>
+          
+            <div className="overflow-x-auto rounded-md bg-white border">
+              <table className="min-w-full ">
+                <thead className="py-5">
+                  <tr >
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Product</th>
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">You Pay</th>
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">You Save</th>
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">No. of items</th>
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -111,16 +131,11 @@ const checkOut =()=>{
                     <CartItem
                       key={item.id}
                       unik={item.id}
-                      imageSrc= {typeof(item.image)==='string'?item.image:item.image[0]}
+                      imageSrc={typeof (item.image) === 'string' ? item.image : item.image[0]}
                       productName={item.name}
                       price={item.price}
                       savings={item.discount}
                       qty={item.qty}
-                      setQty={(qty) => {
-                        const updatedItems = items.map(i => i.id === item.id ? { ...i, qty } : i);
-                        setItems(updatedItems);
-                        calculateTotal(updatedItems);
-                      }}
                       decreaseQuantity={decreaseQuantity}
                       increaseQuantity={increaseQuantity}
                       removeItem={removeItem}
@@ -129,12 +144,12 @@ const checkOut =()=>{
                 </tbody>
               </table>
             </div>
-            <div className="mt-4 text-right">
-              <button className="text-red-500" onClick={() => setItems([]) & setTotal(0) & localStorage.removeItem('cart')}>Remove all</button>
+            <div className="mt-1 text-right">
+              <button className="text-red-500 text-sm mr-2" onClick={() => { setItems([]); setTotal(0); localStorage.removeItem('cart'); }}>Remove all</button>
             </div>
           </div>
-          <div className="w-full lg:w-1/4 mt-8 lg:mt-0 lg:ml-8">
-            <div className="bg-white p-4 border rounded">
+          <div className="w-full lg:w-1/4 mt-8 lg:mt-10 lg:ml-8">
+            <div className="bg-white p-4 border rounded-md">
               <h3 className="text-lg font-semibold mb-4">Price Summary</h3>
               <div className="flex justify-between mb-2">
                 <span>Cart Total</span>
@@ -154,7 +169,7 @@ const checkOut =()=>{
                 </div>
                 <span className="text-red-500">+ Extra</span>
               </div>
-              <button className="w-full bg-blue-500 text-white py-2 rounded-full" onClick={checkOut}>PROCEED TO CHECKOUT</button>
+              <button className="w-full bg-green-500 text-white py-2 rounded-full" onClick={checkOut}>PROCEED TO CHECKOUT</button>
             </div>
           </div>
         </div>

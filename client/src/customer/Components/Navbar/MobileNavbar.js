@@ -160,11 +160,9 @@ const Navbar = (props) => {
   const authToken = localStorage.getItem("authToken");
   const isAuthenticated = !!authToken;
 
-  const handleNavigate = () => {
-    navigate("/category");
-  };
-
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim() === "") return; // Check if the search field is empty
     navigate(`/search/${search}`);
   };
 
@@ -342,21 +340,21 @@ const Navbar = (props) => {
                   onMouseLeave={() => setHoverDropdown(false)}
                 >
                   <button
-                    onClick={() => navigate("/myprofile")}
+                    onClick={() => navigate("/myprofile/profile")}
                     className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                   >
                     <FaUser className="mr-2" />
                     My Profile
                   </button>
                   <button
-                    onClick={() => navigate("/wishlist")}
+                    onClick={() => navigate("/myprofile/likes")}
                     className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                   >
                     <FaHeart className="mr-2" />
                     Wishlist
                   </button>
                   <button
-                    onClick={() => navigate("/orders")}
+                    onClick={() => navigate("/myprofile/orders")}
                     className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                   >
                     <FaBox className="mr-2" />
@@ -379,8 +377,9 @@ const Navbar = (props) => {
         <input
           type="search"
           placeholder="Search for Biscuits"
-          className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-full dark:bg-white dark:text-zinc-300"
+          className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-full dark:bg-white dark:text-black"
           onChange={(e) => setSearch(e.target.value)}
+          required
           value={search}
         />
         <button

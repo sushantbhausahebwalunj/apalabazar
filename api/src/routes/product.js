@@ -10,7 +10,7 @@ import {
 
 const productRouter = express.Router();
 
-productRouter.get("/", getAllProds); // Assuming you also need a route to get all products
+productRouter.get("/?", getAllProds); // Assuming you also need a route to get all products
 productRouter.get("/id/:id",findProd)
 
 export default productRouter; 

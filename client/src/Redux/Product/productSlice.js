@@ -13,7 +13,7 @@ export const createProduct = createAsyncThunk('products/createProduct', async (p
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.get('/admin/product/view');
-    console.log(response.data.data);
+    // console.log(response.data.data);
     return response.data.data;
     
   } catch (error) {

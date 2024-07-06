@@ -9,7 +9,7 @@ const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addTocart = (product) => {
-    console.log(product);
+    // console.log(product);
     alert("Product added successfully");
     dispatch({ type: "ADD", payload: { product } });
   };

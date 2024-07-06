@@ -180,6 +180,7 @@ async function findProductById(id) {
 
 
 async function getAllProducts(reqQuery) {
+
   let {
     search,
     category,
@@ -193,6 +194,8 @@ async function getAllProducts(reqQuery) {
     pageNumber,
     pageSize,
   } = reqQuery;
+console.log(minPrice)
+
   (pageSize = pageSize || 10), (pageNumber = pageNumber || 1);
   let query = Product.find();
   // .populate("category");

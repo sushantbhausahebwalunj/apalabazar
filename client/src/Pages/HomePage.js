@@ -54,7 +54,7 @@ function HomePage() {
         <Slider {...settings} className="rounded-md">
           <div className="w-full rounded-md">
             <a href="./product/1" className="rounded-md">
-              <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
+              <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
                 <img
                   src="./skin_care.jpg"
                   className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
@@ -112,7 +112,7 @@ function HomePage() {
       <HomePageAdvertisement />
 
       
-
+<FrozenSnacks/>
       <Maylike />
       <PopularBrand />
 

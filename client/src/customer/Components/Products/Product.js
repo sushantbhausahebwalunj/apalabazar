@@ -209,10 +209,13 @@ const FrozenSnacks = () => {
   };
 
   return (
-    <div>
+    <div className='mx-5 bg-white rounded-md'>
      {isMobile ? (
         <>
-          <div className="flex flex-wrap justify-start gap-3 sm:gap-3 p-3 sm:p-3">
+        <div>
+          <h3>FrozenSnacks</h3>
+        </div>
+          <div className="flex flex-wrap justify-start  gap-3 sm:gap-3 p-3 sm:p-3">
             {visibleProducts.map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}

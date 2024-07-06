@@ -6,7 +6,6 @@ function MyprofileRouters() {
     <div>
       <Routes>
         <Route path="/*" element={<Myprofile/>}/>
-
       </Routes>
     </div>
   )

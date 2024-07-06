@@ -151,7 +151,10 @@ export const deleteProduct = async (req, res) => {
 // View all products
 export const viewProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate('category ratings reviews');
+    const products = await Product.find()
+    .populate('category')
+    .populate('ratings')
+    .populate('reviews'); 
     return res.status(200).send({ message: "Products retrieved successfully", status: true, data: products });
   } catch (error) {
     console.error(error);

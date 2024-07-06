@@ -5,20 +5,33 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from '../customer/Components/footer/Footer';
 import Slider from "react-slick";
 import ProductComponent from '../customer/Components/Adverties/Adverties.js';
-import FrozenSnacks from '../customer/Components/Products/Product.js'
-import GadgetSection from '../customer/Components/Products/GadgetSection.js'
-import PopularBrand from '../customer/Components/Brand/Popularbrand.js'
-import './HomePage.css'
-
+import FrozenSnacks from '../customer/Components/Products/Product.js';
+import GadgetSection from '../customer/Components/Products/GadgetSection.js';
+import PopularBrand from '../customer/Components/Brand/Popularbrand.js';
+import './HomePage.css';
 
 import TrendingProducts from "../customer/Components/Adverties/Tranding.js";
 import HomePageAdvertisement from "../customer/Components/HomePageAdvertisement/HomePageAdvertisement.js";
 import Maylike from "../customer/Components/Adverties/Maylike.js";
-import MobNavbar from "../customer/Components/Navbar/MobileNavbar.js";
-
 
 function HomePage() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
+  const [viewport, setViewport] = useState(window.innerWidth < 620);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobileView = window.innerWidth < 620;
+      setIsMobile(isMobileView);
+      setViewport(isMobileView);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial state
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const settings = {
     dots: true,
@@ -31,25 +44,9 @@ function HomePage() {
     cssEase: "linear",
   };
 
-  const [viewport, setViewport] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setViewport(window.innerWidth < 620);
-      setIsMobile(window.innerWidth < 620);
-    };
-    handleResize()
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   return (
     <div className="overflow-hidden bg-gray-100">
-      {viewport ? <MobNavbar /> : <Navbar number={12} />}
+      <Navbar />
       <div className="w-[95vw] mx-auto overflow-hidden mt-5 rounded-md">
         <Slider {...settings} className="rounded-md">
           <div className="w-full rounded-md">
@@ -98,24 +95,24 @@ function HomePage() {
           </div>
         </Slider>
       </div>
-     
 
-      {!isMobile && <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-        <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Tranding Products</h2><TrendingProducts /></div>}
+      {!isMobile && (
+        <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
+          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
+          <TrendingProducts />
+        </div>
+      )}
       <GadgetSection />
-      {!isMobile &&    <div className="relative bg-white  px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-        <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2><TrendingProducts /></div>}
-      <div className="flex"></div>
+      {!isMobile && (
+        <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
+          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2>
+          <TrendingProducts/>
+        </div>
+      )}
       <ProductComponent />
-      <GadgetSection />
-
       <HomePageAdvertisement />
-
-      
-<FrozenSnacks/>
       <Maylike />
       <PopularBrand />
-
       <Footer />
     </div>
   );

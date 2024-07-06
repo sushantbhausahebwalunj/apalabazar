@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const productCardClasses = 'bg-white rounded-lg p-1 sm:p-4 flex-shrink-0 mb-3 mt-5 mx-2 sm:mx-4 w-20 h-[180px] border border-gray-300 sm:w-60 sm:h-[320px] transition-transform duration-300 hover:scale-105';
-const imageClasses = 'w-full h-[60px] object-contain mb-2 sm:h-32';
+const imageClasses = 'w-full h-[60%] object-contain mb-2 sm:h-32';
 const buttonClasses = 'bg-green-500 text-white text-4xs py-2 px-2 rounded-lg w-full sm:text-xs';
 
 const ProductCard = ({ product }) => {
@@ -75,7 +75,7 @@ const Trending = () => {
     dots: true,
     infinite: true,
     speed: 5000,
-    slidesToShow: isMobile ? 1 : 3,
+    slidesToShow: isMobile ? 1 : 5,
     autoplay: true,
     autoplaySpeed: 1000,
     slidesToScroll: 1,

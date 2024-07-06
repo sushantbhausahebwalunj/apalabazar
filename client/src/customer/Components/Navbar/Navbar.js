@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Register from "../Auth/Register";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import { setUser, clearUser } from '../../../Redux/User/userSlice';
-import { useSelector, useDispatch } from "react-redux";
-import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa"; // Importing React Icons
+import { useDispatch, useSelector } from "react-redux";
+import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
+import { clearUser } from '../../../Redux/User/userSlice';
+import MobNavbar from "./MobileNavbar.js";
 
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -13,17 +13,25 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  const [search, setSearch] = useState("");
 
-  // Check if authToken is present
   const authToken = localStorage.getItem('authToken');
   const isAuthenticated = !!authToken;
+
+
+
+
+
+
+
+
 
   const handleNavigate = () => {
     navigate("/category");
   };
 
   const handleSearch = () => {
-    navigate("/searchpage");
+    navigate(`/search/${search}`);
   };
 
   const showCart = () => {
@@ -58,8 +66,27 @@ const Navbar = (props) => {
     }
   };
 
+  
+  const [viewport, setViewport] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewport(window.innerWidth < 620);
+      setIsMobile(window.innerWidth < 620);
+    };
+    handleResize()
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="shadow-lg overflow-hidden relative">
+
+<>
+    {viewport ? <MobNavbar /> :   <div className="shadow-lg overflow-hidden relative">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <a href="/" className="flex items-center space-x-4">
@@ -70,12 +97,13 @@ const Navbar = (props) => {
             crossOrigin="anonymous"
           />
         </a>
-        <HomeDeliveryStatus />
         <div className="flex items-center">
           <input
-            type="text"
+            type="search"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
+            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-zinc-300"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
           />
           <button
             onClick={handleSearch}
@@ -136,10 +164,12 @@ const Navbar = (props) => {
               )}
               <Register showModal={showModal} setShowModal={setShowModal} />
             </div>
-            {isAuthenticated && hoverDropdown && (
+            {hoverDropdown && (
               <div
                 className="fixed bg-white shadow-lg space-y-2 w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
                 style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
+                onMouseEnter={() => setHoverDropdown(true)}
+                onMouseLeave={() => setHoverDropdown(false)}
               >
                 <button
                   onClick={() => navigate('/myprofile')}
@@ -189,8 +219,6 @@ const Navbar = (props) => {
                 ></path>
               </svg>
             </button>
-            {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
-            {/* <sub className="text-zinc-700">₹0</sub> */}
           </div>
         </div>
       </div>
@@ -235,27 +263,28 @@ const Navbar = (props) => {
           Cleaners
         </a>
         <a
-          href="/detergent"
-          onClick={() => props.setActiveTab("Detergent & Fabric Care")}
+          href="/toiletries"
+          onClick={() => props.setActiveTab("Toiletries")}
           className="text-zinc-700 font-bold"
         >
-          Detergent & Fabric Care
+          Toiletries
+        </a>
+        <a href="/skincare" className="text-zinc-700 font-bold">
+          Skincare
+        </a>
+        <a href="/babycare" className="text-zinc-700 font-bold">
+          Baby Care
+        </a>
+        <a href="/beverages" className="text-zinc-700 font-bold">
+          Beverages
         </a>
       </div>
-    </div>
+    </div>}
+ 
+
+
+    </>
   );
 };
-
-function HomeDeliveryStatus() {
-  return (
-    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
-      <div className="flex gap-2 text-gray-600">
-        <span>Earliest</span>
-        <span className="text-blue-500">Home Delivery</span>
-        <span>available</span>
-      </div>
-    </div>
-  );
-}
 
 export default Navbar;

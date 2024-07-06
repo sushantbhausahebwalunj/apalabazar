@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
 import { clearUser } from '../../../Redux/User/userSlice';
 import MobNavbar from "./MobileNavbar.js";
-
+import logo from '../../../apala bazar.png'
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
@@ -30,7 +30,9 @@ const Navbar = (props) => {
     navigate("/category");
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim() === "") return; // Check if the search field is empty
     navigate(`/search/${search}`);
   };
 
@@ -86,31 +88,34 @@ const Navbar = (props) => {
   return (
 
 <>
-    {viewport ? <MobNavbar /> :   <div className="shadow-lg overflow-hidden relative">
+    {viewport ? <MobNavbar /> :<div className="shadow-lg overflow-hidden relative">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <a href="/" className="flex items-center space-x-4">
           <img
-            src="./apala bazar.png"
+            src={logo}
             alt="Logo"
             className="h-10"
             crossOrigin="anonymous"
           />
         </a>
         <div className="flex items-center">
+        <form onSubmit={handleSearch}>
           <input
             type="search"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-zinc-300"
+            className="border-[2px]  border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
             onChange={(e) => setSearch(e.target.value)}
+            required
             value={search}
           />
           <button
-            onClick={handleSearch}
+            type="submit"
             className="bg-blue-500 border-[2px] border-blue-500 text-white p-2 rounded-r-lg font-sans"
           >
             SEARCH
           </button>
+          </form> 
         </div>
         <div className="flex space-x-12">
           <div className="relative">
@@ -172,21 +177,21 @@ const Navbar = (props) => {
                 onMouseLeave={() => setHoverDropdown(false)}
               >
                 <button
-                  onClick={() => navigate('/myprofile')}
+                  onClick={() => navigate('/myprofile/profile')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaUser className="mr-2" />
                   My Profile
                 </button>
                 <button
-                  onClick={() => navigate('/wishlist')}
+                  onClick={() => navigate('/myprofile/likes')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaHeart className="mr-2" />
                   Wishlist
                 </button>
                 <button
-                  onClick={() => navigate('/orders')}
+                  onClick={() => navigate('/myprofile/orders')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaBox className="mr-2" />

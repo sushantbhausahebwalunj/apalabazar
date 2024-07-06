@@ -48,7 +48,9 @@ const updateProd = async (req, res) => {
 
 const getAllProds = async (req, res) => {
   try {
+    console.log(req.params)
     const products = await getAllProducts(req.params);
+
     return res.status(201).send(products);
   } catch (error) {
     return res.status(500).send({ error: error.message });

@@ -33,7 +33,6 @@ function ProductDetails() {
 
   const settings = {
     dots: true,
-    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -61,7 +60,7 @@ function ProductDetails() {
                   <img
                     src={productDetails?.imageUrl}
                     alt={productDetails?.title}
-                    className='w-full h-full object-cover'
+                    className='w-full object-cover'
                   />
                 </div>
                 {/* Add more slides here if needed */}

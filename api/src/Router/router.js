@@ -8,6 +8,7 @@ import reviewRouter from '../routes/review.routes.js'
 import paymentRouter from '../routes/payment.routes.js';
 
 
+import productRouter from '../routes/product.js';
 const allRouter = express.Router();
 
 allRouter.use('/admin',adminRouter);
@@ -17,6 +18,8 @@ allRouter.use('/category' ,categoryRouter );
 allRouter.use('/rating' ,ratingRouter );
 allRouter.use('/review' ,reviewRouter );
 allRouter.use('/payment' , paymentRouter );
+allRouter.use('/product' ,productRouter);
+
 
 
 

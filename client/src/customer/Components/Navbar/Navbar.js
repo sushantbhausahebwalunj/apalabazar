@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Register from "../Auth/Register";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa"; // Importing React Icons
-import { setUser, clearUser } from '../../../Redux/User/userSlice';
-
+import { useDispatch, useSelector } from "react-redux";
+import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
+import { clearUser } from '../../../Redux/User/userSlice';
+import MobNavbar from "./MobileNavbar.js";
+import logo from '../../../apala bazar.png'
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
@@ -13,17 +14,27 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  const [search, setSearch] = useState("");
 
-  // Check if authToken is present
   const authToken = localStorage.getItem('authToken');
   const isAuthenticated = !!authToken;
+
+
+
+
+
+
+
+
 
   const handleNavigate = () => {
     navigate("/category");
   };
 
-  const handleSearch = () => {
-    navigate("/searchpage");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim() === "") return; // Check if the search field is empty
+    navigate(`/search/${search}`);
   };
 
   const showCart = () => {
@@ -63,41 +74,54 @@ const Navbar = (props) => {
     }
   };
 
-  const handleDropdownMouseEnter = () => {
-    setHoverDropdown(true);
-    setHoverProfile(true);
-  };
+  
+  const [viewport, setViewport] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
 
-  const handleDropdownMouseLeave = () => {
-    setHoverDropdown(false);
-    setHoverProfile(false);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setViewport(window.innerWidth < 620);
+      setIsMobile(window.innerWidth < 620);
+    };
+    handleResize()
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
-    <div className="shadow-lg overflow-hidden relative">
+
+<>
+    {viewport ? <MobNavbar /> :<div className="shadow-lg overflow-hidden relative">
       {/* Top Navbar */}
       <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
         <a href="/" className="flex items-center space-x-4">
           <img
-            src="./apala bazar.png"
+            src={logo}
             alt="Logo"
             className="h-10"
             crossOrigin="anonymous"
           />
         </a>
-        <HomeDeliveryStatus />
         <div className="flex items-center">
+        <form onSubmit={handleSearch}>
           <input
-            type="text"
+            type="search"
             placeholder="Search for Biscuits"
-            className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[400px] dark:bg-white dark:text-zinc-300"
+            className="border-[2px]  border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
+            onChange={(e) => setSearch(e.target.value)}
+            required
+            value={search}
           />
           <button
-            onClick={handleSearch}
+            type="submit"
             className="bg-blue-500 border-[2px] border-blue-500 text-white p-2 rounded-r-lg font-sans"
           >
             SEARCH
           </button>
+          </form> 
         </div>
         <div className="flex space-x-12">
           <div className="relative">
@@ -151,29 +175,29 @@ const Navbar = (props) => {
               )}
               <Register showModal={showModal} setShowModal={setShowModal} />
             </div>
-            {isAuthenticated && hoverDropdown && (
+            {hoverDropdown && (
               <div
                 className="fixed bg-white shadow-lg space-y-2 w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
                 style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
-                onMouseEnter={handleDropdownMouseEnter}
-                onMouseLeave={handleDropdownMouseLeave}
+                onMouseEnter={() => setHoverDropdown(true)}
+                onMouseLeave={() => setHoverDropdown(false)}
               >
                 <button
-                  onClick={() => navigate('/myprofile')}
+                  onClick={() => navigate('/myprofile/profile')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaUser className="mr-2" />
                   My Profile
                 </button>
                 <button
-                  onClick={() => navigate('/wishlist')}
+                  onClick={() => navigate('/myprofile/likes')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaHeart className="mr-2" />
                   Wishlist
                 </button>
                 <button
-                  onClick={() => navigate('/orders')}
+                  onClick={() => navigate('/myprofile/orders')}
                   className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   <FaBox className="mr-2" />
@@ -206,8 +230,6 @@ const Navbar = (props) => {
                 ></path>
               </svg>
             </button>
-            {/* <sup className="text-orange-500 text-base m-0">{item}</sup> */}
-            {/* <sub className="text-zinc-700">₹0</sub> */}
           </div>
         </div>
       </div>
@@ -252,27 +274,28 @@ const Navbar = (props) => {
           Cleaners
         </a>
         <a
-          href="/detergent"
-          onClick={() => props.setActiveTab("Detergent & Fabric Care")}
+          href="/toiletries"
+          onClick={() => props.setActiveTab("Toiletries")}
           className="text-zinc-700 font-bold"
         >
-          Detergent & Fabric Care
+          Toiletries
+        </a>
+        <a href="/skincare" className="text-zinc-700 font-bold">
+          Skincare
+        </a>
+        <a href="/babycare" className="text-zinc-700 font-bold">
+          Baby Care
+        </a>
+        <a href="/beverages" className="text-zinc-700 font-bold">
+          Beverages
         </a>
       </div>
-    </div>
+    </div>}
+ 
+
+
+    </>
   );
 };
-
-function HomeDeliveryStatus() {
-  return (
-    <div className="text-xs bg-gray-100 mx-3 p-2 rounded-lg">
-      <div className="flex gap-2 text-gray-600">
-        <span>Earliest</span>
-        <span className="text-blue-500">Home Delivery</span>
-        <span>available</span>
-      </div>
-    </div>
-  );
-}
 
 export default Navbar;

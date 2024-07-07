@@ -9,7 +9,7 @@ function cartReducer(state, action) {
         image:product.image||product.imageUrl,
         mrp:product.mrp||product.price,
         name:product.name||product.title,
-        price:product.price||product.discountedPrice,
+        price:product.discountedPrice||product.price,
         qty:1,
         discount:product.discount||product.discountPercent,
         weight:product.weight

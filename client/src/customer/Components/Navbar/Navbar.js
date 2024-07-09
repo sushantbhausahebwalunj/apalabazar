@@ -36,7 +36,7 @@ const Navbar = (props) => {
         if (i < 8) {
           return (
        
-                <button onClick={() => handleSide(`/${category._id}`)} className=" border-none focus:border-none">{category.name}</button>
+                <button onClick={() => handleSide(`/category/${category._id}`)} className=" border-none focus:border-none">{category.name}</button>
          
           );
         }

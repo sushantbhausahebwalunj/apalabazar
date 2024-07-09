@@ -1,7 +1,7 @@
 import express from "express";
-import {upload} from "../middlewares/multer.middleware.js";
+import {upload} from "../middleware/multer.middlware.js";
 import { addAddress, addToCart, deleteAddress, getAllAddress, getCartDetails, getCartItemsById, removeAllCart, removeOneCart, updateAddress } from "../controller/cart.controller.js";
-import { verifyToken } from "../middlewares/verifyUser.js";
+import { verifyToken } from "../middleware/verifyUser.js";
 
 
 const cartRouter = express.Router();
@@ -9,18 +9,18 @@ const cartRouter = express.Router();
 
 ///// cart routes defined here
 
-/// add cart routes 
-cartRouter.route("/addCart").post(
-    
-    verifyToken,
-    upload.none(),
-    addToCart
+    /// add cart routes 
+    cartRouter.route("/addCart").post(
+        
+        // verifyToken,
+        upload.none(),
+        addToCart
 );
 
 
 /// get cart details routes
 cartRouter.route("/getCartDetails").get(
-    verifyToken,
+    // verifyToken,
     getCartDetails
 );
 

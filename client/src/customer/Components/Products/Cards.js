@@ -58,7 +58,7 @@ const buttonClasses ="bg-blue-500 text-white lg:text-lg text-md py-2 px-2 rounde
             <span className="font-semibold">{product.discountedPrice}</span>
           </div>
           <div>
-            Sale{" "}
+            Apala bajar Sale{" "}
             <span className="font-semibold">{product.discountedPrice}</span>
           </div>
         </div>

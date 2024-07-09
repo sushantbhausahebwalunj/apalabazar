@@ -4,7 +4,7 @@ const gadgets = [
   {
     title: 'True Wireless',
     discount: 'Min. 50% Off',
-    imageUrl: 'https://www.swrve.com/images/uploads/inner/coffee_gif.gif',
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVIpDUjGPsRbpeKQFw7TFjrWJkaRxY68b2zA&s',
   },
   {
     title: 'Smart Bands',
@@ -14,7 +14,7 @@ const gadgets = [
   {
     title: 'Smart Watch Straps',
     discount: 'Min. 40% Off',
-    imageUrl: 'https://cdn.shopify.com/s/files/1/0070/7032/files/product-label-design.jpg?v=1680902906',
+    imageUrl: 'https://cdn.shopify.com/s/files/1/2303/2711/files/2_e822dae0-14df-4cb8-b145-ea4dc0966b34.jpg?v=1617059123',
   },
   {
     title: 'Mixer Juicer Grinder',

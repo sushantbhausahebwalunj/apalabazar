@@ -13,6 +13,12 @@ height: 50vh;
       float: left; /* Ensure cards float left */
       clear: both; /* Clear float after two cards */
     }
+
+    div.slick-list {
+      margin-top: 20px;
+      height: 20vh;
+      
+      }
   }
     
   .product-card {

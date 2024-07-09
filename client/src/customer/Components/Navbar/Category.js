@@ -22,7 +22,7 @@ const Category = () => {
       .filter((category) => category.parentCategory && category.parentCategory._id === parentCategoryId)
       .map((subcategory) => (
         <li key={subcategory._id}>
-          <button onClick={() => handleNavigate(`/${subcategory.slug}`)}>{subcategory.name}</button>
+          <button onClick={() => handleNavigate(`/${subcategory.parentCategory._id.toLowerCase()}/${subcategory._id}`)}>{subcategory.name}</button>
         </li>
       ));
   };
@@ -33,9 +33,9 @@ const Category = () => {
       .map((category) => (
         <div key={category._id}>
           <img
-            src={`https://cdn.dmart.in/images/categories/${category.slug}-131022.svg`} // Adjust the URL as needed
-            alt={category.name}
-            className="mb-2"
+            // src={`https://cdn.dmart.in/images/categories/${category.slug}-131022.svg`}
+            // alt={category.name}
+            // className="mb-2"
           />
           <h2 className="font-bold mb-2">{category.name}</h2>
           <ul className="space-y-1 mb-4 font-extralight">

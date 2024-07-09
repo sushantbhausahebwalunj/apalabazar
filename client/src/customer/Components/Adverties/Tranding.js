@@ -68,6 +68,8 @@ const Trending = () => {
     dispatch(fetchProducts());
     const handleResize = () => setIsMobile(window.innerWidth <= 500);
     window.addEventListener('resize', handleResize);
+
+    // Clean up event listener on unmount
     return () => window.removeEventListener('resize', handleResize);
   }, [dispatch]);
 
@@ -83,6 +85,10 @@ const Trending = () => {
     nextArrow: <CustomNextArrow />,
   };
 
+  if (isMobile) {
+    return null; // Or use an empty div: <div></div>
+  }
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
@@ -92,13 +98,12 @@ const Trending = () => {
   }
 
   return (
-  <div>
+    <div>
       <Slider {...settings}>
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </Slider>
-
     </div>
   );
 };

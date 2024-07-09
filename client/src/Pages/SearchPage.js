@@ -5,11 +5,9 @@ import { fetchProducts } from "../Redux/Product/productSlice";
 import { useCartContext } from "../Usecontext/cartContext";
 import { Link } from "react-router-dom";
 import Navbar from "../customer/Components/Navbar/Navbar.js";
-const productCardClasses =
-  "bg-white flex-col flex rounded-lg p-1 lg:p-4 mb-3 mt-5 lg:mx-4 border h-fit border-gray-300 lg:w-60 h-fit transition-transform duration-300 hover:scale-105";
+const productCardClasses ="bg-white flex-col flex rounded-lg p-1 lg:p-4 mb-3 mt-5 lg:mx-4 border h-fit border-gray-300 lg:w-60 h-fit transition-transform duration-300 hover:scale-105";
 const imageClasses = "w-full object-contain mb-2 h-32";
-const buttonClasses =
-  "bg-blue-500 text-white lg:text-lg text-md py-2 px-2 rounded-lg lg:w-full w-30 my-3";
+const buttonClasses ="bg-blue-500 text-white lg:text-lg text-md py-2 px-2 rounded-lg lg:w-full w-30 my-3";
 
 const ProductCard = ({ product }) => {
   const { addTocart } = useCartContext();

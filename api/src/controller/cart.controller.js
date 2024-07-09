@@ -10,9 +10,9 @@ import {ApiError} from "../utils/ApiError.js"
 
 
 const addToCart = asyncHandler(async (req, res) => {
-
-    const { id } = req.user;
-
+//console.log(req.body + " request says")
+    // const { id } = req.user;
+    const  id="668181953b53ebca8f4b14d5"
     const { productId } = req.body;
 
     const user = await User.findById(id);
@@ -20,7 +20,7 @@ const addToCart = asyncHandler(async (req, res) => {
     try {
         
         const product = await Product.findById(productId);
-
+//console.log(product +" poduct find")
         if (!product) {
             return res
             .status(404)
@@ -46,25 +46,16 @@ const addToCart = asyncHandler(async (req, res) => {
 
 
         const cartItem = await CartItem.create({
-           
             quantity: 1,
             price: product.price,
             discountedPrice: product.discountedPrice,
+            imageUrl:  product.imageUrl,            
             userId: id, 
             product: product._id,
             size: product.size,
             createdAt: new Date(),
             updatedAt: new Date()
         });
-
-      
-
-        // const cart = await Cart.create({
-        //     totalPrice: totalPrice,
-        
- 
-        // })
-
    
         return res
         .status(200)
@@ -85,7 +76,7 @@ const addToCart = asyncHandler(async (req, res) => {
 
 const getCartDetails = asyncHandler(async (req, res) => {
 
-    const { id } = req.user;
+    const { id } = req.body;
 
     if(!id) {
         return res
@@ -271,7 +262,6 @@ const addAddress = asyncHandler(async(req, res) => {
 
     const { 
         fullName,
-
         houseNumber,
         landMark,
         streetAddress,
@@ -280,7 +270,6 @@ const addAddress = asyncHandler(async(req, res) => {
         state, 
         zipCode,
         district,
-
         mobile,
         extraMobile
         

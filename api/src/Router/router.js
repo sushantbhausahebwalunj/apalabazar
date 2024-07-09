@@ -9,6 +9,7 @@ import paymentRouter from '../routes/payment.routes.js';
 
 
 import productRouter from '../routes/product.js';
+import cartRouter from '../routes/cart.routes.js';
 const allRouter = express.Router();
 
 allRouter.use('/admin',adminRouter);
@@ -19,7 +20,7 @@ allRouter.use('/rating' ,ratingRouter );
 allRouter.use('/review' ,reviewRouter );
 allRouter.use('/payment' , paymentRouter );
 allRouter.use('/product' ,productRouter);
-
+allRouter.use('/cart',cartRouter)
 
 
 

@@ -1,7 +1,7 @@
 import express from "express";
-import {upload} from "../middlewares/multer.middleware.js";
-import { addAddress, addToCart, deleteAddress, getAllAddress, getCartDetails, getCartItemsById, removeAllCart, removeOneCart, updateAddress } from "../controller/cart.controller.js";
-import { verifyToken } from "../middlewares/verifyUser.js";
+import {upload} from "../middleware/multer.middlware.js";
+import { addToCart,  getCartDetails, getCartItemsById, removeAllCart, removeOneCart } from "../controller/cart.controller.js";
+import { verifyToken } from "../middleware/verifyUser.js";
 
 
 const cartRouter = express.Router();
@@ -12,15 +12,15 @@ const cartRouter = express.Router();
 /// add cart routes 
 cartRouter.route("/addCart").post(
     
-    verifyToken,
-    upload.none(),
+    // verifyToken,
+    // upload.none(),
     addToCart
 );
 
 
 /// get cart details routes
 cartRouter.route("/getCartDetails").get(
-    verifyToken,
+    // verifyToken,
     getCartDetails
 );
 
@@ -28,7 +28,7 @@ cartRouter.route("/getCartDetails").get(
 
 //// get one cart item by id
 cartRouter.route("/getItemsInfo").get(
-    verifyToken,
+    // verifyToken,
     getCartItemsById
 );
 
@@ -36,51 +36,16 @@ cartRouter.route("/getItemsInfo").get(
 
 /// remove one cart item by id
 cartRouter.route("/removeCartItem").delete(
-    verifyToken,
+    // verifyToken,
     removeOneCart
 );
 
 
 /// remove all cart items
 cartRouter.route("/removeAllCart").delete(
-    verifyToken,
+    // verifyToken,
     removeAllCart
 );
-
-
-
-
-
-//// address routes defined here
-
-cartRouter.route("/addAddress").post(
-    verifyToken,
-    upload.none(),
-    addAddress
-);
-
-
-cartRouter.route("/updateAddress").post(
-    verifyToken,
-    upload.none(),
-    updateAddress
-);
-
-
-cartRouter.route("/getAllAddress").get( 
-    verifyToken,
-    upload.none(),
-    getAllAddress
-);
-
-cartRouter.route(`/deleteAddress`).delete(
-
-    verifyToken,
-    upload.none(),
-    deleteAddress
-
-);
-
 
 
 export default cartRouter;

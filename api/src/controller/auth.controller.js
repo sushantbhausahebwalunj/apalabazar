@@ -25,8 +25,8 @@ const sendOTPEmail = async (email, otp) => {
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'neoma48@ethereal.email',
-            pass: 'NVZ9Wr7dExN13uau76'
+            user: 'efren.stark@ethereal.email',
+            pass: 'xCGveSFhAPsQTkZhJf'
         }
     });
 

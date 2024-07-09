@@ -147,7 +147,7 @@ const getCartItemsById = asyncHandler(async (req, res) => {
         const detail = await CartItem.find({userId: id});
 
         if (!cart) {
-            return res
+            return res  
             .status(404)
             .json(new ApiResponse(404, 'Cart not found', null));
         }
@@ -252,6 +252,8 @@ const removeAllCart = asyncHandler(async(req, res) => {
     }
 
 })
+
+
 
 
 
@@ -502,6 +504,7 @@ const getAllAddress = asyncHandler(async(req, res) => {
 
 
 
+
 //// export the cart controllers
 export {
     addToCart,
@@ -511,11 +514,3 @@ export {
     removeAllCart
 }
 
-
-//// export the address controllers
-export {
-    addAddress,
-    updateAddress,
-    deleteAddress,
-    getAllAddress
-}

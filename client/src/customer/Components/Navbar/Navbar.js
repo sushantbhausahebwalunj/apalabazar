@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Register from "../Auth/Register";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
 import { clearUser } from '../../../Redux/User/userSlice';
 import MobNavbar from "./MobileNavbar.js";
-import logo from '../../../apala bazar.png'
+import logo from '../../../apala bazar.png';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
+
 const Navbar = (props) => {
+  
+ 
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
@@ -14,15 +18,31 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
-
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
   const authToken = localStorage.getItem('authToken');
   const isAuthenticated = !!authToken;
 
+  const categories = useSelector((state) => state.categories.categories);
+  const handleSide = (path) => {
+    navigate(path);
+  };
 
-
-
-
-
+  const renderCategories = () => {
+    return categories
+      .filter((category) => category.level === 1)
+      .map((category, i) => {
+        if (i < 8) {
+          return (
+       
+                <button onClick={() => handleSide(`/${category._id}`)} className=" border-none focus:border-none">{category.name}</button>
+         
+          );
+        }
+        return null; // Add this line to ensure all cases are covered
+      });
+  };
 
 
 
@@ -251,38 +271,9 @@ const Navbar = (props) => {
             <span>All Categories</span>
           </button>
         </div>
-        <a href="/grocery" className="text-zinc-700 font-bold">
-          Grocery
-        </a>
-        <a href="/valuepack" className="text-zinc-700 font-bold">
-          Value Packs
-        </a>
-        <a href="/appliances" className="text-zinc-700 font-bold">
-          Home Appliances
-        </a>
-        <a
-          href="/cleaner"
-          onClick={() => props.setActiveTab("Cleaners")}
-          className="text-zinc-700 font-bold"
-        >
-          Cleaners
-        </a>
-        <a
-          href="/toiletries"
-          onClick={() => props.setActiveTab("Toiletries")}
-          className="text-zinc-700 font-bold"
-        >
-          Toiletries
-        </a>
-        <a href="/skincare" className="text-zinc-700 font-bold">
-          Skincare
-        </a>
-        <a href="/babycare" className="text-zinc-700 font-bold">
-          Baby Care
-        </a>
-        <a href="/beverages" className="text-zinc-700 font-bold">
-          Beverages
-        </a>
+
+          { renderCategories()}
+       
       </div>
     </div>}
  

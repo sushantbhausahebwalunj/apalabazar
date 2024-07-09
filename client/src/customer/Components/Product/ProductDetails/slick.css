@@ -6,8 +6,8 @@
   }
   .slick-track{
    width: 400px;
-   height: 300px;
-   object-fit: cover;
+   height:100%;
+   object-fit: contain;
   }
   
   .slick-prev {
@@ -23,3 +23,9 @@
     color: black; /* Change the color as needed */
   }
   
+  .slick-list {
+    height: 54vh;
+}
+.slick-slide{
+  width: 353px;
+}

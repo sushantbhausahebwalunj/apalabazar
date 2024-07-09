@@ -43,7 +43,7 @@ const buttonClasses ="bg-blue-500 text-white lg:text-lg text-md py-2 px-2 rounde
         <Link to={`/product/${product._id}`}>
           <img
             className={imageClasses}
-            src={product.imageUrl}
+            src={product.imageUrl||product.imageUrls[0]}
             alt="Product Image"
           />
           <h3 className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">

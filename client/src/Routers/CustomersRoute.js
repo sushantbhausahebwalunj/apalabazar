@@ -24,12 +24,7 @@ function CustomersRoute() {
       <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/:main?/:sub" element={<Grocery />}></Route>
-      {/* <Route path="/appliances" element={<HomeAppliances />}></Route>
-      <Route path="/cleaner" element={<DetergentFabricCare />}></Route>
-      <Route path="/detergent" element={<DetergentFabricCare />}></Route>
-      <Route path="/valuepack" element={<ValuePack />}></Route>
- 
-      <Route path="/dairy" element={<Dairy />}></Route> */}
+       <Route path="/:main" element={<Grocery />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/category" element={<Category />} />
       <Route path="product/:id" element={<ProductDetails />}></Route>

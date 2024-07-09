@@ -108,17 +108,14 @@ function Grocery() {
   }
 
   const filteredProducts = (e,cate)=>{
-    // if (activeSubTab) {
-    //   return product.category.name.toLowerCase().includes(activeSubTab.toLowerCase());
-    // } else if (activeTab) {
-    //   return product.category.name.toLowerCase().includes(activeTab.toLowerCase());
-    // } else {
-    //   return product.category.parentCategory === main;
-    // }
+
     if(cate){
       e.stopPropagation();
       console.log(cate)
-      const filtered = products.filter((product) => product.category.name.toLowerCase().includes(cate.toLowerCase()))
+      const filtered = products.filter((product) =>
+       product.category.name.toLowerCase().includes(cate.toLowerCase())
+   
+    )
       setFilteredProduct(filtered);
     }else if(sub){
       const filtered = products.filter((product) => product.category._id===sub)

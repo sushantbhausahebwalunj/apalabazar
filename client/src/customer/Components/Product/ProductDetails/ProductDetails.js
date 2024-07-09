@@ -35,7 +35,6 @@ function ProductDetails() {
 
   const settings = {
     dots: true,
-    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -54,6 +53,7 @@ function ProductDetails() {
       <div className="lg:block">
         {viewport ? <MobNavbar /> : <Navbar number={12} />}
       </div>
+
       <div className="flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8">
         <div className="shadow-lg mt-5 bg-white w-full">
           <div className="flex flex-col rounded-3xl mt-10 lg:flex-row items-center justify-center">
@@ -75,6 +75,31 @@ function ProductDetails() {
                   <div className="flex items-center">
                     <StarIcon className="h-6 w-6 text-yellow-500" />
                     <span className="text-yellow-500 ml-2">
+
+      <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
+        <div className='shadow-lg mt-5 bg-white w-full'>
+          <div className='flex flex-col rounded-3xl mt-10 lg:flex-row '>
+            <div className='w-3/4 lg:w-[700px] lg:max-h-max my-6 lg:my-0 mx-12'>
+              <Slider {...settings}>
+
+                  <img
+                    src={productDetails?.imageUrl} // Single image URL
+                    alt='Product Image'
+                    className='w-[80%] h-[60%] object-contain'
+
+                  />
+              </Slider>
+            </div>
+            <div className='lg:ml-5 flex flex-col w-full'>
+              <div className='flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0 mb-5'>
+                <div className='flex flex-col space-y-3 max-h-max mb-3'>
+                  <h1 className='text-xl lg:text-3xl font-semibold mb-2'>
+                    {productDetails?.title}
+                  </h1>
+                  <div className='flex items-center pb-6'>
+                    <StarIcon className='h-6 w-6 text-yellow-500' />
+                    <span className='text-yellow-500 ml-2'>
+
                       {productDetails?.numRatings || 3} Ratings
                     </span>
                   </div>

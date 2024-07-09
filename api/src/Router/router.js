@@ -5,6 +5,9 @@ import userRouter from '../routes/user.routes.js';
 import categoryRouter from '../routes/category.routes.js';
 import ratingRouter from '../routes/rating.routes.js'
 import reviewRouter from '../routes/review.routes.js'
+import paymentRouter from '../routes/payment.routes.js';
+
+
 import productRouter from '../routes/product.js';
 const allRouter = express.Router();
 
@@ -14,6 +17,7 @@ allRouter.use('/user' ,userRouter);
 allRouter.use('/category' ,categoryRouter );
 allRouter.use('/rating' ,ratingRouter );
 allRouter.use('/review' ,reviewRouter );
+allRouter.use('/payment' , paymentRouter );
 allRouter.use('/product' ,productRouter);
 
 

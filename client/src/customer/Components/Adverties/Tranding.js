@@ -22,10 +22,10 @@ const ProductCard = ({ product }) => {
       </Link>
       <div className="flex justify-between text-xs sm:text-sm text-zinc-500 mb-1 sm:mb-2">
         <div>
-          MRP <span className="line-through">{product.price}</span> <span className="font-semibold">{product.discountedPrice}</span>
+          MRP <span className="line-through">{product.price}</span> <span className="font-semibold">₹{product.discountedPrice}</span>
         </div>
         <div>
-          Sale <span className="font-semibold">{product.discountedPrice}</span>
+          Sale <span className="font-semibold">₹{product.discountedPrice}</span>
         </div>
       </div>
       <div className="text-green-600 text-xs sm:text-sm font-semibold mb-1 sm:mb-2">{product.discountPercent}% off</div>
@@ -79,7 +79,7 @@ const Trending = () => {
     speed: 5000,
     slidesToShow: isMobile ? 1 : 5,
     autoplay: true,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 2000,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,

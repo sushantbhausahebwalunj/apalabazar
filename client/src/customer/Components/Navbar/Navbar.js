@@ -13,6 +13,7 @@ const Navbar = (props) => {
  
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
+  const [hoverProfile, setHoverProfile] = useState(false); // Track profile hover state
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -78,13 +79,18 @@ const Navbar = (props) => {
     if (isAuthenticated) {
       const { top, left, height } = event.currentTarget.getBoundingClientRect();
       setDropdownPosition({ top: top + height, left });
+      setHoverProfile(true); // Track profile hover state
       setHoverDropdown(true);
     }
   };
 
   const handleMouseLeave = () => {
     if (isAuthenticated) {
-      setHoverDropdown(false);
+      setTimeout(() => {
+        if (!hoverProfile && !hoverDropdown) {
+          setHoverDropdown(false);
+        }
+      }, 100);
     }
   };
 

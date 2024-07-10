@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { FcHome } from "react-icons/fc";
-
+import axios from 'axios';
 const INPUT_CLASS = 'mt-1 block w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-white text-black';
 const LABEL_CLASS = 'block text-sm font-medium dark:text-black';
 
 const Checkout = () => {
   const [formData, setFormData] = useState({
     fullName: '',
-    pincode: '',
-    area: '',
-    locality: '',
     wing: '',
     landmark: '',
+    area: '',
     city: '',
     state: '',
+    pincode: '',
     district: '',
     contactNumber: '',
+    locality: '',
+
   });
 
   const [deliveryModeChecked, setDeliveryModeChecked] = useState(false);
@@ -25,11 +26,24 @@ const Checkout = () => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
+  
+  const token = localStorage.getItem('authToken');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData);
-    
+     console.log(formData);
+    try {
+      const resp = await axios.post('http://localhost:5454/api/address/addAddress',formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+console.log(resp)
+
+  } catch (error) {
+      console.error('Error in creation:', error);
+  }
     handleCloseForm();
   };
 

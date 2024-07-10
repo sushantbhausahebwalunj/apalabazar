@@ -11,8 +11,8 @@ import {ApiError} from "../utils/ApiError.js"
 
 const addToCart = asyncHandler(async (req, res) => {
 //console.log(req.body + " request says")
-    // const { id } = req.user;
-    const  id="668181953b53ebca8f4b14d5"
+    const { id } = req.user;
+    //const  id="668181953b53ebca8f4b14d5"
     const { productId } = req.body;
 
     const user = await User.findById(id);

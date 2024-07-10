@@ -12,7 +12,7 @@ const cartRouter = express.Router();
     /// add cart routes 
     cartRouter.route("/addCart").post(
         
-        // verifyToken,
+        verifyToken,
         upload.none(),
         addToCart
 );
@@ -20,7 +20,7 @@ const cartRouter = express.Router();
 
 /// get cart details routes
 cartRouter.route("/getCartDetails").get(
-    // verifyToken,
+    verifyToken,
     getCartDetails
 );
 

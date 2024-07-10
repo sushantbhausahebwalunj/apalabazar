@@ -13,7 +13,7 @@ const cartRouter = express.Router();
 /// add cart routes 
 cartRouter.route("/addCart").post(
     
-    // verifyToken,
+    verifyToken,
     // upload.none(),
     addToCart
 
@@ -24,7 +24,7 @@ cartRouter.route("/addCart").post(
 
 /// get cart details routes
 cartRouter.route("/getCartDetails").get(
-    // verifyToken,
+    verifyToken,
     getCartDetails
 );
 
@@ -32,7 +32,7 @@ cartRouter.route("/getCartDetails").get(
 
 //// get one cart item by id 
 cartRouter.route("/getItemsInfo").get(
-    // verifyToken,
+    verifyToken,
     getCartItemsById
 );
 
@@ -40,18 +40,18 @@ cartRouter.route("/getItemsInfo").get(
 
 /// remove one cart item by id
 cartRouter.route("/removeCartItem").delete(
-    // verifyToken,
+    verifyToken,
     removeOneCart
 );
 cartRouter.route("/removeCartItemQuantity").delete(
-    // verifyToken,
+    verifyToken,
     removeItemQuantityCart
 );
 
 
 /// remove all cart items
 cartRouter.route("/removeAllCart").delete(
-    // verifyToken,
+    verifyToken,
     removeAllCart
 );
 

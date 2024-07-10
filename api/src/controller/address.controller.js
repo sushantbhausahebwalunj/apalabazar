@@ -7,7 +7,7 @@ import {ApiError} from "../utils/ApiError.js"
 
 
 const addAddress = asyncHandler(async(req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+      const { id } = req.user; 
 
     const { 
         fullName,
@@ -87,7 +87,7 @@ const addAddress = asyncHandler(async(req, res) => {
 
 
 const updateAddress = asyncHandler(async(req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const { id } = req.user; 
 
     const { 
         addressId,
@@ -170,7 +170,7 @@ const updateAddress = asyncHandler(async(req, res) => {
 
 
 const deleteAddress = asyncHandler(async(req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const { id } = req.user; 
     const { addressId } = req.query;
 
     console.log("req.query => ", req.query);
@@ -210,7 +210,7 @@ const deleteAddress = asyncHandler(async(req, res) => {
 
 
 const getAllAddress = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; // Hardcoded user ID for testing
+    const { id } = req.user;  // Hardcoded user ID for testing
 
     try {
         const user = await User.findById(id);

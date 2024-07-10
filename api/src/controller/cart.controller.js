@@ -36,6 +36,7 @@ const addToCart = asyncHandler(async (req, res) => {
            
             cartItem = await CartItem.create({
                 quantity: 1,
+                imageUrl:product.imageUrl,
                 price: product.price,
                 discountedPrice: product.discountedPrice,
                 userId: id,
@@ -282,7 +283,7 @@ const removeItemQuantityCart = asyncHandler(async (req, res) => {
             return res.status(200).json(new ApiResponse(200, 'Cart item quantity decreased successfully', cartItem));
         } else {
             return res.status(400).json(new ApiResponse(400, 'Minimum quantity reached for this item', null));
-        }
+        } 
     } catch (error) {
         console.error(error);
         return res.status(500).json({

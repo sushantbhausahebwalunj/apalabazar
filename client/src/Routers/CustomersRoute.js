@@ -24,7 +24,7 @@ function CustomersRoute() {
       <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/:main?/:sub" element={<Grocery />}></Route>
-       <Route path="/:main" element={<Grocery />}></Route>
+       <Route path="category/:main" element={<Grocery />}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/category" element={<Category />} />
       <Route path="product/:id" element={<ProductDetails />}></Route>

@@ -7,7 +7,7 @@ import {ApiError} from "../utils/ApiError.js"
 
 
 const addAddress = asyncHandler(async(req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const id = req.user; 
 
     const { 
         fullName,
@@ -20,13 +20,12 @@ const addAddress = asyncHandler(async(req, res) => {
         state, 
         zipCode,
         district,
-
         mobile,
         extraMobile
         
     } = req.body;
 
-    console.log("req.body => ", req.body);
+   // console.log("req.body => ", req.body);
 
     if(!fullName || !streetAddress || !city || !state || !zipCode || !district || !mobile) {
         return res
@@ -36,7 +35,7 @@ const addAddress = asyncHandler(async(req, res) => {
 
     const user = await User.findById(id)
 
-    console.log("user => ", user);
+   // console.log("user => ", user);
 
     if(!user) {
         return res
@@ -64,7 +63,7 @@ const addAddress = asyncHandler(async(req, res) => {
 
         });
 
-        console.log("address user => ", address.user);
+       // console.log("address user => ", address.user);
 
 
         await address.save();
@@ -170,7 +169,7 @@ const updateAddress = asyncHandler(async(req, res) => {
 
 
 const deleteAddress = asyncHandler(async(req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const id = req.user; 
     const { addressId } = req.query;
 
     console.log("req.query => ", req.query);
@@ -210,7 +209,8 @@ const deleteAddress = asyncHandler(async(req, res) => {
 
 
 const getAllAddress = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; // Hardcoded user ID for testing
+    console.log(req.user)
+    const id =req.user; // Hardcoded user ID for testing
 
     try {
         const user = await User.findById(id);

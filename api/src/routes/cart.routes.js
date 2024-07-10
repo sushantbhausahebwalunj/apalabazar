@@ -1,10 +1,6 @@
 import express from "express";
 import {upload} from "../middleware/multer.middlware.js";
-
-import { addToCart,  getCartDetails, getCartItemsById, removeAllCart, removeOneCart } from "../controller/cart.controller.js";
-
-import { addAddress, addToCart, deleteAddress, getAllAddress, getCartDetails, getCartItemsById, removeAllCart, removeOneCart, updateAddress } from "../controller/cart.controller.js";
-
+import { addToCart,  getCartDetails, getCartItemsById, removeAllCart, removeOneCart,removeItemQuantityCart } from "../controller/cart.controller.js";
 import { verifyToken } from "../middleware/verifyUser.js";
 
 
@@ -16,10 +12,12 @@ const cartRouter = express.Router();
 
 /// add cart routes 
 cartRouter.route("/addCart").post(
-        
-        verifyToken,
-        upload.none(),
-        addToCart
+    
+    // verifyToken,
+    // upload.none(),
+    addToCart
+
+    /// add cart routes 
 
 );
 
@@ -32,7 +30,7 @@ cartRouter.route("/getCartDetails").get(
 
 
 
-//// get one cart item by id
+//// get one cart item by id 
 cartRouter.route("/getItemsInfo").get(
     // verifyToken,
     getCartItemsById
@@ -45,6 +43,11 @@ cartRouter.route("/removeCartItem").delete(
     // verifyToken,
     removeOneCart
 );
+cartRouter.route("/removeCartItemQuantity").delete(
+    // verifyToken,
+    removeItemQuantityCart
+);
+
 
 
 /// remove all cart items

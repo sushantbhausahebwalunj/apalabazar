@@ -74,8 +74,15 @@ function ProductDetails() {
                   </h1>
                   <div className="flex items-center">
                     <StarIcon className="h-6 w-6 text-yellow-500" />
-                    <span className="text-yellow-500 ml-2">
-
+                    <span className="text-yellow-500 ml-2"></span>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+      
       <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
         <div className='shadow-lg mt-5 bg-white w-full'>
           <div className='flex flex-col rounded-3xl mt-10 lg:flex-row '>

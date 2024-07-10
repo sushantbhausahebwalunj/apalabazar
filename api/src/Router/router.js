@@ -11,7 +11,7 @@ import addressRoute from '../routes/address.route.js';
 import cartRouter from '../routes/cart.routes.js';
 
 
-import cartRouter from '../routes/cart.routes.js';
+
 
 const allRouter = express.Router();
 

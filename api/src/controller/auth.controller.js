@@ -5,7 +5,7 @@ import OTP from '../models/otp.model.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
-// Load environment variables
+// Load environment variables 
 dotenv.config();
 
 

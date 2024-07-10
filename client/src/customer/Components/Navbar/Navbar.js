@@ -40,12 +40,18 @@ const Navbar = (props) => {
       .map((category, i) => {
         if (i < 8) {
           return (
+
             <button
               onClick={() => handleSide(`/${category._id}`)}
               className=" border-none focus:border-none"
             >
               {category.name}
             </button>
+
+       
+                <button onClick={() => handleSide(`/category/${category._id}`)} className=" border-none focus:border-none">{category.name}</button>
+         
+
           );
         }
         return null; // Add this line to ensure all cases are covered

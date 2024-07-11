@@ -12,7 +12,10 @@ const cartItemSchema = new mongoose.Schema({
     ref: "Products",
     required: true,
   },
-
+  name:{
+    type:String,
+    required: true,
+  },
   imageUrl: {
     type:String,
     required: true,

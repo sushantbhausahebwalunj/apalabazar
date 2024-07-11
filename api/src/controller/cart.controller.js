@@ -26,7 +26,7 @@ const addToCart = asyncHandler(async (req, res) => {
         let cartItem = await CartItem.findOne({ userId: id, product: productId });
 
         if (cartItem) {
-           
+            cartItem.name= product.title,
             cartItem.quantity += 1;
             cartItem.price += product.price;
             cartItem.discountedPrice += product.discountedPrice;
@@ -36,6 +36,7 @@ const addToCart = asyncHandler(async (req, res) => {
            
             cartItem = await CartItem.create({
                 quantity: 1,
+                name:product.title,
                 imageUrl:product.imageUrl,
                 price: product.price,
                 discountedPrice: product.discountedPrice,

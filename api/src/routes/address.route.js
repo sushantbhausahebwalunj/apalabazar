@@ -12,28 +12,28 @@ const address = express.Router();
 //// address routes defined here
 
 address.route("/addAddress").post(
-    // verifyToken,
+    verifyToken,
     // upload.none(),
     addAddress
 );
 
 
 address.route("/updateAddress").post(
-    // verifyToken,
+    verifyToken,
     // upload.none(),
     updateAddress
 );
 
 
 address.route("/getAllAddress").get( 
-    // verifyToken,
+    verifyToken,
     // upload.none(),
     getAllAddress
 );
 
 address.route(`/deleteAddress`).delete(
 
-    // verifyToken,
+    verifyToken,
     // upload.none(),
     deleteAddress
 

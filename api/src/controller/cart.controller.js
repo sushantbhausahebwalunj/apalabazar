@@ -7,7 +7,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const addToCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const { id } = req.user; 
     const { productId } = req.body; 
 
     const user = await User.findById(id); 
@@ -26,7 +26,7 @@ const addToCart = asyncHandler(async (req, res) => {
         let cartItem = await CartItem.findOne({ userId: id, product: productId });
 
         if (cartItem) {
-           
+            cartItem.name= product.title,
             cartItem.quantity += 1;
             cartItem.price += product.price;
             cartItem.discountedPrice += product.discountedPrice;
@@ -36,6 +36,7 @@ const addToCart = asyncHandler(async (req, res) => {
            
             cartItem = await CartItem.create({
                 quantity: 1,
+                name:product.title,
                 imageUrl:product.imageUrl,
                 price: product.price,
                 discountedPrice: product.discountedPrice,
@@ -76,13 +77,16 @@ const addToCart = asyncHandler(async (req, res) => {
 
 
 const getCartDetails = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+   
+    const { id } = req.user; // Extracting the id from req.params
+    console.log('Extracted ID:', id); // Logging the id to the console
+    console.log('User from token:', req.user); // Logging the user from the token
 
     if (!id) {
         return res
             .status(401)
             .json(new ApiError(401, 'id is not set in cookies', 'User not logged in'));
-    }
+    } 
 
     const user = await User.findById(id);
 
@@ -114,7 +118,8 @@ const getCartDetails = asyncHandler(async (req, res) => {
 });
 
 const getCartItemsById = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const { id } = req.user; 
+    console.log(id);
     const { productId } = req.query;
 
     console.log("productId => ", productId);
@@ -149,7 +154,7 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 });
     
 const removeOneCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const { id } = req.user; 
     const { itemId } = req.query;
     console.log(itemId);
     const user = await User.findById(id);
@@ -200,7 +205,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
 });
 
 const removeAllCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const { id } = req.user; 
 
     const user = await User.findById(id);
     if (!user) {
@@ -235,7 +240,7 @@ const removeAllCart = asyncHandler(async (req, res) => {
 
 
 const removeItemQuantityCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const { id } = req.user; 
     const { itemId } = req.query;
 
      console.log(itemId);

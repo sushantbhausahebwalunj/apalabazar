@@ -42,7 +42,7 @@ const Navbar = (props) => {
           return (
 
             <button
-              onClick={() => handleSide(`/${category._id}`)}
+              onClick={() => handleSide(`/category/${category._id}`)}
               className=" border-none focus:border-none"
             >
               {category.name}

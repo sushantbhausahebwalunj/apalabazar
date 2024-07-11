@@ -7,7 +7,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const addToCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5'; 
+    const {id} = req.user; 
+
     const { productId } = req.body; 
 
     const user = await User.findById(id); 
@@ -76,7 +77,7 @@ const addToCart = asyncHandler(async (req, res) => {
 
 
 const getCartDetails = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+const {id} = req.user;
 
     if (!id) {
         return res
@@ -114,7 +115,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
 });
 
 const getCartItemsById = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+     const {id} = req.user;;
     const { productId } = req.query;
 
     console.log("productId => ", productId);
@@ -149,7 +150,7 @@ const getCartItemsById = asyncHandler(async (req, res) => {
 });
     
 const removeOneCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const {id} = req.user;
     const { itemId } = req.query;
     console.log(itemId);
     const user = await User.findById(id);
@@ -162,6 +163,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
 
     try {
         const cartItem = await CartItem.findById({ _id: itemId });
+        
 
         if (!cartItem) {
             return res
@@ -175,7 +177,11 @@ const removeOneCart = asyncHandler(async (req, res) => {
         
         }
 
-        let cart = await Cart.findOne({ user: id });
+
+        const cart = await Cart.findOne({ user: id }).populate({
+            path: 'cartItems',
+            populate: { path: 'product' }
+        });
         const cartItemExists = cart.cartItems.some(item => item.toString() === cartItem._id.toString());
         if (cart.totalPrice>0 && cartItemExists) { 
             cart.cartItems.pull(cartItem._id);
@@ -200,7 +206,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
 });
 
 const removeAllCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const {id} = req.user;
 
     const user = await User.findById(id);
     if (!user) {
@@ -235,7 +241,7 @@ const removeAllCart = asyncHandler(async (req, res) => {
 
 
 const removeItemQuantityCart = asyncHandler(async (req, res) => {
-    const id = '668181953b53ebca8f4b14d5';
+    const {id} = req.user;
     const { itemId } = req.query;
 
      console.log(itemId);

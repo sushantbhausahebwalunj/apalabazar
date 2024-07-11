@@ -54,34 +54,6 @@ function ProductDetails() {
         {viewport ? <MobNavbar /> : <Navbar number={12} />}
       </div>
 
-      <div className="flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8">
-        <div className="shadow-lg mt-5 bg-white w-full">
-          <div className="flex flex-col rounded-3xl mt-10 lg:flex-row items-center justify-center">
-            <div className="w-3/4 lg:w-[700px] lg:h-[600px] my-6 lg:my-0 mx-12">
-              <Slider {...settings}>
-                <img
-                  src={productDetails?.imageUrl} // Single image URL
-                  alt="Product Image"
-                  className="w-[80%] h-[60%] object-contain"
-                />
-              </Slider>
-            </div>
-            <div className="lg:ml-5 flex flex-col w-full">
-              <div className="flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0">
-                <div className="flex flex-col space-y-3 max-h-max">
-                  <h1 className="text-xl lg:text-3xl font-semibold">
-                    {productDetails?.title}
-                  </h1>
-                  <div className="flex items-center">
-                    <StarIcon className="h-6 w-6 text-yellow-500" />
-                    <span className="text-yellow-500 ml-2"></span>
-                   </div>
-                   </div>
-                   </div>
-                   </div>
-                   </div>
-                   </div>
-                   </div>
       
       <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
         <div className='shadow-lg mt-5 bg-white w-full'>

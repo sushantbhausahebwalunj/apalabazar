@@ -2,6 +2,7 @@ import express from "express";
 import {upload} from "../middleware/multer.middlware.js";
 import { addAddress, deleteAddress, getAllAddress, updateAddress } from "../controller/address.controller.js";
 import { verifyToken } from "../middleware/verifyUser.js";
+import authenticate from "../middleware/authenticat.js";
 
 
 const address = express.Router();

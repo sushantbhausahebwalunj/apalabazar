@@ -21,7 +21,7 @@ export default function Checkout(){
   };
 
   return (
-    <div className='bg-gradient-to-br p-3 mt-2 rounded-lg from-violet-500 to-orange-300'>
+    <div className='bg-gradient-to-br p-3 mt-2 rounded-lg bg-slate-300'>
       <h1 className="text-2xl  font-bold mb-4 py-7 max-w-[790px] mx-auto">Checkout</h1>
     <div className="flex flex-col max-w-[800px] w-[3/4] gap-12 justify-center  mx-auto p-4">
       <div className=" bg-white/30 backdrop-blur-lg rounded-lg shadow-lg p-6">
@@ -54,8 +54,8 @@ const DeliveryMode = () => {
         <input type="radio" id="home-delivery" name="delivery-mode" className="mr-2" checked />
         <label htmlFor="home-delivery" className="flex items-center">
           <span className="mr-2">🏠 Home Delivery</span>
-          <span className="line-through mr-2 text-red-500">₹29.00</span>
-          <span className="text-green-500">₹0</span>
+          {/* <span className="line-through mr-2 text-red-500">₹29.00</span>
+          <span className="text-green-500">₹0</span> */}
         </label>
       </div>
     </div>

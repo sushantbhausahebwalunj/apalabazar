@@ -26,20 +26,16 @@ const addToCart = asyncHandler(async (req, res) => {
         let cartItem = await CartItem.findOne({ userId: id, product: productId });
 
         if (cartItem) {
-            cartItem.name= product.title,
+            // cartItem.name= product.title,
             cartItem.quantity += 1;
-            cartItem.price += product.price;
-            cartItem.discountedPrice += product.discountedPrice;
+            // cartItem.price += product.price;
+            // cartItem.discountedPrice += product.discountedPrice;
             cartItem.updatedAt = new Date();
             await cartItem.save();
         } else {
            
             cartItem = await CartItem.create({
-                quantity: 1,
-                name:product.title,
-                imageUrl:product.imageUrl,
-                price: product.price,
-                discountedPrice: product.discountedPrice,
+                quantity: 1,     
                 userId: id,
                 product: product._id,
                 createdAt: new Date(),
@@ -79,8 +75,8 @@ const addToCart = asyncHandler(async (req, res) => {
 const getCartDetails = asyncHandler(async (req, res) => {
    
     const { id } = req.user; // Extracting the id from req.params
-    console.log('Extracted ID:', id); // Logging the id to the console
-    console.log('User from token:', req.user); // Logging the user from the token
+    // console.log('Extracted ID:', id); // Logging the id to the console
+    // console.log('User from token:', req.user); // Logging the user from the token
 
     if (!id) {
         return res
@@ -97,8 +93,10 @@ const getCartDetails = asyncHandler(async (req, res) => {
     }
 
     try {
-        const cart = await Cart.findOne({ user: id }).populate('cartItems');
-
+        const cart = await Cart.findOne({ user: id }).populate({
+            path: 'cartItems',
+            populate: { path: 'product' }
+        });
         if (!cart) {
             return res
                 .status(404)
@@ -116,6 +114,10 @@ const getCartDetails = asyncHandler(async (req, res) => {
         });
     }
 });
+
+
+
+
 
 const getCartItemsById = asyncHandler(async (req, res) => {
     const { id } = req.user; 
@@ -167,6 +169,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
 
     try {
         const cartItem = await CartItem.findById({ _id: itemId });
+        
 
         if (!cartItem) {
             return res
@@ -180,7 +183,11 @@ const removeOneCart = asyncHandler(async (req, res) => {
         
         }
 
-        let cart = await Cart.findOne({ user: id });
+
+        const cart = await Cart.findOne({ user: id }).populate({
+            path: 'cartItems',
+            populate: { path: 'product' }
+        });
         const cartItemExists = cart.cartItems.some(item => item.toString() === cartItem._id.toString());
         if (cart.totalPrice>0 && cartItemExists) { 
             cart.cartItems.pull(cartItem._id);
@@ -205,8 +212,8 @@ const removeOneCart = asyncHandler(async (req, res) => {
 });
 
 const removeAllCart = asyncHandler(async (req, res) => {
-    const { id } = req.user; 
-
+    const  id  = req.user; 
+console.log(id)
     const user = await User.findById(id);
     if (!user) {
         return res
@@ -241,9 +248,11 @@ const removeAllCart = asyncHandler(async (req, res) => {
 
 const removeItemQuantityCart = asyncHandler(async (req, res) => {
     const { id } = req.user; 
-    const { itemId } = req.query;
-
-     console.log(itemId);
+    const { itemId,quantity } = req.query;
+    // console.log(quantity)
+ 
+//console.log()
+     console.log( quantity);
     const user = await User.findById(id);
 
     if (!user) {
@@ -268,7 +277,7 @@ const removeItemQuantityCart = asyncHandler(async (req, res) => {
         }
          const productId =   cartItem.product
          const product= await Product.findById({ _id: productId});
-        if (cartItem.quantity > 1) {
+        if (cartItem.quantity >= 1) {
             cartItem.quantity -= 1;
             cartItem.price -= product.price;
             cartItem.discountedPrice -= product.discountedPrice;

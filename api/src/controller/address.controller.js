@@ -20,13 +20,12 @@ const addAddress = asyncHandler(async(req, res) => {
         state, 
         zipCode,
         district,
-
         mobile,
         extraMobile
         
     } = req.body;
 
-    console.log("req.body => ", req.body);
+   // console.log("req.body => ", req.body);
 
     if(!fullName || !streetAddress || !city || !state || !zipCode || !district || !mobile) {
         return res
@@ -36,7 +35,7 @@ const addAddress = asyncHandler(async(req, res) => {
 
     const user = await User.findById(id)
 
-    console.log("user => ", user);
+   // console.log("user => ", user);
 
     if(!user) {
         return res
@@ -64,7 +63,7 @@ const addAddress = asyncHandler(async(req, res) => {
 
         });
 
-        console.log("address user => ", address.user);
+       // console.log("address user => ", address.user);
 
 
         await address.save();

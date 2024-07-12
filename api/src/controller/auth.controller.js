@@ -158,7 +158,7 @@ export const loginUser = async (req, res) => {
         }
 
         const token = user.generateUserToken();
-
+        
         res.cookie('access_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // set to true in production

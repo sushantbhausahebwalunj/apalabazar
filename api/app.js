@@ -8,11 +8,11 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(morgan('dev'));
+app.use(morgan('dev')); 
 
 
 
-const allowedOrigin = 'http://localhost:3000';
+const allowedOrigin = 'http://localhost:3001';
 
 app.use(cors({
     origin: allowedOrigin,

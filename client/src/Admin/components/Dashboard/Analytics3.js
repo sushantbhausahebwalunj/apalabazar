@@ -17,12 +17,14 @@ const Analytics3 = () => {
         data: [12000, 19000, 3000, 5000, 20000, 3000, 5000, 7000],
         borderColor: 'blue',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        fill: false,
       },
       {
         label: 'Profit',
         data: [9000, 15000, 2000, 4000, 15000, 2000, 4000, 6000],
         borderColor: 'lightblue',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: false,
       },
     ],
   });
@@ -30,7 +32,7 @@ const Analytics3 = () => {
   const [revenueChange, setRevenueChange] = useState(0.56);
 
   useEffect(() => {
-    // Fetch data from the backend in future
+    // Fetch data from the backend in the future
     // For now, we use dummy data
     setOrders([
       { product: 'Prodotti per il tuo cane...', price: '20 Nov 2023', deliveryDate: '20 Nov 2023', imageSrc: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSMgDfLC7IUaSpSahcTId7yQxQ0eL7sC17bvgUiG8vlYfmQ22VU' },
@@ -77,20 +79,48 @@ const Analytics3 = () => {
           </div>
           <p className={textClasses}>Revenue</p>
         </div>
-        <div className='w-[500px]'>
-          <Line data={earningsData} />
+        <div className="w-full md:w-[90%]"> 
+          <Line 
+            data={earningsData}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+              },
+              scales: {
+                x: {
+                  grid: {
+                    display: false,
+                  },
+                },
+                y: {
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    callback: function(value) {
+                      return '$' + value;
+                    },
+                  },
+                },
+              },
+            }}
+          />
         </div>
       </div>
 
       <div className={cardClasses}>
         <h2 className="text-lg font-semibold">New Comments</h2>
-        <ul className='py-5'>
+        <ul className="py-5">
           {comments.map((comment, index) => (
             <li key={index} className="flex items-center mb-2">
               <img src={comment.avatarSrc} alt={comment.name} className="w-10 h-10 rounded-full mr-3" />
               <div>
                 <p className={textClasses}>{comment.name}</p>
-                <p className={textClasses} text-sm>{comment.text}</p>
+                <p className={textClasses}>{comment.text}</p>
                 <p className="text-yellow-500 text-sm">{'★'.repeat(comment.rating)}</p>
               </div>
             </li>

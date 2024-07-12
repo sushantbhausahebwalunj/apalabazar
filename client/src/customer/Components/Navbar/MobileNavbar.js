@@ -306,7 +306,7 @@ const Navbar = (props) => {
                 >
                   <button
                     onClick={() => setShowModal(true)}
-                    className="text-white font-medium"
+                    className="text-white flex no-wrap sm:font-md font-sm"
                   >
                     {" "}
                     <svg

@@ -14,9 +14,7 @@ import Reviews from "../../ReviewProduct/RateProduct";
 function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams(); // Use useParams to get the product ID
-  const { productDetails, status, error } = useSelector(
-    (state) => state.products
-  );
+  const { productDetails, status, error } = useSelector((state) => state.products);
   const { addTocart } = useCartContext();
 
   const [tab, setTab] = useState("Reviews");
@@ -101,9 +99,7 @@ function ProductDetails() {
                   <div className="flex items-center border-b">
                     <button
                       className={`py-2 px-4 text-lg font-medium ${
-                        tab === "Description"
-                          ? "border-b-2 border-blue-500"
-                          : ""
+                        tab === "Description" ? "border-b-2 border-blue-500" : ""
                       }`}
                       onClick={() => setTab("Description")}
                     >
@@ -126,19 +122,15 @@ function ProductDetails() {
           <ul
             onClick={() => setTab("Reviews")}
             className={`cursor-pointer transition-all ${
-              tab === "Review & Ratings"
-                ? "border-b-2 border-green-600 p-2"
-                : ""
+              tab === "Reviews" ? "border-b-2 border-green-600 p-2" : ""
             }`}
           >
-            Reviews & Ratings
+            Reviews
           </ul>
           <ul
             onClick={() => setTab("Country of Origin")}
             className={`cursor-pointer transition-all ${
-              tab === "Country of Origin"
-                ? "border-b-2 border-green-600 p-2"
-                : ""
+              tab === "Country of Origin" ? "border-b-2 border-green-600 p-2" : ""
             }`}
           >
             Country of Origin
@@ -184,9 +176,9 @@ function ProductDetails() {
                   person who has agreed to become a buyer on the Website by
                   providing Registration Data while registering on the Website
                   as Registered User using the computer systems. Apala Bazar
-                  allows the User to surf the Website or making purchases
-                  without registering on the Website. The term "We", "Us", "Our"
-                  shall mean Apala Bazar.
+                  allows the User to surf the Website or make purchases without
+                  registering on the Website. The term "We", "Us", "Our" shall
+                  mean Apala Bazar.
                 </p>
                 <p className="mb-4">
                   When You use any of the services provided by Us through the

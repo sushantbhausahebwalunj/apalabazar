@@ -1,6 +1,6 @@
 import {
   createReview,
-  getAllReview,
+  getAllReview, 
 } from '../services/review.service.js';
 
 const createview = async (req, res) => { 

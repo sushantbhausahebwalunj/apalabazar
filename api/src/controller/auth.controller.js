@@ -158,16 +158,17 @@ export const loginUser = async (req, res) => {
         }
 
         const token = user.generateUserToken();
-        
+        console.log('NODE_ENV:', process.env.NODE_ENV);
+
         res.cookie('access_token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // set to true in production
+            // secure: process.env.NODE_ENV === 'production', // set to true in production
         });
 
         return res.status(200).json({ message: 'Login successful', status: true, token, data: user });
     } catch (error) {
         console.error(error);
-        return res
+        return res 
         status(500)
         .json({ message: 'Internal server error', status: false });
     }

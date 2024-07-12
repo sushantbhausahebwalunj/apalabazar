@@ -24,7 +24,7 @@ app.use(cors({
 // Apply JWT authentication middleware to all routes
 // app.use(jwtAuth);
 
-app.use('/api', allRouter);
+app.use('/api', allRouter);                                                                 
 
 app.get("/", (req, res) => {
     return res.status(200).send({ message: "Welcome to Apala Bazar API - Node", status: true });

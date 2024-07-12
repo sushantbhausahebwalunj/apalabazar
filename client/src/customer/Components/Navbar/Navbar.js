@@ -5,12 +5,11 @@ import {
   FaHeart,
   FaBox,
   FaSignOutAlt,
-  FaQuestionCircle,
 } from "react-icons/fa";
 import { clearUser } from "../../../Redux/User/userSlice";
 import MobNavbar from "./MobileNavbar.js";
 import logo from "../../../logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
 
@@ -23,9 +22,11 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
+
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
   const authToken = localStorage.getItem("authToken");
   const isAuthenticated = !!authToken;
 
@@ -40,21 +41,16 @@ const Navbar = (props) => {
       .map((category, i) => {
         if (i < 8) {
           return (
-
             <button
+              key={category._id}
               onClick={() => handleSide(`/${category._id}`)}
-              className=" border-none focus:border-none"
+              className="border-none focus:border-none"
             >
               {category.name}
             </button>
-
-       
-                // <button onClick={() => handleSide(`/category/${category._id}`)} className=" border-none focus:border-none">{category.name}</button>
-         
-
           );
         }
-        return null; // Add this line to ensure all cases are covered
+        return null;
       });
   };
 
@@ -106,7 +102,7 @@ const Navbar = (props) => {
   };
 
   const [viewport, setViewport] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 620);
 
   useEffect(() => {
     const handleResize = () => {
@@ -128,12 +124,12 @@ const Navbar = (props) => {
       ) : (
         <div className="shadow-lg overflow-hidden relative">
           {/* Top Navbar */}
-          <div className="bg-white p-4 pl-5 border-b-[2px] flex items-center justify-between">
+          <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
             <a href="/" className="flex items-center space-x-4">
               <img
                 src={logo}
                 alt="Logo"
-                className="h-12"
+                className="h-10"
                 crossOrigin="anonymous"
               />
             </a>
@@ -155,16 +151,6 @@ const Navbar = (props) => {
                 </button>
               </form>
             </div>
-            {/* <div className="flex items-center space-x-2">
-              <button
-                onClick={() => navigate("/support")}
-                className="flex items-center space-x-1 text-black font-medium"
-              >
-                <FaQuestionCircle className="w-6 h-6 text-zinc-700" />
-                <span>Support</span>
-              </button>
-            </div> */}
-
             <div className="flex space-x-12">
               <div className="relative">
                 <div
@@ -220,29 +206,26 @@ const Navbar = (props) => {
                 {hoverDropdown && (
                   <div
                     className="fixed bg-white shadow-lg space-y-2 w-fit border-[1px] border-gray-200 rounded-md z-[1000]"
-                    style={{
-                      top: dropdownPosition.top,
-                      left: dropdownPosition.left,
-                    }}
+                    style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
                     onMouseEnter={() => setHoverDropdown(true)}
                     onMouseLeave={() => setHoverDropdown(false)}
                   >
                     <button
-                      onClick={() => navigate("/myprofile/profile")}
+                      onClick={() => navigate('/myprofile/profile')}
                       className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                     >
                       <FaUser className="mr-2" />
                       My Profile
                     </button>
                     <button
-                      onClick={() => navigate("/myprofile/likes")}
+                      onClick={() => navigate('/myprofile/likes')}
                       className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                     >
                       <FaHeart className="mr-2" />
                       Wishlist
                     </button>
                     <button
-                      onClick={() => navigate("/myprofile/orders")}
+                      onClick={() => navigate('/myprofile/orders')}
                       className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                     >
                       <FaBox className="mr-2" />
@@ -261,7 +244,7 @@ const Navbar = (props) => {
               <div className="flex items-center space-x-2">
                 <button onClick={showCart}>
                   <svg
-                    className="w-6 h-6 text-zinc-700"
+                    className="w-10 h-10 text-blue-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -270,15 +253,14 @@ const Navbar = (props) => {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h18l-1.68 9.39a2 2 0 01-1.98 1.61H6.66a2 2 0 01-1.98-1.61L3 3zm0 0l1.68 9.39a2 2 001.98 1.61h10.68a2 2 001.98-1.61L21 3M5 21h14"
-                    ></path>
+                      strokeWidth="1"
+                      d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l.839 2h13.239l3.474-12h1.929l.743-2h-4.195z"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
           </div>
-
           {/* Bottom Navbar */}
           <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2 items-center space-x-8">
             <div className="border-r-[3px] p-2 pr-16">
@@ -303,7 +285,6 @@ const Navbar = (props) => {
                 <span>All Categories</span>
               </button>
             </div>
-
             {renderCategories()}
           </div>
         </div>

@@ -64,7 +64,7 @@ const Analytics = () => {
   };
 
   return (
-    <div className=" flex lg:space-x-4 space-y-4 p-4 bg-transparent lg:flex-row flex-col ">
+    <div className=" flex lg:space-x-4 space-y-4 p-3 bg-transparent lg:flex-row flex-col ">
       <Card 
         iconUrl="https://openui.fly.dev/openui/24x24.svg?text=🛒" 
         title="Total Sales" 
@@ -89,14 +89,7 @@ const Analytics = () => {
         graphData={ordersData} 
         iconBgColor="bg-gray-500"
       />
-      <Card 
-        iconUrl="https://openui.fly.dev/openui/24x24.svg?text=👥" 
-        title="Total Visitor" 
-        value="34,945" 
-        change="1.56%" 
-        graphData={visitorsData} 
-        iconBgColor="bg-blue-500"
-      />
+     
     </div>
   );
 };

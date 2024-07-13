@@ -5,9 +5,9 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { FaCircleInfo } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCart, removeFromCart, clearCart, updateCartQuantity } from '../../../Redux/Cart/cartSlice';
+import { fetchCart, removeFromCart, clearCart, updateCartQuantity,addQuantity } from '../../../Redux/Cart/cartSlice';
 
-const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem }) => {
+const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity,increaseQuantity, removeItem,prodid }) => {
   return (
     <tr className="border-b">
       <td className="py-2 px-2 sm:py-4 sm:px-4 flex items-center">
@@ -28,7 +28,7 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
           <div className="flex flex-col sm:flex-row items-center justify-center">
             <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 px-1 sm:px-2 py-1 rounded-t sm:rounded-l mb-1 sm:mb-0" onClick={() => decreaseQuantity(unik)}>-</button>
             <input type="number" value={qty} readOnly min="1" className="w-12 sm:w-12 text-center border mb-1 sm:mb-0" />
-            <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 sm:px-2 py-1 rounded-b sm:rounded-r mb-1 sm:mb-0" onClick={() => increaseQuantity(unik)}>+</button>
+            <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 sm:px-2 py-1 rounded-b sm:rounded-r mb-1 sm:mb-0" onClick={() => increaseQuantity(unik, prodid)}>+</button>
           </div>
           <div className="flex items-center justify-center mt-1">
             <button className="text-red-500 mx-3" onClick={() => removeItem(unik)}>
@@ -65,9 +65,13 @@ const Cart = () => {
     navigate('/checkout');
   };
 
-  const increaseQuantity = (id) => {
+  const increaseQuantity = (id,prodid) => {
     const item = items[0].find(item => item._id === id);
-    dispatch(updateCartQuantity({ productId: id, quantity: item.quantity + 1 }));
+    // console.log(id);
+    // dispatch(addQuantity(id));
+   
+      dispatch(addQuantity({ itemId: id, productId:prodid, quantity: item.quantity + 1 }));
+
   };
 
   const decreaseQuantity = (id) => {
@@ -93,7 +97,7 @@ const Cart = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  console.log(items);
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
@@ -128,9 +132,9 @@ const Cart = () => {
                 <tbody>
                   {items[0].map(item => (
                     <CartItem
-                      key={item._id}
+                      prodid={item.product._id}
                       unik={item._id}
-                      imageSrc={Array.isArray(item.imageUrl) && item.image.length > 0 ? item.imageUrl[0] : item.product.imageUrl}
+                      imageSrc={item.product.imageUrl}
                       productName={item.product.title}
                       actualPrice={item.product.price * item.quantity}
                       price={item.product.discountedPrice * item.quantity}

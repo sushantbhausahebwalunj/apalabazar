@@ -12,14 +12,27 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
   const response = await axios.post('http://localhost:5454/api/cart/addCart', {
-    productId: product.product._id,
+    productId: product,
   });
   if (response.data.success) {
+    
     alert('Product added');
-  }
+  } 
+  
   return response.data;
 });
-
+export const addQuantity = createAsyncThunk('cart/addQuantity', async (product) => {
+  const response = await axios.post('http://localhost:5454/api/cart/addCart', {
+    productId: product,
+  });
+  if (response.data.success) {
+    
+    alert('Product added');
+  } 
+  console.log("data");
+  console.log(response.data);
+  return response.data;
+});
 export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productId) => {
   await axios.delete(`http://localhost:5454/api/cart/removeCartItem?itemId=${productId}`);
   return productId;
@@ -57,8 +70,9 @@ const cartSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        if (state.items[0]) { // Check if state.items[0] exists before mutating
+        if (state.items[0]) { 
           state.items[0].push(action.payload);
+          
         }
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
@@ -71,6 +85,17 @@ const cartSlice = createSlice({
         if (state.items[0]) { // Check if state.items[0] exists before clearing
           state.items[0] = [];
         }
+      })
+      .addCase(addQuantity.fulfilled, (state, action) => {
+        const { product } = action.payload;
+        console.log(product);
+         if(state.items[0])
+         {
+          const existingItem = state.items[0].find(item => item._id === product);
+          if(existingItem){
+           console.log(existingItem);
+          }
+         }
       })
       .addCase(updateCartQuantity.fulfilled, (state, action) => {
         const { productId, quantity } = action.payload;

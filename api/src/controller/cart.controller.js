@@ -211,7 +211,7 @@ const removeAllCart = asyncHandler(async (req, res) => {
         if (!cart) {
             return res
                 .status(404)
-                .json(new ApiResponse(404, 'Cart not found', null));
+                .json(new ApiResponse(404, 'Cart not found'));
         }
 
         await CartItem.deleteMany({ _id: { $in: cart.cartItems } });
@@ -219,7 +219,7 @@ const removeAllCart = asyncHandler(async (req, res) => {
 
         return res
             .status(200)
-            .json(new ApiResponse(200, 'Cart deleted successfully', cart));
+            .json(new ApiResponse(200, 'Cart deleted successfully'));
     } catch (error) {
         console.error(error);
         return res.status(500).json({

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../../../axiosConfig';
 
 const Reviews = React.memo(() => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Reviews = React.memo(() => {
   useEffect(() => {
     const getReview = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5454/api/review/product/${id}`, {
+        const resp = await axiosInstance.get(`/review/product/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 
 
 
-const allowedOrigin = 'http://localhost:3000';
+const allowedOrigin = process.env.BASE_URL || 'http://localhost:3000';
 
 app.use(cors({
     origin: allowedOrigin,

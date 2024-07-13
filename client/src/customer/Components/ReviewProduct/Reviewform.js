@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../../../axiosConfig';
 
 const sharedClasses = {
   cardContainer: 'h-[100vh] bg-gray-200 bg-card text-card-foreground',
@@ -37,7 +38,7 @@ const navigate = useNavigate();
     try {
         const resp = await Promise.all([
           
-          axios.post('http://localhost:5454/api/review/create', review, {
+          axiosInstance.post('/review/create', review, {
               headers: {
                   'Authorization': `Bearer ${token}`
               }

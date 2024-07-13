@@ -28,7 +28,7 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
           <div className="flex flex-col sm:flex-row items-center justify-center">
             <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 px-1 sm:px-2 py-1 rounded-t sm:rounded-l mb-1 sm:mb-0" onClick={() => decreaseQuantity(unik)}>-</button>
             <input type="number" value={qty} readOnly min="1" className="w-12 sm:w-12 text-center border mb-1 sm:mb-0" />
-            <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 sm:px-2 py-1 rounded-b sm:rounded-r mb-1 sm:mb-0" onClick={() => increaseQuantity(unik, prodid)}>+</button>
+            <button className="bg-blue-500 text-white w-6 h-8 sm:w-6 sm:h-8 sm:px-2 py-1 rounded-b sm:rounded-r mb-1 sm:mb-0" onClick={() => increaseQuantity(prodid)}>+</button>
           </div>
           <div className="flex items-center justify-center mt-1">
             <button className="text-red-500 mx-3" onClick={() => removeItem(unik)}>
@@ -65,12 +65,12 @@ const Cart = () => {
     navigate('/checkout');
   };
 
-  const increaseQuantity = (id,prodid) => {
+  const increaseQuantity = (id) => {
     const item = items[0].find(item => item._id === id);
     // console.log(id);
     // dispatch(addQuantity(id));
    
-      dispatch(addQuantity({ itemId: id, productId:prodid, quantity: item.quantity + 1 }));
+      dispatch(addQuantity(id));
 
   };
 

@@ -11,6 +11,7 @@ const cartSchema = new mongoose.Schema({
     cartItems: [{
         type:mongoose.Schema.Types.ObjectId,
         ref: "cartItems",
+
         required: true,  
     }],  
  
@@ -36,7 +37,7 @@ const cartSchema = new mongoose.Schema({
 
     discount:{
         type: Number,
-       // required: true,
+        required: true,
         default:0 
     },
 

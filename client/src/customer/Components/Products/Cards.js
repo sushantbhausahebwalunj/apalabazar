@@ -65,7 +65,9 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ product, quantity: 1 }));
+    // console.log(product);
+    const id = product._id
+    dispatch(addToCart(id));
   };
 
   return (

@@ -13,8 +13,8 @@ const cartRouter = express.Router();
 
 /// add cart routes 
 cartRouter.route("/addCart").post(
-    authenticate,
-    //verifyToken,
+    // authenticate,
+    verifyToken,
     // upload.none(),
     addToCart
 
@@ -25,8 +25,8 @@ cartRouter.route("/addCart").post(
 
 /// get cart details routes
 cartRouter.route("/getCartDetails").get(
-    // verifyToken,
-    authenticate,
+    verifyToken,
+    // authenticate,
     getCartDetails
 );
 
@@ -34,8 +34,8 @@ cartRouter.route("/getCartDetails").get(
 
 //// get one cart item by id 
 cartRouter.route("/getItemsInfo").get(
-    // verifyToken,
-    authenticate,
+    verifyToken,
+    // authenticate,
     getCartItemsById
 );
 
@@ -43,13 +43,13 @@ cartRouter.route("/getItemsInfo").get(
 
 /// remove one cart item by id
 cartRouter.route("/removeCartItem").delete(
-    // verifyToken,
-    authenticate,
+    verifyToken,
+    // authenticate,
     removeOneCart
 );
 cartRouter.route("/removeCartItemQuantity").delete(
-   // verifyToken,
-    authenticate,
+   verifyToken,
+    // authenticate,
     removeItemQuantityCart
 );
 
@@ -57,8 +57,8 @@ cartRouter.route("/removeCartItemQuantity").delete(
 
 /// remove all cart items
 cartRouter.route("/removeAllCart").delete(
-    // verifyToken,
-    authenticate,
+    verifyToken,
+    // authenticate,
     removeAllCart
 );
 

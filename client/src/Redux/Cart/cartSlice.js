@@ -1,69 +1,57 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const token = localStorage.getItem("authToken");
+// Set up axios to include credentials (cookies)
+axios.defaults.withCredentials = true;
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
-  const token = localStorage.getItem("authToken");
-  const response = await axios.get('http://localhost:5454/api/cart/getCartDetails', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await axios.get('http://localhost:5454/api/cart/getCartDetails');
   const items = [response.data.data.cartItems, response.data.data];
   return items;
 });
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
-  const token = localStorage.getItem("authToken");
   const response = await axios.post('http://localhost:5454/api/cart/addCart', {
-    productId: product.product._id,
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    productId: product,
   });
-  if(response.data.success) {
+  if (response.data.success) {
+    
     alert('Product added');
-  }
+  } 
+  
   return response.data;
 });
-
-export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productId) => {
-  const token = localStorage.getItem("authToken");
-  await axios.delete(`http://localhost:5454/api/cart/removeCartItem?itemId=${productId}`,  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export const addQuantity = createAsyncThunk('cart/addQuantity', async (product) => {
+  const response = await axios.post('http://localhost:5454/api/cart/addCart', {
+    productId: product,
   });
+  if (response.data.success) {
+    
+    alert('Product added');
+  } 
+  console.log("data");
+  console.log(response.data);
+  return response.data;
+});
+export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productId) => {
+  await axios.delete(`http://localhost:5454/api/cart/removeCartItem?itemId=${productId}`);
   return productId;
 });
 
 export const clearCart = createAsyncThunk('cart/clearCart', async () => {
-  const token = localStorage.getItem("authToken");
-  await axios.delete('http://localhost:5454/api/cart/removeAllCart', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  await axios.delete('http://localhost:5454/api/cart/removeAllCart');
   return [];
 });
 
 export const updateCartQuantity = createAsyncThunk('cart/updateCartQuantity', async ({ productId, quantity }) => {
-  const token = localStorage.getItem("authToken");
-  const response = await axios.delete(`http://localhost:5454/api/cart/removeCartItemQuantity?itemId=${productId}&&quantity=${quantity}`,{
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  //console.log(response.data)
+  const response = await axios.delete(`http://localhost:5454/api/cart/removeCartItemQuantity?itemId=${productId}`);
   return { productId, quantity };
 });
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: [],  // Ensure this is initialized as an empty array
+    items: [], // Ensure items is initialized as an array
     status: 'idle',
     error: null,
   },
@@ -82,20 +70,40 @@ const cartSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        state.items[0].push(action.payload); // Add new item to the cart items
+        if (state.items[0]) { 
+          state.items[0].push(action.payload);
+          
+        }
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         const productId = action.payload;
-        state.items[0] = state.items[0].filter(item => item._id !== productId); // Remove item from the cart items
+        if (state.items[0]) { // Check if state.items[0] exists before filtering
+          state.items[0] = state.items[0].filter(item => item._id !== productId);
+        }
       })
       .addCase(clearCart.fulfilled, (state) => {
-        state.items[0] = []; // Clear all items from the cart items
+        if (state.items[0]) { // Check if state.items[0] exists before clearing
+          state.items[0] = [];
+        }
+      })
+      .addCase(addQuantity.fulfilled, (state, action) => {
+        const { product } = action.payload;
+        console.log(product);
+         if(state.items[0])
+         {
+          const existingItem = state.items[0].find(item => item._id === product);
+          if(existingItem){
+           console.log(existingItem);
+          }
+         }
       })
       .addCase(updateCartQuantity.fulfilled, (state, action) => {
         const { productId, quantity } = action.payload;
-        const existingItem = state.items[0].find(item => item._id === productId);
-        if (existingItem) {
-          existingItem.quantity = quantity; // Update the quantity of the existing item
+        if (state.items[0]) { // Check if state.items[0] exists before updating quantity
+          const existingItem = state.items[0].find(item => item._id === productId);
+          if (existingItem) {
+            existingItem.quantity = quantity;
+          }
         }
       });
   },

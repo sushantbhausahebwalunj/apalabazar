@@ -1,3 +1,4 @@
+
 import Cart from "../models/cart.model.js";
 import CartItem from "../models/cartItem.model.js";
 import Product from "../models/product.model.js";
@@ -26,16 +27,18 @@ const addToCart = asyncHandler(async (req, res) => {
         let cartItem = await CartItem.findOne({ userId: id, product: productId });
 
         if (cartItem) {
-            // cartItem.name= product.title,
+            
             cartItem.quantity += 1;
-            // cartItem.price += product.price;
-            // cartItem.discountedPrice += product.discountedPrice;
+            cartItem.price += product.price;
+            cartItem.discountedPrice += product.discountedPrice;
             cartItem.updatedAt = new Date();
             await cartItem.save();
         } else {
            
             cartItem = await CartItem.create({
-                quantity: 1,     
+                quantity: 1,
+                price: product.price,
+                discountedPrice: product.discountedPrice,
                 userId: id,
                 product: product._id,
                 createdAt: new Date(),
@@ -44,6 +47,7 @@ const addToCart = asyncHandler(async (req, res) => {
         }
 
         let cart = await Cart.findOne({ user: id });
+        console.log(cart);
         if (!cart) {
             cart = await Cart.create({
                 user: id,
@@ -63,7 +67,7 @@ const addToCart = asyncHandler(async (req, res) => {
             cart.discount += (product.price - product.discountedPrice);
             await cart.save();
         }
-
+    const imagesUrl = product.imageUrl;
         return res.status(200).json(new ApiResponse(200, 'Product added to cart successfully', cartItem,cart)); 
     } catch (error) {
         console.error(error);
@@ -73,51 +77,37 @@ const addToCart = asyncHandler(async (req, res) => {
 
 
 const getCartDetails = asyncHandler(async (req, res) => {
-   
-    const { id } = req.user; // Extracting the id from req.params
-    // console.log('Extracted ID:', id); // Logging the id to the console
-    // console.log('User from token:', req.user); // Logging the user from the token
+    const { id } = req.user;
 
     if (!id) {
-        return res
-            .status(401)
-            .json(new ApiError(401, 'id is not set in cookies', 'User not logged in'));
-    } 
+        return res.status(401).json(new ApiResponse(401, 'User ID not provided in cookies', null));
+    }
 
     const user = await User.findById(id);
 
     if (!user) {
-        return res
-            .status(401)
-            .json(new ApiError(401, 'User not found'));
+        return res.status(401).json(new ApiResponse(401, 'User not found', null));
     }
 
     try {
         const cart = await Cart.findOne({ user: id }).populate({
             path: 'cartItems',
-            populate: { path: 'product' }
+            populate: {
+                path: 'product',
+                model: 'products'
+            }
         });
+
         if (!cart) {
-            return res
-                .status(404)
-                .json(new ApiResponse(404, 'Cart is empty for this user', null));
+            return res.status(404).json(new ApiResponse(404, 'Cart is empty for this user', null));
         }
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, 'Cart retrieved successfully', cart));
+        return res.status(200).json(new ApiResponse(200, 'Cart retrieved successfully', cart));
     } catch (error) {
-        console.error("error => ", error);
-        return res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+        console.error(error);
+        return res.status(500).json(new ApiResponse(500, error.message, null));
     }
 });
-
-
-
-
 
 const getCartItemsById = asyncHandler(async (req, res) => {
     const { id } = req.user; 
@@ -169,7 +159,6 @@ const removeOneCart = asyncHandler(async (req, res) => {
 
     try {
         const cartItem = await CartItem.findById({ _id: itemId });
-        
 
         if (!cartItem) {
             return res
@@ -183,13 +172,9 @@ const removeOneCart = asyncHandler(async (req, res) => {
         
         }
 
-
-        const cart = await Cart.findOne({ user: id }).populate({
-            path: 'cartItems',
-            populate: { path: 'product' }
-        });
+        let cart = await Cart.findOne({ user: id });
         const cartItemExists = cart.cartItems.some(item => item.toString() === cartItem._id.toString());
-        if (cart.totalPrice>0 && cartItemExists) { 
+        if (cartItem.quantity>0 && cartItemExists) { 
             cart.cartItems.pull(cartItem._id);
             cart.totalPrice -= cartItem.price;
             cart.totalItem -= cartItem.quantity;
@@ -212,8 +197,8 @@ const removeOneCart = asyncHandler(async (req, res) => {
 });
 
 const removeAllCart = asyncHandler(async (req, res) => {
-    const  id  = req.user; 
-console.log(id)
+    const { id } = req.user; 
+
     const user = await User.findById(id);
     if (!user) {
         return res
@@ -248,11 +233,9 @@ console.log(id)
 
 const removeItemQuantityCart = asyncHandler(async (req, res) => {
     const { id } = req.user; 
-    const { itemId,quantity } = req.query;
-    // console.log(quantity)
- 
-//console.log()
-     console.log( quantity);
+    const { itemId } = req.query;
+
+     console.log(itemId);
     const user = await User.findById(id);
 
     if (!user) {
@@ -277,7 +260,7 @@ const removeItemQuantityCart = asyncHandler(async (req, res) => {
         }
          const productId =   cartItem.product
          const product= await Product.findById({ _id: productId});
-        if (cartItem.quantity >= 1) {
+        if (cartItem.quantity > 1) {
             cartItem.quantity -= 1;
             cartItem.price -= product.price;
             cartItem.discountedPrice -= product.discountedPrice;

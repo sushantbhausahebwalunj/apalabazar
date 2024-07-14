@@ -74,7 +74,6 @@ const Categories = () => {
       setError(err.message); // Handle errors during form submission
     }
   };
-  
 
   const handleDelete = async (id) => {
     try {
@@ -98,53 +97,49 @@ const Categories = () => {
         </div>
         {error && <div className="text-red-500 mb-4">{error}</div>} {/* Display errors */}
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-[--card] text-[--card-foreground]">
-            <thead className="bg-gray-500 rounded-lg">
-              <tr>
-                <th className={`p-2 ${sharedClasses.border}`}>Category</th>
-                <th className={`p-2 ${sharedClasses.border}`}>Parent Category</th>
-                <th className={`p-2 ${sharedClasses.border}`}>Level</th>
-                <th className={`p-2 ${sharedClasses.border}`}>Quantity</th>
-                <th className={`p-2 ${sharedClasses.border}`}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => (
-                <tr key={category._id} className={sharedClasses.muted}>
-                  <td className={`p-2 ${sharedClasses.border}`}>{category.name}</td>
-                  <td className={`p-2 ${sharedClasses.border}`}>
-                    {category.parentCategory ? category.parentCategory.name : 'None'}
-                  </td>
-                  <td className={`p-2 ${sharedClasses.border}`}>{category.level}</td>
-                  <td className={`p-2 ${sharedClasses.border}`}>{category.level}</td>
-                  <td className={`p-2 ${sharedClasses.border} flex space-x-3 p-4`}>
-                    <button
-                      onClick={() => updateModal(category)}
-                      className="text-[--accent] hover:text-[--accent]/80"
-                      aria-label="Edit category"
-                    >
-                      <img
-                        aria-hidden="true"
-                        alt="edit-icon"
-                        src="https://openui.fly.dev/openui/16x16.svg?text=✏️"
-                      />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(category._id)}
-                      className="text-[--destructive] hover:text-[--destructive]/80"
-                      aria-label="Delete category"
-                    >
-                      <img
-                        aria-hidden="true"
-                        alt="delete-icon"
-                        src="https://openui.fly.dev/openui/16x16.svg?text=🗑️"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="flex flex-col">
+            <div className="flex justify-between p-2 bg-gray-500 rounded-lg text-white font-semibold">
+              <div className="w-1/4 p-2">Category</div>
+              <div className="w-1/4 p-2">Parent Category</div>
+              <div className="w-1/4 p-2 hidden md:block">Level</div>
+              <div className="w-1/4 p-2">Quantity</div>
+              <div className="w-1/4 p-2">Action</div>
+            </div>
+            {categories.map((category) => (
+              <div key={category._id} className="flex justify-between p-2 border-b border-gray-400">
+                <div className="w-1/4 p-2">{category.name}</div>
+                <div className="w-1/4 p-2">
+                  {category.parentCategory ? category.parentCategory.name : 'None'}
+                </div>
+                <div className="w-1/4 p-2 hidden md:block">{category.level}</div>
+                <div className="w-1/4 p-2">{category.level}</div>
+                <div className="w-1/4 p-2 flex space-x-3">
+                  <button
+                    onClick={() => updateModal(category)}
+                    className="text-[--accent] hover:text-[--accent]/80"
+                    aria-label="Edit category"
+                  >
+                    <img
+                      aria-hidden="true"
+                      alt="edit-icon"
+                      src="https://openui.fly.dev/openui/16x16.svg?text=✏️"
+                    />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(category._id)}
+                    className="text-[--destructive] hover:text-[--destructive]/80"
+                    aria-label="Delete category"
+                  >
+                    <img
+                      aria-hidden="true"
+                      alt="delete-icon"
+                      src="https://openui.fly.dev/openui/16x16.svg?text=🗑️"
+                    />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <Modal
           isOpen={showModal}

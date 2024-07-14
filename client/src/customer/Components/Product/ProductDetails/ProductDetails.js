@@ -14,9 +14,7 @@ import Reviews from "../../ReviewProduct/RateProduct";
 function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams(); // Use useParams to get the product ID
-  const { productDetails, status, error } = useSelector(
-    (state) => state.products
-  );
+  const { productDetails, status, error } = useSelector((state) => state.products);
   const { addTocart } = useCartContext();
 
   const [tab, setTab] = useState("Reviews");
@@ -54,28 +52,7 @@ function ProductDetails() {
         {viewport ? <MobNavbar /> : <Navbar number={12} />}
       </div>
 
-      <div className="flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8">
-        <div className="shadow-lg mt-5 bg-white w-full">
-          <div className="flex flex-col rounded-3xl mt-10 lg:flex-row items-center justify-center">
-            <div className="w-3/4 lg:w-[700px] lg:h-[600px] my-6 lg:my-0 mx-12">
-              <Slider {...settings}>
-                <img
-                  src={productDetails?.imageUrl} // Single image URL
-                  alt="Product Image"
-                  className="w-[80%] h-[60%] object-contain"
-                />
-              </Slider>
-            </div>
-            <div className="lg:ml-5 flex flex-col w-full">
-              <div className="flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0">
-                <div className="flex flex-col space-y-3 max-h-max">
-                  <h1 className="text-xl lg:text-3xl font-semibold">
-                    {productDetails?.title}
-                  </h1>
-                  <div className="flex items-center">
-                    <StarIcon className="h-6 w-6 text-yellow-500" />
-                    <span className="text-yellow-500 ml-2">
-
+      
       <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
         <div className='shadow-lg mt-5 bg-white w-full'>
           <div className='flex flex-col rounded-3xl mt-10 lg:flex-row '>
@@ -122,9 +99,7 @@ function ProductDetails() {
                   <div className="flex items-center border-b">
                     <button
                       className={`py-2 px-4 text-lg font-medium ${
-                        tab === "Description"
-                          ? "border-b-2 border-blue-500"
-                          : ""
+                        tab === "Description" ? "border-b-2 border-blue-500" : ""
                       }`}
                       onClick={() => setTab("Description")}
                     >
@@ -147,19 +122,15 @@ function ProductDetails() {
           <ul
             onClick={() => setTab("Reviews")}
             className={`cursor-pointer transition-all ${
-              tab === "Review & Ratings"
-                ? "border-b-2 border-green-600 p-2"
-                : ""
+              tab === "Reviews" ? "border-b-2 border-green-600 p-2" : ""
             }`}
           >
-            Reviews & Ratings
+            Reviews
           </ul>
           <ul
             onClick={() => setTab("Country of Origin")}
             className={`cursor-pointer transition-all ${
-              tab === "Country of Origin"
-                ? "border-b-2 border-green-600 p-2"
-                : ""
+              tab === "Country of Origin" ? "border-b-2 border-green-600 p-2" : ""
             }`}
           >
             Country of Origin
@@ -205,9 +176,9 @@ function ProductDetails() {
                   person who has agreed to become a buyer on the Website by
                   providing Registration Data while registering on the Website
                   as Registered User using the computer systems. Apala Bazar
-                  allows the User to surf the Website or making purchases
-                  without registering on the Website. The term "We", "Us", "Our"
-                  shall mean Apala Bazar.
+                  allows the User to surf the Website or make purchases without
+                  registering on the Website. The term "We", "Us", "Our" shall
+                  mean Apala Bazar.
                 </p>
                 <p className="mb-4">
                   When You use any of the services provided by Us through the

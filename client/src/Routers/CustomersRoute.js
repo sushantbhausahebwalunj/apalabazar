@@ -8,9 +8,6 @@ import Dairy from '../Pages/Dairy/Dairy';
 import ProductDetails from '../customer/Components/Product/ProductDetails/ProductDetails.js';
 import Login from '../customer/Components/Auth/Login';
 import Profile from '../Profile/components/Profilemain/Profile.js';
-import HomeAppliances from '../Pages/HomeAppliances/HomeAppliances.js';
-import  DetergentFabricCare  from '../Pages/HomeKitchen/HomeKitchen.js';
-import ValuePack from '../Pages/Specials/Specials.js';
 import Checkout from '../Profile/components/Orders/Checkoutpage.js';
 import RatingsAndReviews from '../customer/Components/ReviewProduct/Reviewform.js';
 import SearchPage from '../Pages/SearchPage.js';
@@ -24,12 +21,12 @@ function CustomersRoute() {
       <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/:main?/:sub" element={<Grocery />}></Route>
-       <Route path="category/:main" element={<Grocery />}></Route>
+       <Route path="category/:main" element={<Grocery/>}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/category" element={<Category />} />
       <Route path="product/:id" element={<ProductDetails />}></Route>
        <Route path="/login" element={<Login />}></Route>
-      <Route path="/checkout" element={<Checkout />}></Route>
+      <Route path="/checkout" element={< Checkout/>}></Route>
       <Route path="/myprofile" element={<Profile/>}></Route>
       <Route path="/review/:id" element={<RatingsAndReviews/>}></Route>
       <Route path="/search/:name" element={<SearchPage/>}></Route>

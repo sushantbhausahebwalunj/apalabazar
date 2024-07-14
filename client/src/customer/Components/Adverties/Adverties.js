@@ -18,21 +18,21 @@ const gadgets = [
   },
 ];
 
-const Gadgets = () => {
+const Gadgets = ({advertisements, status}) => {
   return (
     <div className="rounded-md">
       <div className="flex flex-wrap m-2">
-        {gadgets.slice(0, 2).map((gadget, index) => (
+        {advertisements.filter((advertisement) => advertisement.section === "Section 3").slice(0, 2).map((advertisement, index) => (
           <div key={index} className={`w-full sm:w-${index === 0 ? '1/3 lg:w-1/3' : '2/3 lg:w-2/3'} p-4`}>
             <div className="bg-white border rounded-lg shadow-lg overflow-hidden">
               <img
-                src={gadget.imageUrl}
-                alt={gadget.title}
+                src={advertisement.imageUrl}
+                alt={advertisement.title}
                 className="w-full h-[600px] object-cover transform sm:hover:scale-[1.5] transition duration-300"
               />
               <div className="p-4">
-                <h3 className="text-lg font-semibold">{gadget.title}</h3>
-                <p className="text-green-600 text-sm">{gadget.discount}</p>
+                <h3 className="text-lg font-semibold">{advertisement.title}</h3>
+                <p className="text-green-600 text-sm">{advertisement.description}</p>
               </div>
             </div>
           </div>

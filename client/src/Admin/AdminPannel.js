@@ -11,7 +11,8 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import Navbar from "./tables/navbar";
 import { FaTachometerAlt, FaBoxOpen, FaTags, FaShoppingCart, FaUser, FaCog, FaTimes } from 'react-icons/fa';
 import { RiAdvertisementFill } from "react-icons/ri";
-import CreateAdvertisement from "./components/Advertisements/CreateAdvertisement";
+// import CreateAdvertisement from "./components/Advertisements/CreateAdvertisement";
+import Advertisements from "./components/Advertisements/Advertisements";
 
 
 const sidebarClasses = 'w-64 bg-white border-r border-gray-200 shadow-lg fixed lg:static h-full lg:z-auto'; // Increased z-index
@@ -71,7 +72,7 @@ function AdminPanel() {
               <Route path="/orders" element={<OrdersTable />} />
               <Route path="/customers" element={<Customers />} />
               <Route path="/categories" element={<Categories />} />
-              <Route path="/advertisements" element={<CreateAdvertisement />} />
+              <Route path="/advertisements" element={<Advertisements />} />
             </Routes>
           </div>
         </div>

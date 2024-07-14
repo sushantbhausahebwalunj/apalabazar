@@ -10,25 +10,28 @@ const advertisementsSchema = new mongoose.Schema({
     },
     imageUrl: {
       type: String,
-      required: true
     },
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
-      required: true
+      // required: true
     },
     startDate: {
       type: Date,
-      required: true
+      // required: true
     },
     endDate: {
       type: Date,
-      required: true
+      // required: true
     },
     section: {
       type: String,
       required: true,
-      enum: ['section1', 'section2', 'section3', 'section4'] 
+      enum: ['Section 0','Section 1', 'Section 2', 'Section 3', 'Section 4'] 
+    },
+    active: {
+      type: Boolean,
+      default: true
     }
   }, 
   { timestamps: true });

@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5454
-      - BASE_URL=http://10.128.0.2:3000
+      - BASE_URL=http://162.222.181.29:3000
   client:
     build:
       context: ./client
@@ -19,4 +19,4 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - REACT_APP_BASE_URL=http://10.128.0.2:5454/api
+      - REACT_APP_BASE_URL=http://162.222.181.29:5454/api

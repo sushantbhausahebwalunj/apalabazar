@@ -19,4 +19,6 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+
       - REACT_APP_BASE_URL=http://162.222.181.29:5454/api
+

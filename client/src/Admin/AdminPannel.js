@@ -10,6 +10,10 @@ import Categories from './components/Category/categories';
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import Navbar from "./tables/navbar";
 import { FaTachometerAlt, FaBoxOpen, FaTags, FaShoppingCart, FaUser, FaCog, FaTimes } from 'react-icons/fa';
+import { RiAdvertisementFill } from "react-icons/ri";
+// import CreateAdvertisement from "./components/Advertisements/CreateAdvertisement";
+import Advertisements from "./components/Advertisements/Advertisements";
+
 
 const sidebarClasses = 'w-64 bg-white border-r border-gray-200 shadow-lg fixed lg:static h-full lg:z-auto'; // Increased z-index
 const linkClasses = 'flex items-center p-4 mt-2 text-gray-600 hover:bg-gray-100 hover:text-green-500 rounded-lg transition-colors duration-200';
@@ -22,6 +26,7 @@ const menu = [
   { name: "Categories", path: "/admin/categories", icon: <BiSolidCategoryAlt /> },
   { name: "Customers", path: "/admin/customers", icon: <FaUser /> },
   { name: "Orders", path: "/admin/orders", icon: <FaShoppingCart /> },
+  { name: "Advertisements", path: "/admin/advertisements", icon: <RiAdvertisementFill />},
   { name: "Settings", path: "/admin/settings", icon: <FaCog /> },
 ];
 
@@ -67,6 +72,7 @@ function AdminPanel() {
               <Route path="/orders" element={<OrdersTable />} />
               <Route path="/customers" element={<Customers />} />
               <Route path="/categories" element={<Categories />} />
+              <Route path="/advertisements" element={<Advertisements />} />
             </Routes>
           </div>
         </div>

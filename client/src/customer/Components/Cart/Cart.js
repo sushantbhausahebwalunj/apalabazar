@@ -5,9 +5,9 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { FaCircleInfo } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCart, removeFromCart, clearCart, updateCartQuantity,addQuantity } from '../../../Redux/Cart/cartSlice';
+import { fetchCart, removeFromCart, clearCart, updateCartQuantity, addQuantity } from '../../../Redux/Cart/cartSlice';
 
-const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity,increaseQuantity, removeItem,prodid }) => {
+const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem, prodid }) => {
   return (
     <tr className="border-b">
       <td className="py-2 px-2 sm:py-4 sm:px-4 flex items-center">
@@ -15,9 +15,6 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
         <div>
           <span className="bg-green-300 text-black text-xs sm:text-xs w-20 sm:w-28 font-semibold mr-2 px-1 sm:px-2.5 py-0.5 rounded">Home Delivery Only</span>
           <p className="text-sm sm:text-base font-medium">{productName}</p>
-          {/* <p className="text-xs sm:text-md text-zinc-500">
-            Variant: <span className="font-semibold">320gm</span>
-          </p> */}
         </div>
       </td>
       <td className="py-2 px-2 sm:py-4 sm:px-4 text-center">₹{actualPrice}</td>
@@ -43,13 +40,20 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { items, status, error } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const { items, status, fetchCartError } = useSelector((state) => state.cart);
   const [viewport, setViewport] = useState(false);
   const [priceSummary, setPriceSummary] = useState({ totalDiscountedPrice: 0, discount: 0 });
 
+  const handleAddToCart = async () => {
+    const resultAction = await dispatch(fetchCart());
+    if (fetchCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
+      navigate('/login');
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchCart());
+    handleAddToCart();
   }, [dispatch]);
 
   useEffect(() => {
@@ -61,17 +65,14 @@ const Cart = () => {
     }
   }, [items]);
 
+
   const checkOut = () => {
     navigate('/checkout');
   };
 
   const increaseQuantity = (id) => {
     const item = items[0].find(item => item._id === id);
-    // console.log(id);
-    // dispatch(addQuantity(id));
-   
-      dispatch(addQuantity(id));
-
+    dispatch(addQuantity(id));
   };
 
   const decreaseQuantity = (id) => {
@@ -97,13 +98,9 @@ const Cart = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  console.log(items);
+
   if (status === 'loading') {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   if (!items || items.length === 0) {
@@ -132,6 +129,7 @@ const Cart = () => {
                 <tbody>
                   {items[0].map(item => (
                     <CartItem
+                      key={item._id}
                       prodid={item.product._id}
                       unik={item._id}
                       imageSrc={item.product.imageUrl}

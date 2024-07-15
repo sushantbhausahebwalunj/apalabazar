@@ -53,16 +53,16 @@ const addToCart = asyncHandler(async (req, res) => {
                 user: id,
                 cartItems: [cartItem._id],
                 totalPrice: cartItem.price,
-                totalItem: cartItem.quantity,
+                totalItem: 1,
                 totalDiscountedPrice: cartItem.discountedPrice,
                 discount: cartItem.price - cartItem.discountedPrice,
             });
         } else {
             if (!cart.cartItems.includes(cartItem._id)) {
                 cart.cartItems.push(cartItem._id);
+                cart.totalItem += 1;
             }
             cart.totalPrice += product.price;
-            cart.totalItem += 1;
             cart.totalDiscountedPrice += product.discountedPrice;
             cart.discount += (product.price - product.discountedPrice);
             await cart.save();
@@ -177,7 +177,7 @@ const removeOneCart = asyncHandler(async (req, res) => {
         if (cartItem.quantity>0 && cartItemExists) { 
             cart.cartItems.pull(cartItem._id);
             cart.totalPrice -= cartItem.price;
-            cart.totalItem -= cartItem.quantity;
+            cart.totalItem -= 1;
             cart.totalDiscountedPrice -= cartItem.discountedPrice;
             cart.discount -= (cartItem.price - cartItem.discountedPrice);
             await cart.save();
@@ -271,7 +271,6 @@ const removeItemQuantityCart = asyncHandler(async (req, res) => {
             const cartItemExists = cart.cartItems.some(item => item.toString() === cartItem._id.toString());
             if (cart && cartItemExists) {
                 cart.totalPrice -= product.price;
-                cart.totalItem -= 1;
                 cart.totalDiscountedPrice -= product.discountedPrice;
                 cart.discount -= (product.price - product.discountedPrice);
                 await cart.save();

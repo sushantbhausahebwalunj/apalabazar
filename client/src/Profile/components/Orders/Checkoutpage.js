@@ -3,59 +3,25 @@ import { FcHome } from "react-icons/fc";
 import axiosInstance from "../../../axiosConfig";
 import axios from "axios";
 import { RiDeleteBin7Fill } from "react-icons/ri";
+import { fetchCart } from '../../../Redux/Cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+
 const INPUT_CLASS =
   "mt-1 block w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-white text-zinc-900 dark:text-black";
 const LABEL_CLASS =
   "block text-sm font-medium text-black";
 
+
 const Checkout = () => {
-  const [address,setaddress]=useState([])
-  const token = localStorage.getItem("authToken");
 
-useEffect(()=>{
-getAddress()
-},[])
+  const [open, setOpen] = useState(false)
+ 
 
-const getAddress=async()=>{
-  try {
-
-    const resp = await axios.get(
-      "http://localhost:5454/api/address/getAllAddress",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-     console.log(resp)
-    setaddress(resp.data.data)
-  } catch (error) {
-    console.error("Error in fetching:", error);
-  }
-};
-
-
-
-const handleDelete= async(id)=>{
-    try {
-      const resp = await axios.delete(
-        `http://localhost:5454/api/address/deleteAddress/?addressId=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if(resp.status==200){
-        setaddress(address.filter((add) => add._id !== id));
-      }
-     
-    } catch (error) {
-      console.error("Error in deletion:", error);
-    }
-  
-}
-
+  const [details, setDetails] = useState({});
+  const dispatch = useDispatch();
+  const { items, status, error } = useSelector((state) => state.cart);  
+  const [address, setAddress] = useState([]);
   const [formData, setFormData] = useState({
     fullName: "",
     houseNumber: "",
@@ -68,37 +34,59 @@ const handleDelete= async(id)=>{
     mobile: "",
     streetAddress: "",
   });
-
   const [deliveryModeChecked, setDeliveryModeChecked] = useState(false);
   const [savedAddressChecked, setSavedAddressChecked] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Promise.all([dispatch(fetchCart()), getAddress()]);
+      } catch (error) {
+        console.error("Error in fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+
+  const getAddress = async () => {
+    try {
+      const resp = await axiosInstance.get(
+        "/address/getAllAddress"
+      );
+      setAddress(resp.data.data);
+    } catch (error) {
+      console.error("Error in fetching addresses:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const resp = await axiosInstance.delete(
+        `/address/deleteAddress/?addressId=${id}`
+      );
+      if (resp.status === 200) {
+        setAddress(address.filter((add) => add._id !== id));
+      }
+    } catch (error) {
+      console.error("Error in deletion:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
   };
 
- 
-
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    const token = localStorage.getItem("authToken");
-    console.log(formData);
     try {
-      const resp = await axios.post(
-        "http://localhost:5454/api/address/addAddress",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const resp =await axiosInstance.post(
+        "/address/addAddress",
+        formData
       );
-if(resp.status==200)
-  getAddress()
+      if (resp.status === 200) getAddress();
       alert(resp.data.message);
-
     } catch (error) {
       console.error("Error in creation:", error);
     }
@@ -107,7 +95,6 @@ if(resp.status==200)
 
   const handleOpenForm = () => setIsFormOpen(true);
   const handleCloseForm = () => setIsFormOpen(false);
-
 
   const buttonClass = (enabled) =>
     enabled
@@ -133,8 +120,8 @@ if(resp.status==200)
     }
 
     try {
-      const response = await axiosInstance.post("/payment/create-order", {
-        amount: 276,
+      const response = await axios.post("/payment/create-order", {
+        amount:items[1].totalDiscountedPrice,
         currency: "INR",
       });
 
@@ -147,7 +134,7 @@ if(resp.status==200)
         currency: order.currency,
         order_id: order.id,
         name: "Apala Bazar",
-        description: "Chwackout",
+        description: "Checkout",
         handler: function (response) {
           alert("Payment successful");
           alert("Payment ID: " + response.razorpay_payment_id);
@@ -174,16 +161,11 @@ if(resp.status==200)
       alert("Error creating order. Please try again.");
     }
   };
-
   return (
-    <section className="bg-[#f1f3f6]">
-      <div className="flex justify-between h-16 bg-white  shadow-lg p-6">
-        <div className="mb-2">
-          <img src="./apala bazar.png" className="h-8" alt="Apala Bazar" />
-        </div>
-      </div>
+    <section className="bg-[#f1f3f6] flex items-center lg:h-[100vh] justify-center">
+
       <div className="flex flex-col gap-[22px] bg-transparent mt-5 min-h-max lg:flex-row justify-between p-4">
-        <div className="w-full lg:w-3/4">
+        <div className="w-full lg:w-[70vw]">
           <form className="bg-white p-5 shadow-md min-h-full rounded-lg">
             <h1 className="text-2xl font-semibold mb-4">Checkout</h1>
             <div className="mb-4">
@@ -210,8 +192,8 @@ if(resp.status==200)
                 />
                 <FcHome className="text-xl mr-1" />
                 <span>Home Delivery</span>
-                {/* <span className='ml-2 bg-secondary text-secondary-foreground px-2 py-1 rounded line-through'>Flat ₹29</span>
-                <span className='ml-2 text-green-600'>₹0</span> */}
+                <span className='ml-2 bg-secondary text-secondary-foreground px-2 py-1 rounded line-through'>Flat ₹29</span>
+                <span className='ml-2 text-green-600'>₹0</span>
               </div>
             </div>
 
@@ -261,45 +243,40 @@ if(resp.status==200)
                 Add New Address
               </button>
             </div>
-            <div className="text-center">
-            <button
-              className={`${buttonClass(
-                deliveryModeChecked && savedAddressChecked
-              )} w-40 `}
-              disabled={!deliveryModeChecked || !savedAddressChecked}
-            >    CONFIRM ADDRESS
-              </button>
-            </div>
+      
           </form>
         </div>
-
+        {items && items[1] ? (
+          <>
         <div className="max-w-sm mx-auto bg-card text-card-foreground bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-4">PRICE SUMMARY</h2>
           <div className="mb-2 flex justify-between">
-            <span>Price (2 items) </span>
-            <span className="text-green-500 font-bold">₹276</span>
+            <span>Price ({items[1].totalItem} items) 
+            <button className="border-none focus:none mx-5 text-blue-600" onClick={()=>setOpen(!open)}>View</button></span>
+            <span className="text-green-500 font-bold">₹{items[1].totalPrice}</span>
           </div>
           <div className="mb-2 flex justify-between">
             <span>Discount</span>
-            <span>- ₹276</span>
+            <span>- ₹{items[1].discount}</span>
           </div>
           <div className="mb-2 flex justify-between">
             <span>Delivery charge</span>
             <div className="space-x-3">
-              <span className="text-red-500 line-through">₹30</span>
-              <span className="text-green-500">₹20</span>
+              <span className="text-red-500">Free</span>
+              <span className="text-green-500 line-through">₹20</span>
             </div>
           </div>
           <div className="mb-2 flex justify-between">
             <span>Your Savings</span>
-            <span className="text-orange-500">₹144</span>
+            <span className="text-orange-500">₹{items[1].discount+20}</span>
           </div>
           <hr className="my-4 border-muted" />
           <div className="mb-1 font-semibold flex justify-between">
             <span>Total Amount</span>
-            <span>₹276</span>
+            <span>₹{items[1].totalDiscountedPrice}
+            </span>
           </div>
-          <div className="text-xs pb-3">You will save ₹144 on this order</div>
+          <div className="text-xs pb-3">You will save ₹{items[1].discount+20} on this order</div>
           <div className="mt-4 flex-col lg:flex-row justify-center flex-wrap items-center space-y-4">
             <button
               className={buttonClass(
@@ -332,6 +309,93 @@ if(resp.status==200)
             </span>
           </div>
         </div>
+               </>
+              ) : (
+                <div>Loading...</div>
+              )}
+
+
+              {/*-------------------- code for view carts product------------------------- */}
+
+
+              <Dialog open={open} onClose={setOpen} className="relative z-10">
+      <DialogBackdrop
+        transition
+        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
+      />
+
+      <div className="fixed inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <DialogPanel
+              transition
+              className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-[closed]:translate-x-full sm:duration-700"
+            >
+              <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                  <div className="flex items-start justify-between">
+                    <DialogTitle className="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
+                    <div className="ml-3 flex h-7 items-center">
+                      <button
+                        type="button"
+                        onClick={() => setOpen(false)}
+                        className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                      >
+                        <span className="absolute -inset-0.5" />
+                        <span className="sr-only">Close panel</span>
+                       X
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="mt-8">
+                    <div className="flow-root">
+                      <ul role="list" className="-my-6 divide-y divide-gray-200">
+                      {items && items.length > 0 && items[0].map((product) => (
+  <li key={product.product._id} className="flex py-6">
+    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+      <img
+        alt={product.product.title}
+        src={product.product.imageUrl}
+        className="h-full w-full object-cover object-center"
+      />
+    </div>
+
+    <div className="ml-4 flex flex-1 flex-col">
+      <div>
+        <div className="flex justify-between text-base font-medium text-gray-900">
+          <h3>{product.product.title}</h3>
+          <p className="ml-4 line-through">₹{product.product.price}</p>
+          <p className="ml-4">₹{product.product.discountedPrice}</p>
+        </div>
+        <p className="mt-1 text-sm text-gray-500">{product.color ? product.color : null}</p>
+      </div>
+      <div className="flex flex-1 items-end justify-between text-sm">
+        <p className="text-gray-500">Qty {product.quantity}</p>
+      </div>
+    </div>
+  </li>
+                                   ))}             </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </div>
+    </Dialog>
+
+
+
+
+
+
+
+
+
+
+
       </div>
 
       {isFormOpen && (

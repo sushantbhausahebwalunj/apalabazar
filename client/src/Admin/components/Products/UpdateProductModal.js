@@ -12,7 +12,7 @@ const UpdateProductModal = ({ product, onClose, onUpdate }) => {
     quantity: product.quantity || '',
     brand: product.brand || '',
     category: product.category._id || '',
-    image: null, // Changed from imageUrl to image for file upload
+    imageUrl: null, // Changed from imageUrl to image for file upload
   });
 
   const handleChange = (e) => {

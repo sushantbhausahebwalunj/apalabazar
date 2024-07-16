@@ -11,6 +11,7 @@ import MobNavbar from "./MobileNavbar.js";
 import logo from "../../../logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchCart} from '../../../Redux/Cart/cartSlice';
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
 
 const Navbar = (props) => {
@@ -22,11 +23,14 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
-
+  const { items, status, fetchCartError } = useSelector((state) => state.cart);
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchCart());
+  },[dispatch]);
   const authToken = localStorage.getItem("authToken");
   const isAuthenticated = !!authToken;
 
@@ -43,7 +47,7 @@ const Navbar = (props) => {
           return (
             <button
               onClick={() => handleSide(`/category/${category._id}`)}
-              className=" border-none focus:border-none"
+              className=" border-none focus:border-none ml-3"
             >
               {category.name}
             </button>
@@ -118,9 +122,7 @@ const Navbar = (props) => {
 
   return (
     <>
-      {viewport ? (
-        <MobNavbar />
-      ) : (
+ 
         <div className="shadow-lg overflow-hidden relative">
           {/* Top Navbar */}
           <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
@@ -132,12 +134,12 @@ const Navbar = (props) => {
                 crossOrigin="anonymous"
               />
             </a>
-            <div className="flex items-center">
+            <div className="md:flex items-center hidden ">
               <form onSubmit={handleSearch}>
                 <input
                   type="search"
                   placeholder="Search for Biscuits"
-                  className="border-[2px]  border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
+                  className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
                   onChange={(e) => setSearch(e.target.value)}
                   required
                   value={search}
@@ -150,7 +152,7 @@ const Navbar = (props) => {
                 </button>
               </form>
             </div>
-            <div className="flex space-x-12">
+            <div className="flex lg:space-x-12">
               <div className="relative">
                 <div
                   className="flex items-center space-x-2 rounded-md p-2 border-[1px] bg-blue-500 hover:bg-blue-600"
@@ -240,10 +242,10 @@ const Navbar = (props) => {
                   </div>
                 )}
               </div>
-              <div className="flex items-center space-x-2">
-                <button onClick={showCart}>
+              <div className="flex items-center ml-4 lg:space-x-2">
+             <button onClick={showCart}>
                   <svg
-                    className="w-10 h-10 text-blue-500"
+                    className="w-8 h-8 text-blue-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -256,13 +258,13 @@ const Navbar = (props) => {
                       d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l.839 2h13.239l3.474-12h1.929l.743-2h-4.195z"
                     />
                   </svg>
-                </button>
+                </button>   <sup className="text-bold px-2 rounded-full bg-blue-500 text-black text-lg" style={{marginTop:'-15px',marginLeft:'-5px'}}>{items&&items[0]&&items[0].length} </sup>
               </div>
             </div>
           </div>
           {/* Bottom Navbar */}
-          <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2 items-center space-x-8">
-            <div className="border-r-[3px] p-2 pr-16">
+          <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2 w-full items-center lg:space-x-8">
+            <div className="border-r-[3px] p-2 pr-5 lg:pr-16 w-fit">
               <button
                 onClick={handleNavigate}
                 className="flex items-center space-x-1 text-zinc-700"
@@ -281,13 +283,39 @@ const Navbar = (props) => {
                     d="M4 6h16M4 12h16m-7 6h7"
                   ></path>
                 </svg>
-                <span>All Categories</span>
+                {viewport ? (
+        null
+      ) : (  <span>All Categories</span>)}
               </button>
             </div>
-            {renderCategories()}
+            <div >
+              <div className="md:flex justify-evenly lg:w-[60vw] md:w-100 hidden">
+              {renderCategories()}
+              </div>
+              <div className="md:hidden items-center flex ">
+              <form onSubmit={handleSearch} className="w-100%">
+                <input
+                  type="search"
+                  placeholder="Search for Biscuits"
+                  className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[56vw] dark:bg-white dark:text-black"
+                  onChange={(e) => setSearch(e.target.value)}
+                  required
+                  value={search}
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-500 border-[2px] border-blue-500 text-white p-2 rounded-r-lg font-sans w-fit"
+                >
+                  SEARCH
+                </button>
+              </form>
+            </div>
+     
+            </div>
+      
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

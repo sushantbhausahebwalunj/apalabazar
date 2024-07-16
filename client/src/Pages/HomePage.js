@@ -195,7 +195,7 @@ function HomePage() {
                     .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
                     .map(publishedAdvertisement => (
                         <div className="w-full rounded-md" key={publishedAdvertisement._id}>
-                                 <Link to={`/product/${publishedAdvertisement._id}`}>
+                                 {/* <Link to={`/product/${publishedAdvertisement._id}`}> */}
                                 <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
                                     <img
                                     
@@ -204,7 +204,7 @@ function HomePage() {
                                         alt="Skin Care"
                                     />
                                 </div>
-                                </Link>
+                                {/* </Link> */}
                         </div>
                     ))
             ) : (

@@ -13,13 +13,10 @@ app.use(morgan('dev'));
 
 app.use(cors({
   origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Enable credentials
 }));
-
-// Apply JWT authentication middleware to all routes
-// app.use(jwtAuth);
 
 app.use('/api', allRouter);
 

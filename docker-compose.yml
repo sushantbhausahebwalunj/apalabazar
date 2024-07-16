@@ -10,7 +10,10 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5454
-      - BASE_URL=http://162.222.181.29:3000
+      - BASE_URL=http://client:3000
+    networks:
+      - app-network
+
   client:
     build:
       context: ./client
@@ -19,6 +22,22 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+      - REACT_APP_BASE_URL=http://apalabajar.com/api
+    networks:
+      - app-network
 
-      - REACT_APP_BASE_URL=http://162.222.181.29:5454/api
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+      - client
+    networks:
+      - app-network
 
+networks:
+  app-network:
+    driver: bridge

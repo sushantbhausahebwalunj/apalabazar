@@ -138,6 +138,7 @@ import Maylike from "../customer/Components/Adverties/Maylike.js";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAdvertisements } from "../Redux/Advertisements/advertisementSlice.js";
+import { Link } from "react-router-dom";
 
 
 
@@ -193,16 +194,17 @@ function HomePage() {
                 advertisements
                     .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
                     .map(publishedAdvertisement => (
-                        <div className="w-full rounded-md" key={publishedAdvertisement.id}>
-                            <a href="./product/1" className="rounded-md">
+                        <div className="w-full rounded-md" key={publishedAdvertisement._id}>
+                                 {/* <Link to={`/product/${publishedAdvertisement._id}`}> */}
                                 <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
                                     <img
+                                    
                                         src={publishedAdvertisement.imageUrl}
                                         className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
                                         alt="Skin Care"
                                     />
                                 </div>
-                            </a>
+                                {/* </Link> */}
                         </div>
                     ))
             ) : (

@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import axiosInstance from '../../axiosConfig';
-
-axios.defaults.withCredentials = true;
+import { toast } from 'react-toastify';
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWithValue }) => {
   try {
@@ -21,22 +19,20 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (productId, { 
   try {
     const response = await axiosInstance.post('/cart/addCart', { productId });
     if (response.data.success) {
-      alert('Product added');
+      toast.success('Product added to cart');
     }
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 401) {
       return rejectWithValue({ isUnauthorized: true });
     }
+    toast.error('Failed to add product to cart');
     return rejectWithValue(error.response.data);
   }
 });
 
 export const addQuantity = createAsyncThunk('cart/addQuantity', async (productId) => {
   const response = await axiosInstance.post('/cart/addCart', { productId });
-  if (response.data.success) {
-    alert('Product added');
-  }
   return response.data;
 });
 
@@ -78,7 +74,8 @@ const cartSlice = createSlice({
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = 'failed';
         state.fetchCartError = action.payload;
-        state.items[0] =[]
+        state.items[0] = [];
+        toast.error('Failed to fetch cart details');
       })
       .addCase(addToCart.pending, (state) => {
         state.addToCartStatus = 'loading';
@@ -98,10 +95,12 @@ const cartSlice = createSlice({
         const { data } = action.payload;
         if (state.items[0]) {
           state.items[0] = state.items[0].filter(item => item._id !== data._id);
+          toast.success('Product removed from cart');
         }
       })
       .addCase(clearCart.fulfilled, (state) => {
         state.items[0] = [];
+        toast.success('Cart cleared');
       })
       .addCase(addQuantity.fulfilled, (state, action) => {
         const { data } = action.payload;

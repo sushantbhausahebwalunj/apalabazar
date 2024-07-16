@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5454
-      - BASE_URL=http://client:3000
+      - BASE_URL=http://apalabajar.com:5454
     networks:
       - app-network
 

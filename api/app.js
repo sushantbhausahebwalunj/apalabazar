@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 const url = process.env.BASE_URL || 'http://localhost:3000'
 app.use(cors({
-  origin: '*', // Allow all origins
+  origin: url, // Allow all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Enable credentials

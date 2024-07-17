@@ -23,7 +23,7 @@ const Reviews = React.memo(() => {
         });
         setReviews(resp.data); // Save response in state
       } catch (error) {
-        console.error(error);
+        console.error("no review");
       }
     };
     getReview(); // Call the function to fetch reviews

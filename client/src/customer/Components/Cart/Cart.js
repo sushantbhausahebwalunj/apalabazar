@@ -6,7 +6,7 @@ import { FaCircleInfo } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchCart, removeFromCart, clearCart, updateCartQuantity, addQuantity } from '../../../Redux/Cart/cartSlice';
-
+import logo from "../../../logo.png";
 const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem, prodid }) => {
   return (
     <tr className="border-b">
@@ -41,9 +41,9 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const { items, status, fetchCartError } = useSelector((state) => state.cart);
   const [viewport, setViewport] = useState(false);
-  const [priceSummary, setPriceSummary] = useState({ totalDiscountedPrice: 0, discount: 0 });
 
   const handleAddToCart = async () => {
     const resultAction = await dispatch(fetchCart());
@@ -56,15 +56,17 @@ const Cart = () => {
     handleAddToCart();
   }, [dispatch]);
 
-  useEffect(() => {
-    if (items && items.length > 0) {
-      const totalDiscountedPrice = items[0].reduce((acc, item) => acc + item.product.discountedPrice * item.quantity, 0);
-      const totalActualPrice = items[0].reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-      const discount = totalActualPrice - totalDiscountedPrice;
-      setPriceSummary({ totalDiscountedPrice, discount });
-    }
-  }, [items]);
+  const categories = useSelector((state) => state.categories.categories);
+  const handleSide = (path) => {
+    navigate(path);
+  };
 
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.trim() === "") return; // Check if the search field is empty
+    navigate(`/search/${search}`);
+  };
 
   const checkOut = () => {
     navigate('/checkout');
@@ -108,19 +110,49 @@ const Cart = () => {
   }
 
   return (
+    
     <div className="h-[800px]">
-      {viewport ? <MobNavBar /> : <Navbar number={12} />}
+ <div>
+ <div className="bg-white p-4 border-b-[2px] flex items-center justify-between">
+            <a href="/" className="flex items-center space-x-4">
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-10"
+                crossOrigin="anonymous"
+              />
+            </a>
+            <div className="md:flex items-center hidden ">
+              <form onSubmit={handleSearch}>
+                <input
+                  type="search"
+                  placeholder="Search for Biscuits"
+                  className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
+                  onChange={(e) => setSearch(e.target.value)}
+                  required
+                  value={search}
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-500 border-[2px] border-blue-500 text-white p-2 rounded-r-lg font-sans"
+                >
+                  SEARCH
+                </button>
+              </form>
+            </div>
+            </div>
+ </div>
       <div className="container mx-auto p-4">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-3/4">
-            <h3 className="text-lg mb-4">Cart / <span className="text-green-500 font-semibold">Checkout</span> / Confirmation ({items[0].length} items)</h3>
+            <h3 className="text-lg mb-4"> <span className="text-green-500 font-semibold">Cart /</span> <span>Checkout</span> / Confirmation ({items[0].length} items)</h3>
             <div className="overflow-x-auto rounded-md bg-white border">
               <table className="min-w-full">
                 <thead className="py-5">
                   <tr>
                     <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Product</th>
                     <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Price</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Apala Bajar Price</th>
+                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Aapla Bajar Price</th>
                     <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">You Save</th>
                     <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">No. of items</th>
                     <th className="py-2 px-2 sm:py-2 sm:px-4 border-b"></th>
@@ -128,15 +160,15 @@ const Cart = () => {
                 </thead>
                 <tbody>
                   {items[0].map(item => (
-                    <CartItem
-                      key={item._id}
-                      prodid={item.product._id}
+                <CartItem
+                      key={item&&item._id}
+                      prodid={items&&item&&item.product&&item.product._id}
                       unik={item._id}
-                      imageSrc={item.product.imageUrl}
-                      productName={item.product.title}
-                      actualPrice={item.product.price * item.quantity}
-                      price={item.product.discountedPrice * item.quantity}
-                      savings={(item.product.price - item.product.discountedPrice) * item.quantity}
+                      imageSrc={items&&item&&item.product&&item.product.imageUrl}
+                      productName={items&&item&&item.product&&item.product.title}
+                      actualPrice={items&&item&&item.product&&item.product.price * item.quantity}
+                      price={items&&item&&item.product&&item.product.discountedPrice * item.quantity}
+                      savings={(items&&item&&item.product&&item.product.price -item.product.discountedPrice) * item.quantity}
                       qty={item.quantity}
                       decreaseQuantity={decreaseQuantity}
                       increaseQuantity={increaseQuantity}
@@ -150,16 +182,16 @@ const Cart = () => {
               <button className="text-red-500 text-sm mr-2" onClick={clearCartItems}>Remove all</button>
             </div>
           </div>
-          <div className="w-full lg:w-1/4 mt-8 lg:mt-10 lg:ml-8">
+              <div className="w-full lg:w-1/4 mt-8 lg:mt-10 lg:ml-8">
             <div className="bg-white p-4 border rounded-md">
               <h3 className="text-lg font-semibold mb-4">Price Summary</h3>
               <div className="flex justify-between mb-2">
                 <span>Cart Total</span>
-                <span>₹ {priceSummary.totalDiscountedPrice}</span>
+                <span>₹ {items&&items[1]&&items[1].totalDiscountedPrice}</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>You Saved</span>
-                <span>₹ {priceSummary.discount}</span>
+                <span>₹ {items&&items[1]&&items[1].discount}</span>
               </div>
               <div className="flex justify-between mb-2">
                 <div className="group relative">
@@ -178,6 +210,7 @@ const Cart = () => {
               <button className="w-full bg-green-500 text-white py-2 rounded-full" onClick={checkOut}>PROCEED TO CHECKOUT</button>
             </div>
           </div>
+
         </div>
       </div>
     </div>

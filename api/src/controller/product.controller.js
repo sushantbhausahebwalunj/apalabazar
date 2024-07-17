@@ -97,6 +97,13 @@ export const updateProduct = async (req, res) => {
       const result = await uploadImageOnCloudinary(req.file.path);
       imageUrl = result.secure_url;
       fs.unlinkSync(req.file.path); // Remove the local file after uploading to Cloudinary
+    } else {
+      // Fetch existing product to retain the current image URL
+      const existingProduct = await Product.findById(id);
+      if (!existingProduct) {
+        return res.status(404).send({ message: "Product not found", status: false });
+      }
+      imageUrl = existingProduct.imageUrl; // Retain the existing image URL
     }
 
     const slug = slugify(title, { lower: true });

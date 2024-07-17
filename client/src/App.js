@@ -5,7 +5,7 @@ import AdminRouters from './Routers/AdminRouters';
 import MyprofileRouters from './Routers/MyprofileRouters';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -18,7 +18,7 @@ function App() {
       if (currentUser.role === 'ADMIN') {
         navigate('/admin');
       } else {
-        navigate('/');
+        
       }
     }
   }, [currentUser, isAuthenticated, navigate]);

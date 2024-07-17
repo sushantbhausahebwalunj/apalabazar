@@ -11,7 +11,6 @@ import cartRouter from '../routes/cart.routes.js';
 
 
 
-
 const allRouter = express.Router();
 
 allRouter.use('/admin',adminRouter);
@@ -21,7 +20,6 @@ allRouter.use('/category' ,categoryRouter );
 allRouter.use('/rating' ,ratingRouter );
 allRouter.use('/review' ,reviewRouter );
 allRouter.use('/product' ,productRouter);
-
 allRouter.use('/address' ,addressRoute);
 
 allRouter.use('/cart',cartRouter)

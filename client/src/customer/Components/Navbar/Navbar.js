@@ -75,7 +75,7 @@ const Navbar = (props) => {
     if (localStorage.getItem("role") === "ADMIN") {
       navigate("/admin");
     } else {
-      navigate("/myprofile/profile");
+      // navigate("/myprofile/profile-information");
     }
   };
 
@@ -212,7 +212,7 @@ const Navbar = (props) => {
                     onMouseLeave={() => setHoverDropdown(false)}
                   >
                     <button
-                      onClick={() => navigate('/myprofile/profile')}
+                      onClick={() => navigate('/myprofile/profile-information')}
                       className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                     >
                       <FaUser className="mr-2" />

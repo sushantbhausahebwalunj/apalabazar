@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
            
           </div>
           <div className='text-center'>
-            <p>Aapla bajar Sale{" "}</p>
+            <p>Aapla Bajar price{" "}</p>
             <span className="font-semibold">{product.discountedPrice}</span>
           </div>
         </div>

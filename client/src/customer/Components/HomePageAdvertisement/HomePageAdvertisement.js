@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const gadgets = [
   {
@@ -28,6 +29,7 @@ const Gadgets = ({advertisements,status}) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {advertisements.filter(advertisement => advertisement.section === "Section 4").slice(0,3)
         .map((advertisement, index) => (
+        <Link to={`/product/${advertisement.product._id}`}>
           <div key={index} className="bg-white border rounded-lg shadow-lg overflow-hidden">
             <img
               src={advertisement.imageUrl}
@@ -36,6 +38,7 @@ const Gadgets = ({advertisements,status}) => {
             />
            
           </div>
+        </Link>
         ))}
       </div>
     </div>

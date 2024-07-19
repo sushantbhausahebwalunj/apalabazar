@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchCart, removeFromCart, clearCart, updateCartQuantity, addQuantity } from '../../../Redux/Cart/cartSlice';
 import { fetchCoupons } from '../../../Redux/Coupons/couponSlice';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-
+import logo from "../../../logo.png";
 
 const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem, prodid }) => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectedProduct = ({ selectedProduct, handleChange, handleSave,handlemodalclose,handleFileChange }) => {
+const SelectedProduct = ({ selectedProduct, handleChange, handleSave,handlemodalclose,handleFileChange,imagearea }) => {
     
     return (
         <>
@@ -29,7 +29,9 @@ const SelectedProduct = ({ selectedProduct, handleChange, handleSave,handlemodal
                     className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                 />
             </div>
-            
+            <div className="pt-5 pb-5">
+             {imagearea}
+            </div>
             <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700">Start Date</label>
                 <input

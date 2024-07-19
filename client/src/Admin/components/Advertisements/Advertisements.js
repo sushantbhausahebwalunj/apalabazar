@@ -121,6 +121,8 @@ const Advertisements = () => {
             section: activeTab
         });
         setIsModalOpen(true);
+        setFilteredProducts([]);
+        setSearchTerm(product.title);
     };
 
     const handleChange = (e) => {
@@ -355,8 +357,22 @@ const Advertisements = () => {
                  <HeroSection 
                  advertisements={advertisements} 
                  status={adsstatus} 
+                 searchstatus = {status}
+                 filteredProducts = {filteredProducts}
+                 searchTerm = {searchTerm}
+                 setSearchTerm = {setSearchTerm}
                  activeTab={activeTab}
                  handleDeleteAdvertisement = {handleDeleteAdvertisement}
+                 handleProductSelect = {handleProductSelect}
+                 selectedProduct = {selectedProduct}
+                 isModalOpen = {isModalOpen}
+                 setIsModalOpen = {setIsModalOpen}
+                 handleChange={handleChange}
+                 handleSave = {handleSave}
+                 handlePublish = {handlePublish}
+                 handlemodalclose = {handlemodalclose}
+                 SelectedProduct={SelectedProduct}
+                 
                  />
             ) }
         </div>

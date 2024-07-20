@@ -141,7 +141,6 @@ import { fetchAdvertisements } from "../Redux/Advertisements/advertisementSlice.
 import { Link } from "react-router-dom";
 
 
-
 function HomePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 630);
   const [viewport, setViewport] = useState(window.innerWidth < 620);
@@ -169,7 +168,7 @@ function HomePage() {
     dispatch(fetchAdvertisements());
   }, [dispatch]);
   if (adsstatus === 'succeeded'){
-    console.log("PUBLISHED ADVERTISEMENTS: ", advertisements);
+    console.log("PUBLISHED ADVERTISEMENTS first element product brand: ", advertisements[0]);
   }
   
 
@@ -184,6 +183,8 @@ function HomePage() {
     cssEase: "linear",
   };
 
+  // const prodID = advertisements[4].product._id;
+
   return (
     <div className="overflow-hidden bg-gray-100">
       <Navbar />
@@ -194,8 +195,9 @@ function HomePage() {
                 advertisements
                     .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
                     .map(publishedAdvertisement => (
-                        <div className="w-full rounded-md" key={publishedAdvertisement._id}>
-                                 {/* <Link to={`/product/${publishedAdvertisement._id}`}> */}
+                      // <Link to={`/product/${prodID}`}>
+                        <div className="w-full rounded-md" key={publishedAdvertisement.id}>
+                            {/* <a href="./product/${advertisement.product._id}" className="rounded-md"> */}
                                 <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
                                     <img
                                     
@@ -206,6 +208,7 @@ function HomePage() {
                                 </div>
                                 {/* </Link> */}
                         </div>
+                      // </Link>
                     ))
             ) : (
                   

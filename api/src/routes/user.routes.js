@@ -1,17 +1,18 @@
-import express from "express";
+import express from 'express';
+import upload from '../cloud/multerConfig.js';
+import {
+    getUserById,
+    updateUserById,
+    deleteUserById,
+    getAllUsers
+} from '../controller/user.controller.js';
+import { verifyToken } from '../middleware/verifyUser.js';
 
-const userRouter = express.Router();
+const router = express.Router();
 
+router.get('/view/:Id',verifyToken, getUserById);
+router.put('/update/:Id', upload.single('profileImage'), updateUserById);
+router.delete('/delete/:Id',verifyToken, deleteUserById);
+router.get('/view', getAllUsers);
 
-
-// userRouter.post('/update/:id', verifyToken, updateUser)
-// userRouter.delete('/delete/:id', verifyToken, deleteUser)
-// userRouter.get('/:id', verifyToken, getUser)
-
-
-
-
-
-
-export default userRouter;
- 
+export default router;

@@ -6,14 +6,14 @@ import fs from 'fs';
 
 // This function will create advertisement
 export const createAdvertisement = async (req, res) => {
-  const { title, description,imageUrl, product, startDate, endDate, section } = req.body;
-
+  const { title, description,imageUrl: bodyImageUrl, product, startDate, endDate, section } = req.body;
+  console.log("this is createAdvertisement");
   // if (!title || !product || !startDate || !imageUrl || !endDate || !section) {
   //   return res.status(400).send({ message: "Title, product, start date, end date, and section are required", status: false });
   // }
   
   try {
-      let imageUrl = '';
+      let imageUrl = bodyImageUrl;
       if (req.file) {
         try {
           const result = await uploadImageOnCloudinary(req.file.path);
@@ -52,8 +52,8 @@ export const getallAdvertisements = async (req, res) => {
         .populate({
           path: 'product',
           model: Product,
-          select: 'title price description brand' // Adjust fields as necessary
-        });
+          select: 'title price description brand imageUrl price discountedPrice discountedPrice quantity' // Adjust fields as necessary
+        }).exec();
   
       return res.status(200).send({ message: "Advertisements retrieved successfully", status: true, data: advertisements });
     } catch (error) {

@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product._id}`}>
           <img
             className={imageClasses}
-            src={product.imageUrl }
+            src={product.imageUrl}
             alt="Product Image"
           />
           <h3 className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">
@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
         <div className="text-blue-400 text-xs sm:text-sm font-semibold mb-1 sm:mb-2">
-          {product.discountPercent}% off
+          {product.discountedPrice}% off
         </div>
         <div className="text-xs sm:text-sm text-zinc-500 mb-1 sm:mb2">
           {product.quantity > 0 ? 'Available' : 'Not Available'}

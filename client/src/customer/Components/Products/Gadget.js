@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 const gadgets = [
   {
     title: 'True Wireless',
@@ -25,6 +24,8 @@ const gadgets = [
   },
 ];
 
+const imageClasses = "w-full object-contain mb-2 h-32";
+
 
 
 
@@ -46,7 +47,7 @@ const Gadgets = ({advertisements, status}) => {
       <h2 className="text-2xl font-bold text-center mb-6">Best Gadgets & Appliances</h2>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 ">
           {advertisements.filter(advertisement => advertisement.section === "Section 1").slice(0,4).map((advertisement, index) => (
-              <Link to={`/product/${advertisement.product._id}`}>
+            <Link to={`/product/${advertisement.product._id}`}>
             <div key={index} className="bg-white border rounded-lg shadow-lg overflow-hidden ">
               <img src={advertisement.imageUrl} alt={advertisement.title} className="w-full h-25 sm:h-48 transform hover:scale-105 transition duration-300 object-cover" />
               <div className="p-4">
@@ -55,7 +56,6 @@ const Gadgets = ({advertisements, status}) => {
               </div>
             </div>
             </Link>
-            
           ))}
       </div>
     </div>

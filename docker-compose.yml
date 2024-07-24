@@ -4,25 +4,25 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: dockerfile.dev
+      dockerfile: dockerfile.prod
     ports:
       - "5454:5454"
     environment:
       - NODE_ENV=development
       - PORT=5454
-      - BASE_URL = http://apalabajar.com
+      - BASE_URL=http://apalabajar.com
     networks:
       - app-network
 
   client:
     build:
       context: ./client
-      dockerfile: dockerfile.dev
+      dockerfile: dockerfile.prod
     ports:
-      - "3000:3000"
+      - "80:80"  # Map the client service to port 80 on the host
     environment:
       - NODE_ENV=development
-      - REACT_APP_BASE_URL=http://apalabajar.com:5454/api
+      - REACT_APP_BASE_URL=http://apalabajar.com/api
     networks:
       - app-network
 

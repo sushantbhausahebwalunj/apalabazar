@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "../../../axiosConfig";
 
 const sharedClasses = {
   textZinc: "text-zinc-500",
@@ -50,7 +51,7 @@ const Register = ({ showModal, setShowModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:5454/api/auth/register`, { [contactMethod]: contactValue });
+      const response = await axiosInstance.post(`/auth/register`, { [contactMethod]: contactValue });
       if (response.data.status) {
         setOtpSent(true);
         toast.success("OTP sent successfully! Please check your " + (contactMethod === "phone" ? "phone" : "email") + ".");
@@ -77,7 +78,7 @@ const Register = ({ showModal, setShowModal }) => {
       };
       console.log("Sending payload:", payload); // Log the payload for debugging
 
-      const response = await axios.post('http://localhost:5454/api/auth/verify-otp', payload);
+      const response = await axiosInstance.post('/auth/verify-otp', payload);
       if (response.data.status) {
         toast.success("OTP verified successfully. User created.");
         navigate('/login'); // Redirect to login page upon successful user creation

@@ -8,7 +8,7 @@ services:
     ports:
       - "5454:5454"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - PORT=5454
       - BASE_URL=http://apalabajar.com
     networks:
@@ -21,7 +21,7 @@ services:
     ports:
       - "80:80"  # Map the client service to port 80 on the host
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - REACT_APP_BASE_URL=http://apalabajar.com/api
     networks:
       - app-network

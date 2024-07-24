@@ -121,6 +121,8 @@ const Advertisements = () => {
             section: activeTab
         });
         setIsModalOpen(true);
+        setFilteredProducts([]);
+        setSearchTerm(product.title);
     };
 
     const handleChange = (e) => {
@@ -156,11 +158,16 @@ const Advertisements = () => {
     }
 
     const handleDelete = (Product,event) => {
+        console.log("inside handleDelte");
         event.preventDefault();
         const SAds = JSON.parse(localStorage.getItem('savedSelectedProducts')) || [];
         const updateddAds = SAds.filter(ad => ad.product !== Product.product);
+        console.log("inside handleDelte updateads");
+
         localStorage.setItem('savedSelectedProducts', JSON.stringify(updateddAds));
         setSavedAdvertisements(updateddAds);
+        console.log("inside handleDelte setads");
+
     };
 
 
@@ -170,10 +177,11 @@ const Advertisements = () => {
         for (const key in savedAdvertisement) {
             publishformData.append(key, savedAdvertisement[key]);
         }
-        console.log("publishformData");
-        for (let pair of publishformData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-        }
+        console.log("publishformData",publishformData.entries());
+        // for (let pair of publishformData.entries()) {
+        //     console.log(pair[0] + ': ' + pair[1]);
+        // }
+
         dispatch(createAdvertisement(publishformData)).then((response) => {
           if (response.error) {
             toast.error('Failed to publish Advertisement');
@@ -349,8 +357,22 @@ const Advertisements = () => {
                  <HeroSection 
                  advertisements={advertisements} 
                  status={adsstatus} 
+                 searchstatus = {status}
+                 filteredProducts = {filteredProducts}
+                 searchTerm = {searchTerm}
+                 setSearchTerm = {setSearchTerm}
                  activeTab={activeTab}
                  handleDeleteAdvertisement = {handleDeleteAdvertisement}
+                 handleProductSelect = {handleProductSelect}
+                 selectedProduct = {selectedProduct}
+                 isModalOpen = {isModalOpen}
+                 setIsModalOpen = {setIsModalOpen}
+                 handleChange={handleChange}
+                 handleSave = {handleSave}
+                 handlePublish = {handlePublish}
+                 handlemodalclose = {handlemodalclose}
+                 SelectedProduct={SelectedProduct}
+                 
                  />
             ) }
         </div>

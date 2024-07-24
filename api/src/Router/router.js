@@ -8,6 +8,7 @@ import reviewRouter from '../routes/review.routes.js'
 import productRouter from '../routes/product.js';
 import addressRoute from '../routes/address.route.js';
 import cartRouter from '../routes/cart.routes.js';
+import couponsRoute from '../routes/coupons.route.js'
 import OrderRouter from '../routes/order.route.js';
 
 
@@ -22,6 +23,8 @@ allRouter.use('/rating' ,ratingRouter );
 allRouter.use('/review' ,reviewRouter );
 allRouter.use('/product' ,productRouter);
 allRouter.use('/address' ,addressRoute);
+allRouter.use('/coupons' ,couponsRoute);
+
 allRouter.use('/order',OrderRouter),
 allRouter.use('/cart',cartRouter)
 

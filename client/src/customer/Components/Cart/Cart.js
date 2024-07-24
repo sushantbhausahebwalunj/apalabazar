@@ -6,7 +6,10 @@ import { FaCircleInfo } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchCart, removeFromCart, clearCart, updateCartQuantity, addQuantity } from '../../../Redux/Cart/cartSlice';
+import { fetchCoupons } from '../../../Redux/Coupons/couponSlice';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import logo from "../../../logo.png";
+
 const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qty, decreaseQuantity, increaseQuantity, removeItem, prodid }) => {
   return (
     <tr className="border-b">
@@ -44,6 +47,25 @@ const Cart = () => {
   const [search, setSearch] = useState("");
   const { items, status, fetchCartError } = useSelector((state) => state.cart);
   const [viewport, setViewport] = useState(false);
+
+  // COUPONS FETCHING
+  const { coupons, status : couponsstatus } = useSelector((state) => state.coupons);
+  const [showCouponOverlay, setShowCouponOverlay] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
+  useEffect(() => {
+      dispatch(fetchCoupons());
+  }, [dispatch]);
+
+  const applyCoupon = () => {
+    if (selectedCoupon) {
+      console.log('Applying coupon:', selectedCoupon);
+      setSelectedCoupon(null);
+      setShowCouponOverlay(false);
+    }
+  };
+  // END COUPONS FETCHING
+
+
 
   const handleAddToCart = async () => {
     const resultAction = await dispatch(fetchCart());
@@ -206,6 +228,64 @@ const Cart = () => {
                   </div>
                 </div>
                 <span className="text-red-500">+ Extra</span>
+              </div>
+
+              {/* SHWOS HTHE AVAILABEL COUPONS */}
+              <div className="relative">
+                <button className="bg-blue-500  w-full text-white px-4 mb-2 mt-4 py-2 rounded-full" onClick={() => setShowCouponOverlay(true)}>
+                  Apply Coupons
+                </button>
+
+                {showCouponOverlay && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                    {/* <div className="bg-white p-4 rounded-md shadow-lg"> */}
+                    <div className="w-1/2 pr-4">
+                      <div className="bg-green-100 p-8 rounded-lg shadow-md">
+                      <h2 className="text-lg font-semibold mb-2">Select a Coupon</h2>
+                      {couponsstatus === "succeeded" && coupons.map((coupon) => (
+                         <div key={coupon._id} className="mb-4 p-2 bg-white rounded-lg items-center hover:scale-[1.02] transition duration-300">
+                         <div className="flex justify-between p-4 bg-white rounded-lg items-center border-2 border-dashed border-gray-500">
+                             <div className="flex items-center">
+                                 <div className="mr-3 text-blue-500">
+                                     <LocalOfferIcon/>
+                                 </div>
+                                 <div>
+                                     <p className="text-gray-800 font-medium">{coupon.code}: {coupon.discountType === "percentage" ? `${coupon.discountValue}% off` : `${coupon.discountValue} off`}</p>
+                                     <p className="text-gray-600">Expires on {new Date(coupon.expirationDate).toLocaleDateString()}</p>
+                                 </div>
+                             </div>
+                             <div className="flex">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedCoupon === coupon._id}
+                                  onChange={() => setSelectedCoupon(coupon.id)}
+                                  disabled={selectedCoupon && selectedCoupon !== coupon._id}
+                                  className="mr-2"
+                                />
+                                 {/* <div className="mr-3 text-red-300 hover:text-red-500" onClick={(e) => handleDelete(coupon._id,e)}>
+                                     <RemoveCircleIcon />
+                                 </div> */}
+                             </div>
+                             
+                         </div>
+                         </div>
+                      ))}
+                      <div className="flex justify-end mt-4">
+                        <button
+                          className="bg-green-300 text-white px-4 py-2 hover:bg-green-600 rounded-full"
+                          onClick={applyCoupon}
+                          disabled={!selectedCoupon}
+                        >
+                          Apply
+                        </button>
+                        <button className="bg-red-300 text-white px-4 hover:bg-red-600 py-2 rounded-full ml-2" onClick={() => setShowCouponOverlay(false)}>
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <button className="w-full bg-green-500 text-white py-2 rounded-full" onClick={checkOut}>PROCEED TO CHECKOUT</button>
             </div>

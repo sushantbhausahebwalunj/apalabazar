@@ -6,6 +6,9 @@ import { RiDeleteBin7Fill } from "react-icons/ri";
 import { fetchCart } from '../../../Redux/Cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { placeOrder } from "../../../Redux/Order/orderSlice";
+import { toast, ToastContainer } from "react-toastify";
+
 
 const INPUT_CLASS =
   "mt-1 block w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-white text-zinc-900 dark:text-black";
@@ -161,6 +164,31 @@ const Checkout = () => {
       alert("Error creating order. Please try again.");
     }
   };
+
+
+  const handleOrder = () => {
+    // do something
+    // const dispatch = useDispatch();
+    const selectedAddress = address.find(addr => addr._id === savedAddressChecked);
+    if (!selectedAddress) {
+        console.error("Selected address not found");
+        return;
+    }
+    const orderData = {
+      shippingAddress: selectedAddress,
+      paymentDetails: { paymentMethod: 'COD' },
+    };
+    try {
+      dispatch(placeOrder(orderData));
+      toast.success("Order placed successfully");
+  } catch (error) {
+      console.error("Failed to place order:", error);
+      toast.error("Failed to place order");
+  }
+  };
+
+
+
   return (
     <section className="bg-[#f1f3f6] flex items-center lg:h-[100vh] justify-center">
 
@@ -283,6 +311,7 @@ const Checkout = () => {
                 deliveryModeChecked && savedAddressChecked
               )}
               disabled={!deliveryModeChecked || !savedAddressChecked}
+              onClick={handleOrder}
             >
               PAY ON DELIVERY (COD)
             </button>

@@ -11,6 +11,8 @@ import Profile from '../Profile/components/Profilemain/Profile.js';
 import Checkout from '../Profile/components/Orders/Checkoutpage.js';
 import RatingsAndReviews from '../customer/Components/ReviewProduct/Reviewform.js';
 import SearchPage from '../Pages/SearchPage.js';
+import TermsAndConditions from '../Pages/TermsCondition.js';
+import ReturnPolicy from '../Pages/cancellation_policy.js';
 
 
 
@@ -30,6 +32,9 @@ function CustomersRoute() {
       <Route path="/myprofile" element={<Profile/>}></Route>
       <Route path="/review/:id" element={<RatingsAndReviews/>}></Route>
       <Route path="/search/:name" element={<SearchPage/>}></Route>
+      <Route path="/termscondition" element={<TermsAndConditions/>}></Route>
+      <Route path="/returnpolicy" element={<ReturnPolicy/>}></Route>
+
 
       </Routes>
     </div>

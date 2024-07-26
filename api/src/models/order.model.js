@@ -46,14 +46,23 @@ const orderSchema = new Schema({
         type: Number,
         required: true,
     },
-   discounte: {
+    GST:{
+     type:Number,
+     required:true,
+    },
+    discount:{
         type: Number,
         required: true,
+        default:0 
     },
    orderStatus: {
         type: String,
         required: true,
         default: "PENDING"
+    },
+    coupenDiscount:{
+        type:Number,
+        default:0,
     },
     totalItem: {
         type: Number,

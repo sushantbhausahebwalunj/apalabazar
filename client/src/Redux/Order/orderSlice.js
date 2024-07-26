@@ -10,50 +10,23 @@ export const placeOrder = createAsyncThunk('order/placeOrder', async (orderData,
   }
 });
 
-// export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.get('/admin/product/view');
-//     // console.log(response.data.data);
-//     return response.data.data;
+export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get('/order/getAllOrders');
+    console.log("insider orderslice: ",response.data.data);
+    return response.data.data;
     
-//   } catch (error) {
-//     return rejectWithValue(error.response.data);
-//   }
-// });
-
-// export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.delete(`/admin/product/delete/${productId}`);
-//     return response.data.data;
-//   } catch (error) {
-//     return rejectWithValue(error.response.data);
-//   }
-// });
-
-// export const updateProduct = createAsyncThunk('products/updateProduct', async ({ id, productData }, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.put(`/admin/product/update/${id}`, productData);
-//     return response.data.data;
-//   } catch (error) {
-//     return rejectWithValue(error.response.data);
-//   }
-// });
-
-// export const fetchProduct = createAsyncThunk('products/fetchProduct', async (productId, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.get(`/admin/product/view/${productId}`);
-//     return response.data.data;
-//   } catch (error) {
-//     return rejectWithValue(error.response.data);
-//   }
-// });
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 
 
 const orderSlice = createSlice({
   name: 'orders',
   initialState: {
-    products: [],
+    orders: [],
     status: 'idle',
     error: null,
   },
@@ -65,12 +38,24 @@ const orderSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products.push(action.payload);
+        state.orders.push(action.payload);
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
-      }); 
+      })
+      .addCase(fetchOrders.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.orders = action.payload;
+        console.log("inside addcase: ",action.payload);
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      });
   },
 });
 

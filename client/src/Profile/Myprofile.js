@@ -15,6 +15,7 @@ import './Myprofile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {jwtDecode} from 'jwt-decode';
 import { fetchUserById, updateUser } from '../Redux/User/userSlice';
+import MyOrders from './components/Orders/MyOrders.js';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -201,7 +202,7 @@ const MyProfile = () => {
             ☰
           </button>
           <Routes>
-            <Route path="my-orders" element={<div>My Orders</div>} />
+            <Route path="my-orders" element={<MyOrders/>} />
             <Route path="profile-information" element={<ProfileInformation />} />
             <Route path="manage-addresses" element={<ManageAddresses />} />
             <Route path="pan-card-information" element={<PanCardInformation />} />

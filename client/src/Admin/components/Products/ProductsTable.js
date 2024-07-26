@@ -117,7 +117,7 @@ const ProductTable = () => {
                       {truncateDescription(product.description, 15)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {product.category.name}
+                      {product.category?.name || 'Category Name' }
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       ₹{product.price}

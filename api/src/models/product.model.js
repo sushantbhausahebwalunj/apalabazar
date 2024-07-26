@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    default: 'TITLE'    // required: true,
   },
   description: {
     type: String,
-    required: true,
+     default: 'TRUE'    // required: true,
   },
   price: {
     type: Number,
-    required: true,
+    default: 0          // required: true,
   },
   discountedPrice: {
     type: Number,
@@ -64,6 +64,47 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  // New fields for offline counter sales
+  BarCode:{
+    type: Number,
+    default: 0,
+  },
+  stockType:{
+    type: String,
+    default: "TYPE NONE"
+  },
+  unit:{
+    type: String,
+    default: 'Unit A'
+  },
+  purchaseRate: {
+    type: Number,
+    default : 0
+  },
+  profitPercentage: {
+    type: Number,
+    default : 0
+  },
+  HSN: {
+    type: String,
+    default: 'HSN'
+  },
+  GST: {
+    type: Number,
+    default : 0
+  },
+  retailPrice: {
+    type: Number,
+    default : 0
+  },
+  totalAmount: {
+    type: Number,
+    default : 0
+  },
+  amountPaid: {
+    type: Number,
+    default : 0
+  }
 });
 
 const Product = mongoose.model("products", productSchema);

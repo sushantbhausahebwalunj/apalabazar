@@ -26,7 +26,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (productId, { 
     if (error.response && error.response.status === 401) {
       return rejectWithValue({ isUnauthorized: true });
     }
-    toast.error('Failed to add product to cart');
+    // toast.error('Failed to add product to cart');
     return rejectWithValue(error.response.data);
   }
 });
@@ -75,7 +75,7 @@ const cartSlice = createSlice({
         state.status = 'failed';
         state.fetchCartError = action.payload;
         state.items[0] = [];
-        toast.error('Failed to fetch cart details');
+     
       })
       .addCase(addToCart.pending, (state) => {
         state.addToCartStatus = 'loading';

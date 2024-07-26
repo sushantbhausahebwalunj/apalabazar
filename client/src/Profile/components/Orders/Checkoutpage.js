@@ -404,7 +404,7 @@ const Checkout = () => {
       </div>
     </div>
   </li>
-                                   ))}             </ul>
+    ))}             </ul>
                     </div>
                   </div>
                 </div>

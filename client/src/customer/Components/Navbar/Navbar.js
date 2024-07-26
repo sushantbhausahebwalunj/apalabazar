@@ -49,7 +49,7 @@ const Navbar = (props) => {
               onClick={() => handleSide(`/category/${category._id}`)}
               className=" border-none focus:border-none ml-3"
             >
-              {category.name}
+              {category.name.toUpperCase()}
             </button>
           );
         }
@@ -133,6 +133,7 @@ const Navbar = (props) => {
                 className="h-10"
                 crossOrigin="anonymous"
               />
+              <h2 className="text-black text-xl ml-[-12px] ">Aapla <span className="text-red-500">Bajar</span></h2> 
             </a>
             <div className="md:flex items-center hidden ">
               <form onSubmit={handleSearch}>
@@ -155,7 +156,7 @@ const Navbar = (props) => {
             <div className="flex lg:space-x-12">
               <div className="relative">
                 <div
-                  className="flex items-center space-x-2 rounded-md p-2 border-[1px] bg-blue-500 hover:bg-blue-600"
+                  className="flex items-center space-x-2 rounded-md p-2 border-[1px] border-none"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -174,11 +175,8 @@ const Navbar = (props) => {
                     ></path>
                   </svg>
                   {isAuthenticated ? (
-                    <button
-                      onClick={handleProfileClick}
-                      className="text-white font-medium flex items-center"
-                    >
-                      Profile
+               <span>
+               
                       <svg
                         className="w-4 h-4 ml-1"
                         fill="none"
@@ -193,13 +191,13 @@ const Navbar = (props) => {
                           d="M19 9l-7 7-7-7"
                         ></path>
                       </svg>
-                    </button>
+                      </span>
                   ) : (
                     <button
                       onClick={() => setShowModal(true)}
-                      className="text-white font-medium"
+                      className="text-black font-medium"
                     >
-                      Sign In / Register
+                   Register
                     </button>
                   )}
                   <Register showModal={showModal} setShowModal={setShowModal} />

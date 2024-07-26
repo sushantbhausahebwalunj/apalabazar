@@ -34,9 +34,6 @@ const AddressSchema= new mongoose.Schema({
         type: String,
         
     },
-
-
-
     city:{
         type:String,
         required:true,

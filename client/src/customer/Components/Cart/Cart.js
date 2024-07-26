@@ -45,6 +45,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [priceSummary,setPriceSummary] = useState('')
   const { items, status, fetchCartError } = useSelector((state) => state.cart);
   const [viewport, setViewport] = useState(false);
 
@@ -56,6 +57,24 @@ const Cart = () => {
       dispatch(fetchCoupons());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (items && items.length > 0 && items[0].length > 0) {
+      const totalDiscountedPrice = items[0].reduce((acc, item) => {
+        if (item.product) {
+          return acc + item.product.discountedPrice * item.quantity;
+        }
+        return acc;
+      }, 0);
+      const totalActualPrice = items[0].reduce((acc, item) => {
+        if (item.product) {
+          return acc + item.product.price * item.quantity;
+        }
+        return acc;
+      }, 0);
+      const discount = totalActualPrice - totalDiscountedPrice;
+      setPriceSummary({ totalDiscountedPrice, discount, totalActualPrice });
+    }
+  }, [items]);
   const applyCoupon = () => {
     if (selectedCoupon) {
       console.log('Applying coupon:', selectedCoupon);
@@ -209,11 +228,11 @@ const Cart = () => {
               <h3 className="text-lg font-semibold mb-4">Price Summary</h3>
               <div className="flex justify-between mb-2">
                 <span>Cart Total</span>
-                <span>₹ {items&&items[1]&&items[1].totalDiscountedPrice}</span>
+                <span>₹ {priceSummary.totalDiscountedPrice}</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>You Saved</span>
-                <span>₹ {items&&items[1]&&items[1].discount}</span>
+                <span>₹  {priceSummary.discount}</span>
               </div>
               <div className="flex justify-between mb-2">
                 <div className="group relative">

@@ -5,6 +5,7 @@ import productReducer from './Product/productSlice';
 import cartReducer from './Cart/cartSlice';  // Import the cart reducer
 import advertisementReducer from './Advertisements/advertisementSlice';
 import couponReducer from './Coupons/couponSlice';
+import orderReducer from './Order/orderSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
     cart: cartReducer,  // Add cart reducer
     advertisements: advertisementReducer,
     coupons : couponReducer,
-
+    order: orderReducer,
   },
 });
 

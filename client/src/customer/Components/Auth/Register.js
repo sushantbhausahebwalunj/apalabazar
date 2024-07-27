@@ -5,6 +5,7 @@ import logo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../axiosConfig";
+import logoo from "./logo.png"
 import { signInWithGooglePopup } from "../../../firebaseConfig";
 
 const sharedClasses = {
@@ -193,7 +194,7 @@ const Register = ({ showModal, setShowModal }) => {
           <div className="p-8 flex-1">
             <div className="flex justify-between items-center mb-4">
               {!otpSent && (
-                <img src="./apala bazar.png" alt="Logo" className="max-w-20" />
+                <img src={logoo} alt="Logo" className="max-w-20" />
               )}
               <button
                 onClick={closeModal}

@@ -4,6 +4,7 @@ import User from '../models/user.model.js';
 import OTP from '../models/otp.model.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+// import { verifyGoogleToken } from './firebaseConfig';
 
 // Load environment variables 
 dotenv.config();
@@ -207,6 +208,7 @@ export const signout = (req, res) => {
     res.status(200).json({ message: 'Sign out successful', status: true });
 };
 
+
 // export const signout = (req, res) => {
 //     res.clearCookie('token'); 
 //     req.session.destroy(err => { 
@@ -216,3 +218,49 @@ export const signout = (req, res) => {
 //         res.status(200).send({ message: 'Successfully logged out' });
 //     });
 // };
+
+
+
+
+
+
+// thi will Register user via Google
+export const registerWithGoogle = async (req, res) => {
+    const { email, userName, password } = req.body;
+
+    if (!email || !userName || !password) {
+        return res.status(400).json({ message: 'Email, password, and userName are required', status: false });
+    }
+
+    try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(201).json({ message: 'User already exists', status: false });
+        }
+
+        // const randomPassword = Math.random().toString(36).slice(-8);
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({ email, password: hashedPassword, userName });
+
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET environment variable is not set.');
+            return res.status(500).json({ message: 'Internal server error', status: false });
+        }
+
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+        });
+
+        return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
+    } 
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error', status: false });
+    }
+};

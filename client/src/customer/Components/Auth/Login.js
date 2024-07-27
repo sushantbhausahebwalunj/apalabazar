@@ -4,8 +4,24 @@ import { toast, ToastContainer } from "react-toastify";
 import Register from '../assets/register.png';
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "./logo.png"
 import axiosInstance from "../../../axiosConfig";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode correctly
+import { signInWithGooglePopup } from "../../../firebaseConfig.js";
+
+
+const SignIn = () => {
+  const logGoogleUser = async () => {
+    const response = await signInWithGooglePopup();
+    console.log(response);
+    window.location.href = '/';
+    }
+    return (
+      <div>
+          <button onClick={logGoogleUser}>Login In With Google</button>
+      </div>
+    )
+}
 
 const sharedClasses = {
   textZinc: "text-zinc-500",
@@ -44,6 +60,8 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -93,8 +111,9 @@ const Login = () => {
               Back to Home
             </Link>
           </div>
-          <img src="./apala bazar.png" alt="Logo" className="max-w-20 mb-12" />
+          <img src={logo} alt="Logo" className="max-w-20 mb-12" />
           <h2 className="text-xl text-black font-bold mb-4">Login</h2>
+
           <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label
@@ -135,7 +154,17 @@ const Login = () => {
             >
               {loading ? "LOGGING IN..." : "LOGIN"}
             </button>
+            
+              <div class="flex mt-4 items-center w-full justify-center">
+                  <div class="px-4 py-2 w-full border flex justify-center gap-2 border-slate-200  rounded-lg text-slate-700  hover:border-slate-400  hover:bg-gray-100 hover:text-slate-900 hover:shadow transition duration-150">
+                      <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                      <SignIn />
+                  </div>
+              </div>
+            
+
           </form>
+         
         </div>
       </div>
       <ToastContainer position="bottom-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />

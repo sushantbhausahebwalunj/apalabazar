@@ -113,7 +113,7 @@ function Grocery() {
       e.stopPropagation();
       console.log(cate)
       const filtered = products.filter((product) =>
-       product.category.name.toLowerCase().includes(cate.toLowerCase())
+       product?.category?.name?.toLowerCase().includes(cate.toLowerCase())
    
     )
       setFilteredProduct(filtered);

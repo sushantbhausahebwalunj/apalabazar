@@ -156,6 +156,8 @@ const Register = ({ showModal, setShowModal }) => {
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('role', response.data.data.role);
         toast.success("Login successful");
+        navigate('/');
+
 
         if (response.data.data.role === 'ADMIN') {
           navigate('/admin');

@@ -3,7 +3,7 @@ import {
   checkSession,
   loginUser,
   registerUser,
-  signOut,
+  signout,
   verifyOTP,
 } from "../controller/auth.controller.js";
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post("/verify-otp", verifyOTP);
 
 router.post("/login", loginUser);
 
-router.get("/signout", signOut);
+router.delete("/signout", signout);
 router.get("/session", checkSession);
 
 export default router;

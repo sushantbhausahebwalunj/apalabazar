@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Register from '../assets/register.png';
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "./logo.png"
 import axiosInstance from "../../../axiosConfig";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode correctly
 import { signInWithGooglePopup } from "../../../firebaseConfig.js";
@@ -110,7 +111,7 @@ const Login = () => {
               Back to Home
             </Link>
           </div>
-          <img src="./apala bazar.png" alt="Logo" className="max-w-20 mb-12" />
+          <img src={logo} alt="Logo" className="max-w-20 mb-12" />
           <h2 className="text-xl text-black font-bold mb-4">Login</h2>
 
           <form onSubmit={handleLogin}>

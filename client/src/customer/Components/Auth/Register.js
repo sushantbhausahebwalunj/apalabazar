@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/register.png';
+import registerlogo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../axiosConfig";
-import logoo from "./logo.png"
-
+import logo from "./logo.png"
+import "./register.css"
 const sharedClasses = {
   textZinc: "text-zinc-500",
   hoverTextZinc: "hover:text-zinc-700",
@@ -96,27 +96,26 @@ const Register = ({ showModal, setShowModal }) => {
 
   return (
     showModal && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
-        <div className="bg-white dark:bg-card bg-opacity-95 w-full lg:max-w-4xl h-[600px] mx-auto rounded-lg shadow-lg flex flex-col md:flex-row">
-          
-          <div className="bg-green-100 p-8 flex-1 hidden lg:flex items-center flex-col justify-between">
-            <div className='text-primary-foreground p-6 rounded-lg max-w-sm'>
-              <h2 className='text-3xl font-bold text-gray-700 mb-4'>Register</h2>
-              <p className='text-muted-foreground text-gray-600'>
-                Create your account to start shopping!
-              </p>
-            </div>
-            <img
-              src={logo}
-              alt="Illustration of a woman shopping"
-              className="max-w-full bg-cover h-[300px] w-[400px]"
-            />
+      <div className="min-h-screen fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
+      <div className="bg-white dark:bg-card dark:text-white w-full max-w-4xl mx-auto rounded-lg shadow-lg flex flex-col md:flex-row animate-fadeIn">
+      <div className="bg-blue-100 hover-bg-blue p-8 flex-1 hidden lg:flex items-center flex-col justify-between animate-slideInLeft">
+      <div className="text-primary-foreground p-6 rounded-lg max-w-sm">
+            <h2 className="text-3xl font-bold text-gray-700 mb-4">Welcome Back!</h2>
+            <p className="text-muted-foreground text-gray-600">
+              Log in to continue shopping with us!
+            </p>
           </div>
+          <img
+            src={registerlogo}
+            alt="Illustration of a person logging in"
+          className="max-w-full bg-cover h-[300px] w-[400px] animate-bounce image-hover"
+          />
+        </div>
           <div className="p-8 flex-1">
             <div className="flex justify-between items-center mb-4">
               {!otpSent && (
-                <img src={logoo} alt="Logo" className="max-w-20" />
-              )}
+          <img src={logo} alt="Logo"   className="max-w-20 logo-move" />
+        )}
               <button
                 onClick={closeModal}
                 className={`${sharedClasses.textZinc} ${sharedClasses.hoverTextZinc} ${sharedClasses.darkTextZinc} ${sharedClasses.darkHoverTextZinc}`}
@@ -227,10 +226,10 @@ const Register = ({ showModal, setShowModal }) => {
               </p>
               <button
                 type="submit"
-                className={`w-full py-2 ${sharedClasses.bgZinc} ${sharedClasses.textZinc} rounded ${loading ? "cursor-not-allowed" : ""}`}
+                className={`w-full py-2 bg-gradient-to-r from-blue-500 to-purple-600  text-white rounded transition duration-150 transform hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-500 hover:scale-105 focus:outline-none active:animate-flash ${sharedClasses.bgZinc} ${sharedClasses.textZinc} rounded ${loading ? "cursor-not-allowed" : ""}`}
                 disabled={loading}
               >
-                {loading ? "SENDING..." : otpSent ? "VERIFY OTP" : "CONTINUE"}
+                { loading ? <span className="text-white">SENDING...</span> : otpSent ? <span className="text-white">VERIFY OTP</span> : <span className="text-white">CONTINUE</span>}
               </button>
             </form>
             {!otpSent && (

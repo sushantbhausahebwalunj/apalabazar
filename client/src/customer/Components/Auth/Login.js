@@ -10,6 +10,7 @@ import {jwtDecode} from "jwt-decode";
 import { signInWithGooglePopup } from "../../../firebaseConfig.js";
 import "./loginpg.css"
 
+
 const SignIn = () => {
   const logGoogleUser = async () => {
     const response = await signInWithGooglePopup();
@@ -94,6 +95,78 @@ const Login = () => {
     }
   };
 
+  const GoogleSignINUP = () => {
+    const logGoogleUser = async () => {
+      const response = await signInWithGooglePopup();
+      console.log(response);
+      const user = response.user;
+      const email = user.email;
+      const userName = user.displayName;
+      const uniqueUserID = user.uid;
+      console.log('Email:', user.email);
+      console.log('Username:', user.displayName);
+      console.log('Unique User ID:', user.uid);
+      await handleRegisterWithGoogle(email, userName, uniqueUserID);
+      }
+      return (
+        <div class="flex mt-4 items-center w-full justify-center">
+            <div class="px-4 py-2 w-full border flex justify-center gap-2 border-slate-200  rounded-lg text-slate-700  hover:border-slate-400  hover:bg-gray-100 hover:text-slate-900 hover:shadow transition duration-150">
+                <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                <button onClick={logGoogleUser}>Continue With Google</button>
+            </div>
+        </div>
+      );
+  }
+  
+  const handleRegisterWithGoogle = async (email, userName, uniqueUserID) => {
+    try {
+        const payload = {
+            email,
+            userName,
+            password: uniqueUserID,
+        };
+        console.log("Sending payload:", payload); 
+        const response = await axiosInstance.post('/auth/registerWithGoogle', payload);
+        if (response.data.status) {
+            toast.success("Google registration successful. User created.");
+            toast.success("A Moment Logging you in!");
+            handleLoginwithGoogle(email, uniqueUserID);
+  
+        } else if (response.data.message === "User already exists") {
+            // User already exists, log them in
+            // await handleLoginWithGoogle(email, uniqueUserID);
+            handleLoginwithGoogle(email, uniqueUserID);
+            toast.success("User already exist");
+        }
+    } catch (error) {
+        console.error("Error registering with Google:", error);
+        toast.error("An error occurred while registering with Google. Please try again.");
+    } 
+  };
+  
+  const handleLoginwithGoogle = async (email, password ) => {
+    try {
+      console.log("inside handleLoginwithGoogle: ",email,password);
+      const response = await axiosInstance.post(`/auth/login`, { email, password }, { withCredentials: true });
+      if (response.data.status) {
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('role', response.data.data.role);
+        toast.success("Login successful");
+  
+        if (response.data.data.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      } else {
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("An error occurred during login. Please try again.");
+    } 
+  };
+
   return (
     <div className="min-h-screen fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
       <div className="bg-white dark:bg-card dark:text-white w-full max-w-4xl mx-auto rounded-lg shadow-lg flex flex-col md:flex-row animate-fadeIn">
@@ -163,7 +236,11 @@ const Login = () => {
             >
               {loading ? "LOGGING IN..." : "LOGIN"}
             </button>
+
             <SignIn />
+
+            <GoogleSignINUP />
+
           </form>
         </div>
       </div>

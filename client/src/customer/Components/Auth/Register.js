@@ -5,8 +5,14 @@ import registerlogo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../axiosConfig";
+
 import logo from "./logo.png"
 import "./register.css"
+
+import logoo from "./logo.png"
+import { signInWithGooglePopup } from "../../../firebaseConfig";
+
+
 const sharedClasses = {
   textZinc: "text-zinc-500",
   hoverTextZinc: "hover:text-zinc-700",
@@ -89,6 +95,86 @@ const Register = ({ showModal, setShowModal }) => {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       toast.error("An error occurred while verifying OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const GoogleSignINUP = () => {
+    const logGoogleUser = async () => {
+      const response = await signInWithGooglePopup();
+      console.log(response);
+      const user = response.user;
+      const email = user.email;
+      const userName = user.displayName;
+      const uniqueUserID = user.uid;
+      console.log('Email:', user.email);
+      console.log('Username:', user.displayName);
+      console.log('Unique User ID:', user.uid);
+      // window.location.href = '/'
+      await handleRegisterWithGoogle(email, userName, uniqueUserID);
+      }
+      return (
+        <div class="flex mt-4 items-center w-full justify-center">
+            <div class="px-4 py-2 w-full border flex justify-center gap-2 border-slate-200  rounded-lg text-slate-700  hover:border-slate-400  hover:bg-gray-100 hover:text-slate-900 hover:shadow transition duration-150">
+                <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                <button onClick={logGoogleUser}>Continue With Google</button>
+            </div>
+        </div>
+      );
+  }
+
+  const handleRegisterWithGoogle = async (email, userName, uniqueUserID) => {
+    setLoading(true);
+    try {
+        const payload = {
+            email,
+            userName,
+            password: uniqueUserID,
+        };
+        console.log("Sending payload:", payload); 
+        const response = await axiosInstance.post('/auth/registerWithGoogle', payload);
+        if (response.data.status) {
+            toast.success("Google registration successful. User created.");
+            toast.success("A Moment Logging you in!");
+            handleLoginwithGoogle(email, uniqueUserID);
+
+        } else if (response.data.message === "User already exists") {
+            // User already exists, log them in
+            // await handleLoginWithGoogle(email, uniqueUserID);
+            handleLoginwithGoogle(email, uniqueUserID);
+            toast.success("User already exist");
+        }
+    } catch (error) {
+        console.error("Error registering with Google:", error);
+        toast.error("An error occurred while registering with Google. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const handleLoginwithGoogle = async (email, password ) => {
+    try {
+      console.log("inside handleLoginwithGoogle: ",email,password);
+      const response = await axiosInstance.post(`/auth/login`, { email, password }, { withCredentials: true });
+      if (response.data.status) {
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('role', response.data.data.role);
+        toast.success("Login successful");
+        navigate('/');
+
+
+        if (response.data.data.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      } else {
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("An error occurred during login. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -231,6 +317,7 @@ const Register = ({ showModal, setShowModal }) => {
               >
                 { loading ? <span className="text-white">SENDING...</span> : otpSent ? <span className="text-white">VERIFY OTP</span> : <span className="text-white">CONTINUE</span>}
               </button>
+              <GoogleSignINUP />
             </form>
             {!otpSent && (
               <div className="mt-4">

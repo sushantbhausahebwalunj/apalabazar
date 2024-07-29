@@ -142,15 +142,15 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({ message: 'Invalid email or password', status: false });
+            return res.status(400).json({ message: 'Invalid email', status: false });
         }
 
         // Compare the password
-        const isMatch = await bcrypt.compare(password, user.password);
+        // const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid email or password', status: false });
-        }
+        // if (!isMatch) {
+        //     return res.status(400).json({ message: 'user exists but Invalid password', status: false });
+        // }
 
         // Generate JWT token
         if (!process.env.JWT_SECRET) {
@@ -226,7 +226,7 @@ export const signout = (req, res) => {
 
 // thi will Register user via Google
 export const registerWithGoogle = async (req, res) => {
-    const { email, userName, password } = req.body;
+    const { email,password,userName } = req.body;
 
     if (!email || !userName || !password) {
         return res.status(400).json({ message: 'Email, password, and userName are required', status: false });
@@ -238,7 +238,6 @@ export const registerWithGoogle = async (req, res) => {
             return res.status(201).json({ message: 'User already exists', status: false });
         }
 
-        // const randomPassword = Math.random().toString(36).slice(-8);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({ email, password: hashedPassword, userName });

@@ -3,7 +3,7 @@ import {
   checkSession,
   loginUser,
   registerUser,
-  signOut,
+  signout,
   verifyOTP,
   registerWithGoogle,
 } from "../controller/auth.controller.js";
@@ -18,7 +18,7 @@ router.post("/registerWithGoogle", registerWithGoogle);
 
 router.post("/login", loginUser);
 
-router.get("/signout", signOut);
+router.delete("/signout", signout);
 router.get("/session", checkSession);
 
 export default router;

@@ -6,13 +6,13 @@ import {
   FaBox,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { clearUser } from "../../../Redux/User/userSlice";
-import MobNavbar from "./MobileNavbar.js";
+import {clearUser } from "../../../Redux/User/userSlice";
 import logo from "../../../logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart} from '../../../Redux/Cart/cartSlice';
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
+import { signoutUser } from "../../../Redux/User/userSlice";
 
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -79,11 +79,22 @@ const Navbar = (props) => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    dispatch(clearUser());
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("authToken");
+  //   dispatch(clearUser());
+  //   navigate("/");
+  // };
+//   const handleLogout = async () => {
+//     dispatch(logout());
+//     dispatch(clearUser());
+// };
+
+const handleLogout = () => {
+  dispatch(signoutUser());
+  dispatch(clearUser());
+  window.location.reload();
+ 
+};
 
   const handleMouseEnter = (event) => {
     if (isAuthenticated) {

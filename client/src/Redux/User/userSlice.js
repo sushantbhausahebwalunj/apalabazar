@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../axiosConfig';
+import axios from 'axios';
 
 // Async thunks for user operations
 
@@ -124,4 +125,17 @@ const userSlice = createSlice({
 });
 
 export const { setUser, clearUser } = userSlice.actions;
+
+export const signoutUser = () => async dispatch => {
+    try {
+      
+        await axiosInstance.delete('/auth/signout'); 
+        localStorage.removeItem("authToken");
+        dispatch(clearUser());
+        
+    } catch (error) {
+        console.error('Failed to sign out:', error);
+    }
+};
+
 export default userSlice.reducer;

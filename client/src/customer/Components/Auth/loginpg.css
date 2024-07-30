@@ -139,7 +139,7 @@
     transform: translateX(0);
   }
   50% {
-    transform: translateX(400%);
+    transform: translateX(300%);
   }
   100% {
     transform: translateX(0);

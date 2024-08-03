@@ -27,7 +27,6 @@ body {
   
   /* Product Image Section */
   .product-image-section {
-    flex: 1;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -47,7 +46,6 @@ body {
   
   /* Product Info Section */
   .product-info-section {
-    flex: 1;
     padding: 20px;
   }
   
@@ -283,6 +281,16 @@ body {
   @media (min-width: 620px) {
     .product-details-container {
       flex-direction: row;
+    }
+    .product-image-section,
+    .product-info-section {
+      flex: 1;
+    }
+    .product-description {
+      margin-top: 0;
+    }
+    .description-content {
+      margin-top: 20px;
     }
   }
   

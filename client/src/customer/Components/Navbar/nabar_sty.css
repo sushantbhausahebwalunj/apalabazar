@@ -1,0 +1,110 @@
+/* Adjust logo and title for smaller screens */
+@media (max-width: 768px) {
+    .logo-title {
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo-title img {
+      height: 8rem;
+    }
+    .logo-title h2 {
+      font-size: 1.2rem;
+    }
+  }
+  
+  /* Adjust search input and button for smaller screens */
+  @media (max-width: 768px) {
+    .search-form {
+      width: 80%;
+    }
+    .search-input {
+      width: 100%;
+    }
+    .search-button {
+      width: auto;
+    }
+  }
+  
+  /* Navbar container */
+  .navbar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Navbar logo */
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Navbar items */
+  .navbar-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Navbar items - large screens */
+  @media (min-width: 768px) {
+    .navbar-items {
+      justify-content: space-around;
+    }
+  }
+  
+  /* Navbar item */
+  .navbar-item {
+    margin: 0 1rem;
+  }
+  
+  /* Navbar item - responsive */
+  @media (max-width: 767px) {
+    .navbar-item {
+      margin: 0.5rem 0;
+    }
+  }
+  
+
+  /* Cart button */
+  .cart-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .cart-button:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Animate bounce for cart items count */
+  .animate-bounce {
+    animation: bounce 0.5s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(-10%);
+    }
+    50% {
+      transform: translateY(0);
+    }
+  }
+  
+  /* Profile dropdown trigger */
+  .profile-dropdown-trigger {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .profile-dropdown-trigger:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+  }
+  

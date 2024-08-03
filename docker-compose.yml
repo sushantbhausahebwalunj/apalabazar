@@ -5,6 +5,7 @@ services:
     build:
       context: ./api
       dockerfile: dockerfile.prod
+    container_name: backend-api
     ports:
       - "5454:5454"
     environment:
@@ -22,7 +23,7 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=production
-      - REACT_APP_BASE_URL=http://apalabajar.com:5454/api
+      - REACT_APP_BASE_URL=http://backend-api:5454/api
     networks:
       - app-network
 networks:

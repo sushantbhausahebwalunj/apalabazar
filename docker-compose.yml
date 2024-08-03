@@ -5,6 +5,7 @@ services:
     build:
       context: ./api
       dockerfile: dockerfile.prod
+    container_name: backend-api
     ports:
       - "5454:5454"
     environment:

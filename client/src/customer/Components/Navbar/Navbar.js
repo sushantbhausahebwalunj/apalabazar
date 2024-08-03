@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Register from "../Auth/Register";
 import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
-import { clearUser } from "../../../Redux/User/userSlice";
+import { clearUser, signoutUser } from "../../../Redux/User/userSlice";
 import logo from "../../../logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from '../../../Redux/Cart/cartSlice';
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
-import { signoutUser } from "../../../Redux/User/userSlice";
-import "./nabar_sty.css"
+import "./nabar_sty.css";
+
 const Navbar = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [hoverDropdown, setHoverDropdown] = useState(false);
@@ -35,29 +35,6 @@ const Navbar = (props) => {
 
   const handleSide = (path) => {
     navigate(path);
-  };
-
-  const renderCategories = () => {
-    return categories
-      .filter((category) => category.level === 1)
-      .map((category, i) => {
-        if (i < 8) {
-          return (
-            <button
-              key={category._id}
-              onClick={() => handleSide(`/category/${category._id}`)}
-              className="border-none focus:border-none ml-3"
-            >
-              {category.name.toUpperCase()}
-            </button>
-          );
-        }
-        return null;
-      });
-  };
-
-  const handleNavigate = () => {
-    navigate("/category");
   };
 
   const handleSearch = (e) => {
@@ -118,6 +95,22 @@ const Navbar = (props) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const [uniqueCategories, setUniqueCategories] = useState([]);
+
+  useEffect(() => {
+    const uniqueParentCategories = new Set();
+    const filteredCategories = categories.filter((category) => {
+      const parentCategoryName = category.parentCategory?.name ?? 'None';
+      if (uniqueParentCategories.has(parentCategoryName) || parentCategoryName === 'None') {
+        return false;
+      } else {
+        uniqueParentCategories.add(parentCategoryName);
+        return true;
+      }
+    });
+    setUniqueCategories(filteredCategories);
+  }, [categories]);
 
   return (
     <div className="shadow-lg overflow-hidden relative">
@@ -248,16 +241,26 @@ const Navbar = (props) => {
       </div>
 
       {/* Bottom Navbar */}
-      <div className="bg-white flex justify-between items-center p-2 shadow-md">
-        <div className="flex items-center space-x-2 overflow-hidden">
-          {renderCategories()}
-          <button
-            onClick={handleNavigate}
-            className="border-none focus:border-none ml-3"
-          >
-            All Categories
-          </button>
-        </div>
+      <div className="navbar-category-container flex items-center space-x-6 p-4 bg-white shadow-md border-t-2 border-gray-200">
+        {uniqueCategories.map((category) => (
+          <div key={category._id} className="navbar-category-item">
+            <select
+              className="category-select p-2 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              onChange={(e) => navigate(`/products/${e.target.value}`)}
+            >
+              <option value="" disabled selected>
+                {category.parentCategory?.name || 'None'}
+              </option>
+              {categories
+                .filter((subcat) => subcat.parentCategory?._id === category.parentCategory?._id && subcat.parentCategory?.name !== 'None')
+                .map((filteredCategory) => (
+                  <option key={filteredCategory._id} value={filteredCategory._id}>
+                    {filteredCategory.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        ))}
       </div>
     </div>
   );

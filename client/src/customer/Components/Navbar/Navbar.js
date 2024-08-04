@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Register from "../Auth/Register";
-import { FaUser, FaHeart, FaBox, FaSignOutAlt } from "react-icons/fa";
-import { clearUser, signoutUser } from "../../../Redux/User/userSlice";
+import {
+  FaUser,
+  FaHeart,
+  FaBox,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import {clearUser } from "../../../Redux/User/userSlice";
 import logo from "../../../logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from '../../../Redux/Cart/cartSlice';
+import { fetchCart} from '../../../Redux/Cart/cartSlice';
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
+import { signoutUser } from "../../../Redux/User/userSlice";
 import "./nabar_sty.css";
 
 const Navbar = (props) => {
@@ -19,22 +25,41 @@ const Navbar = (props) => {
   const { currentUser } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
   const { items, status, fetchCartError } = useSelector((state) => state.cart);
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchCart());
-  }, [dispatch]);
-
+  },[dispatch]);
   const authToken = localStorage.getItem("authToken");
   const isAuthenticated = !!authToken;
 
   const categories = useSelector((state) => state.categories.categories);
-
   const handleSide = (path) => {
     navigate(path);
+  };
+
+  const renderCategories = () => {
+    return categories
+      .filter((category) => category.level === 1)
+      .map((category, i) => {
+        if (i < 8) {
+          return (
+            <button
+              onClick={() => handleSide(`/category/${category._id}`)}
+              className=" border-none focus:border-none ml-3"
+            >
+              {category.name.toUpperCase()}
+            </button>
+          );
+        }
+        return null;
+      });
+  };
+
+  const handleNavigate = () => {
+    navigate("/category");
   };
 
   const handleSearch = (e) => {
@@ -51,15 +76,26 @@ const Navbar = (props) => {
     if (localStorage.getItem("role") === "ADMIN") {
       navigate("/admin");
     } else {
-      navigate("/myprofile/profile-information");
+      // navigate("/myprofile/profile-information");
     }
   };
 
-  const handleLogout = () => {
-    dispatch(signoutUser());
-    dispatch(clearUser());
-    window.location.reload();
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("authToken");
+  //   dispatch(clearUser());
+  //   navigate("/");
+  // };
+//   const handleLogout = async () => {
+//     dispatch(logout());
+//     dispatch(clearUser());
+// };
+
+const handleLogout = () => {
+  dispatch(signoutUser());
+  dispatch(clearUser());
+  window.location.reload();
+ 
+};
 
   const handleMouseEnter = (event) => {
     if (isAuthenticated) {
@@ -96,6 +132,8 @@ const Navbar = (props) => {
     };
   }, []);
 
+
+  
   const [uniqueCategories, setUniqueCategories] = useState([]);
 
   useEffect(() => {
@@ -113,7 +151,9 @@ const Navbar = (props) => {
   }, [categories]);
 
   return (
-    <div className="shadow-lg overflow-hidden relative">
+    <>
+ 
+ <div className="shadow-lg overflow-hidden relative">
       {/* Top Navbar */}
       <div className="bg-orange-500 p-4 flex items-center justify-between">
         <a href="/" className="flex items-center space-x-4 logo-title">
@@ -134,7 +174,7 @@ const Navbar = (props) => {
               SEARCH
             </button>
           </form>
-        </div>
+          </div>
         <div className="flex items-center space-x-4">
           <div
             className="flex items-center space-x-2 rounded-md p-2 border-[1px] border-none profile-dropdown-trigger"
@@ -216,33 +256,30 @@ const Navbar = (props) => {
               </button>
             </div>
           )}
-          <button onClick={showCart} className="relative cart-button">
-            <svg
+              </div>
+              <div className="flex items-center ml-4 lg:space-x-2">
+             <button onClick={showCart}>
+                  <svg
               className="w-8 h-8 text-black-500 hover:text-blue-500 transition-colors duration-300 ease-in-out"
               fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h2l.34 2.17M7 13h10l4-8H5.978L4.34 5.17M7 13l-1.52 6.714M7 13h10.28a1 1 0 0 1 .93.635l.097.175.516 1.045M19.5 13H8.5m0 0L6.978 19.714M19.5 13h2.5m-4.5 5.5A1.5 1.5 0 1 1 20.5 19A1.5 1.5 0 0 1 19 17.5zm-9 0A1.5 1.5 0 1 1 11.5 19A1.5 1.5 0 0 1 10 17.5z"
-              ></path>
-            </svg>
-            {items.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center animate-bounce">
-                {items.length}
-              </span>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Bottom Navbar */}
-      <div className="navbar-category-container flex items-center space-x-6 p-4 bg-white shadow-md border-t-2 border-gray-200">
-        {uniqueCategories.map((category) => (
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1"
+                      d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l.839 2h13.239l3.474-12h1.929l.743-2h-4.195z"
+                    />
+                  </svg>
+                </button>   <sup className="text-bold px-2 rounded-full bg-red-500 text-black text-lg animate-bounce" style={{marginTop:'-15px',marginLeft:'-5px'}}>{items&&items[0]&&items[0].length} </sup>
+              </div>
+            </div>
+          </div>
+          {/* Bottom Navbar */}
+          <div className="bg-white/70 backdrop-blur-lg border-b-[2px] flex flex-wrap gap-2 w-full items-center lg:space-x-8">
+          {uniqueCategories.map((category) => (
           <div key={category._id} className="navbar-category-item">
             <select
               className="category-select p-2 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -261,8 +298,11 @@ const Navbar = (props) => {
             </select>
           </div>
         ))}
-      </div>
-    </div>
+      
+          </div>
+        
+      {/* )} */}
+    </>
   );
 };
 

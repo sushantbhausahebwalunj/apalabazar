@@ -18,17 +18,17 @@ const SignIn = () => {
     window.location.href = '/';
   };
 
-  // return (
-  //   <div className="flex justify-center mt-4">
-  //     <button
-  //       onClick={logGoogleUser}
-  //       className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:border-gray-400 hover:bg-gray-100 hover:text-gray-900 hover:shadow transition duration-150"
-  //     >
-  //       <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
-  //       Login With Google
-  //     </button>
-  //   </div>
-  // );
+  return (
+    <div className="flex justify-center mt-4">
+      <button
+        onClick={logGoogleUser}
+        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:border-gray-400 hover:bg-gray-100 hover:text-gray-900 hover:shadow transition duration-150"
+      >
+        <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+        Login With Google
+      </button>
+    </div>
+  );
 };
 
 const sharedClasses = {

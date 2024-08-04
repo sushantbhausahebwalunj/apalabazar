@@ -9,7 +9,7 @@ import CartItem from "../models/cartItem.model.js";
 const placeOrder = asyncHandler(async (req, res) => {
     const { id } = req.user;
 
-
+   
     const cart = await Cart.findOne({ user: id }).populate('cartItems');
     
     if (!cart) {

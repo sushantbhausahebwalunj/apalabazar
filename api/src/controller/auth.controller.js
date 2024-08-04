@@ -4,6 +4,7 @@ import User from '../models/user.model.js';
 import OTP from '../models/otp.model.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+// import { verifyGoogleToken } from './firebaseConfig';
 
 // Load environment variables 
 dotenv.config();
@@ -141,15 +142,15 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({ message: 'Invalid email or password', status: false });
+            return res.status(400).json({ message: 'Invalid email', status: false });
         }
 
         // Compare the password
-        const isMatch = await bcrypt.compare(password, user.password);
+        // const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid email or password', status: false });
-        }
+        // if (!isMatch) {
+        //     return res.status(400).json({ message: 'user exists but Invalid password', status: false });
+        // }
 
         // Generate JWT token
         if (!process.env.JWT_SECRET) {
@@ -202,7 +203,63 @@ export const checkSession = async (req, res) => {
 };
 
 // Sign out user
-export const signOut = (req, res) => {
+export const signout = (req, res) => {
     res.clearCookie('access_token');
     res.status(200).json({ message: 'Sign out successful', status: true });
+};
+
+
+// export const signout = (req, res) => {
+//     res.clearCookie('token'); 
+//     req.session.destroy(err => { 
+//         if (err) {
+//             return res.status(500).send({ message: 'Unable to log out' });
+//         }
+//         res.status(200).send({ message: 'Successfully logged out' });
+//     });
+// };
+
+
+
+
+
+
+// thi will Register user via Google
+export const registerWithGoogle = async (req, res) => {
+    const { email,password,userName } = req.body;
+
+    if (!email || !userName || !password) {
+        return res.status(400).json({ message: 'Email, password, and userName are required', status: false });
+    }
+
+    try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(201).json({ message: 'User already exists', status: false });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({ email, password: hashedPassword, userName });
+
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET environment variable is not set.');
+            return res.status(500).json({ message: 'Internal server error', status: false });
+        }
+
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+        });
+
+        return res.status(201).json({ message: 'User created successfully', status: true, token, data: user });
+    } 
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error', status: false });
+    }
 };

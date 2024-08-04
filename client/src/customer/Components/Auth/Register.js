@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/register.png';
+import registerlogo from '../assets/register.png';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../axiosConfig";
+
+import logo from "./logo.png"
+import "./register.css"
+
+import logoo from "./logo.png"
+import { signInWithGooglePopup } from "../../../firebaseConfig";
+
 
 const sharedClasses = {
   textZinc: "text-zinc-500",
@@ -93,29 +100,108 @@ const Register = ({ showModal, setShowModal }) => {
     }
   };
 
+  const GoogleSignINUP = () => {
+    const logGoogleUser = async () => {
+      const response = await signInWithGooglePopup();
+      console.log(response);
+      const user = response.user;
+      const email = user.email;
+      const userName = user.displayName;
+      const uniqueUserID = user.uid;
+      console.log('Email:', user.email);
+      console.log('Username:', user.displayName);
+      console.log('Unique User ID:', user.uid);
+      // window.location.href = '/'
+      await handleRegisterWithGoogle(email, userName, uniqueUserID);
+      }
+      return (
+        <div class="flex mt-4 items-center w-full justify-center">
+            <div class="px-4 py-2 w-full border flex justify-center gap-2 border-slate-200  rounded-lg text-slate-700  hover:border-slate-400  hover:bg-gray-100 hover:text-slate-900 hover:shadow transition duration-150">
+                <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                <button onClick={logGoogleUser}>Continue With Google</button>
+            </div>
+        </div>
+      );
+  }
+
+  const handleRegisterWithGoogle = async (email, userName, uniqueUserID) => {
+    setLoading(true);
+    try {
+        const payload = {
+            email,
+            userName,
+            password: uniqueUserID,
+        };
+        console.log("Sending payload:", payload); 
+        const response = await axiosInstance.post('/auth/registerWithGoogle', payload);
+        if (response.data.status) {
+            toast.success("Google registration successful. User created.");
+            toast.success("A Moment Logging you in!");
+            handleLoginwithGoogle(email, uniqueUserID);
+
+        } else if (response.data.message === "User already exists") {
+            // User already exists, log them in
+            // await handleLoginWithGoogle(email, uniqueUserID);
+            handleLoginwithGoogle(email, uniqueUserID);
+            toast.success("User already exist");
+        }
+    } catch (error) {
+        console.error("Error registering with Google:", error);
+        toast.error("An error occurred while registering with Google. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const handleLoginwithGoogle = async (email, password ) => {
+    try {
+      console.log("inside handleLoginwithGoogle: ",email,password);
+      const response = await axiosInstance.post(`/auth/login`, { email, password }, { withCredentials: true });
+      if (response.data.status) {
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('role', response.data.data.role);
+        toast.success("Login successful");
+        navigate('/');
+
+
+        if (response.data.data.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      } else {
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("An error occurred during login. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     showModal && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
-        <div className="bg-white dark:bg-card bg-opacity-95 w-full lg:max-w-4xl h-[600px] mx-auto rounded-lg shadow-lg flex flex-col md:flex-row">
-          
-          <div className="bg-green-100 p-8 flex-1 hidden lg:flex items-center flex-col justify-between">
-            <div className='text-primary-foreground p-6 rounded-lg max-w-sm'>
-              <h2 className='text-3xl font-bold text-gray-700 mb-4'>Register</h2>
-              <p className='text-muted-foreground text-gray-600'>
-                Create your account to start shopping!
-              </p>
-            </div>
-            <img
-              src={logo}
-              alt="Illustration of a woman shopping"
-              className="max-w-full bg-cover h-[300px] w-[400px]"
-            />
+      <div className="min-h-screen fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black bg-opacity-50">
+      <div className="bg-white dark:bg-card dark:text-white w-full max-w-4xl mx-auto rounded-lg shadow-lg flex flex-col md:flex-row animate-fadeIn">
+      <div className="bg-blue-100 hover-bg-blue p-8 flex-1 hidden lg:flex items-center flex-col justify-between animate-slideInLeft">
+      <div className="text-primary-foreground p-6 rounded-lg max-w-sm">
+            <h2 className="text-3xl font-bold text-gray-700 mb-4">Welcome Back!</h2>
+            <p className="text-muted-foreground text-gray-600">
+              Log in to continue shopping with us!
+            </p>
           </div>
+          <img
+            src={registerlogo}
+            alt="Illustration of a person logging in"
+          className="max-w-full bg-cover h-[300px] w-[400px] animate-bounce image-hover"
+          />
+        </div>
           <div className="p-8 flex-1">
             <div className="flex justify-between items-center mb-4">
               {!otpSent && (
-                <img src="./apala bazar.png" alt="Logo" className="max-w-20" />
-              )}
+          <img src={logo} alt="Logo"   className="max-w-20 logo-move" />
+        )}
               <button
                 onClick={closeModal}
                 className={`${sharedClasses.textZinc} ${sharedClasses.hoverTextZinc} ${sharedClasses.darkTextZinc} ${sharedClasses.darkHoverTextZinc}`}
@@ -226,11 +312,12 @@ const Register = ({ showModal, setShowModal }) => {
               </p>
               <button
                 type="submit"
-                className={`w-full py-2 ${sharedClasses.bgZinc} ${sharedClasses.textZinc} rounded ${loading ? "cursor-not-allowed" : ""}`}
+                className={`w-full py-2 bg-gradient-to-r from-blue-500 to-purple-600  text-white rounded transition duration-150 transform hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-500 hover:scale-105 focus:outline-none active:animate-flash ${sharedClasses.bgZinc} ${sharedClasses.textZinc} rounded ${loading ? "cursor-not-allowed" : ""}`}
                 disabled={loading}
               >
-                {loading ? "SENDING..." : otpSent ? "VERIFY OTP" : "CONTINUE"}
+                { loading ? <span className="text-white">SENDING...</span> : otpSent ? <span className="text-white">VERIFY OTP</span> : <span className="text-white">CONTINUE</span>}
               </button>
+              <GoogleSignINUP />
             </form>
             {!otpSent && (
               <div className="mt-4">

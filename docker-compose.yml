@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5454
-      - BASE_URL = http://apalabajar.com
+      - BASE_URL=http://apalabajar.com  # Removed space around '='
     networks:
       - app-network
 
@@ -19,12 +19,16 @@ services:
     build:
       context: ./client
       dockerfile: dockerfile.prod
+    container_name: front-end
     ports:
       - "80:80"
     environment:
       - NODE_ENV=production
+    depends_on:
+      - api
     networks:
       - app-network
+
 networks:
   app-network:
     driver: bridge

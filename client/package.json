@@ -69,6 +69,5 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.4.4"
-  },
-  "proxy": "http://backend-api:5454" 
+  }
 }

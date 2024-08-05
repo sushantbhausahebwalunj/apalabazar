@@ -10,6 +10,8 @@ import { fetchProduct } from "../../../../Redux/Product/productSlice"; // Update
 import { useCartContext } from "../../../../Usecontext/cartContext";
 import { StarIcon } from "@heroicons/react/solid";
 import Reviews from "../../ReviewProduct/RateProduct";
+import "./ProductDetails.css"; // Import the improved CSS
+import {  ShoppingCartIcon } from "@heroicons/react/solid";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -70,80 +72,83 @@ function ProductDetails() {
             <div className='lg:ml-5 flex flex-col w-full'>
               <div className='flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0 mb-5'>
                 <div className='flex flex-col space-y-3 max-h-max mb-3'>
-                  <h1 className='text-xl lg:text-3xl font-semibold mb-2'>
-                    {productDetails?.title}
-                  </h1>
-                  <div className='flex items-center pb-6'>
-                    <StarIcon className='h-6 w-6 text-yellow-500' />
-                    <span className='text-yellow-500 ml-2'>
+                <h1 className="product-title">{productDetails?.title}</h1>
 
-                      {productDetails?.numRatings || 3} Ratings
-                    </span>
-                  </div>
-                  <h2 className="text-lg font-semibold">
-                    ₹{productDetails?.discountedPrice}
-                    <span className="text-sm line-through ml-2">
-                      ₹{productDetails?.price}
-                    </span>
-                  </h2>
-                  <div className="flex flex-row items-center">
-                    <button
-                      className="bg-green-600 text-white px-4 py-2 rounded-lg"
-                      onClick={() => addTocart(productDetails)}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
+                <div className="product-rating">
+            {[...Array(5)].map((star, index) => (
+              <StarIcon
+                key={index}
+                className={`star-icon ${index < productDetails?.rating ? "filled" : ""}`}
+              />
+            ))}
+            <span className="rating-text">
+              {productDetails?.numRatings || 0} Ratings
+            </span>
+          </div>
+          <div className="product-pricing">
+            <span className="discounted-price">
+              ₹{productDetails?.discountedPrice}
+            </span>
+            <span className="original-price">
+              ₹{productDetails?.price}
+            </span>
+          </div>
+          <div className="stock-status">In Stock</div>
+          <div className="quantity-selector">
+            <label htmlFor="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              max="10"
+              defaultValue="1"
+            />
+          </div>
+          <div className="button-group">
+            <button
+              className="add-to-cart-btn"
+              onClick={() => addTocart(productDetails)}
+            >
+              <ShoppingCartIcon className="cart-icon" /> Add to Cart
+            </button>
+            <button className="buy-now-btn">Buy Now</button>
+          </div>
                 </div>
-                <div className="lg:mt-6 flex flex-col w-full">
-                  <div className="flex items-center border-b">
-                    <button
-                      className={`py-2 px-4 text-lg font-medium ${
-                        tab === "Description" ? "border-b-2 border-blue-500" : ""
-                      }`}
-                      onClick={() => setTab("Description")}
-                    >
-                      Description
-                    </button>
-                  </div>
-                  <div className="mt-4 px-4">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: productDetails?.description,
-                      }}
-                    />
-                  </div>
-                </div>
+                <div className="product-description">
+            <h2 className="tab-title">Description</h2>
+            <div className="description-content">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: productDetails?.description,
+                }}
+              />
+            </div>
+          </div>
               </div>
             </div>
           </div>
         </div>
-        <nav className="flex justify-start items-center gap-12 select-none mt-12">
-          <ul
-            onClick={() => setTab("Reviews")}
-            className={`cursor-pointer transition-all ${
-              tab === "Reviews" ? "border-b-2 border-green-600 p-2" : ""
-            }`}
-          >
-            Reviews
-          </ul>
-          <ul
-            onClick={() => setTab("Country of Origin")}
-            className={`cursor-pointer transition-all ${
-              tab === "Country of Origin" ? "border-b-2 border-green-600 p-2" : ""
-            }`}
-          >
-            Country of Origin
-          </ul>
-          <ul
-            onClick={() => setTab("Disclaimer")}
-            className={`cursor-pointer transition-all ${
-              tab === "Disclaimer" ? "border-b-2 border-green-600 p-2" : ""
-            }`}
-          >
-            Disclaimer
-          </ul>
-        </nav>
+        <nav className="tabs-navigation">
+        <ul
+          onClick={() => setTab("Reviews")}
+          className={`tab-item ${tab === "Reviews" ? "active" : ""}`}
+        >
+          Reviews
+        </ul>
+        <ul
+          onClick={() => setTab("Country of Origin")}
+          className={`tab-item ${tab === "Country of Origin" ? "active" : ""}`}
+        >
+          Country of Origin
+        </ul>
+        <ul
+          onClick={() => setTab("Disclaimer")}
+          className={`tab-item ${tab === "Disclaimer" ? "active" : ""}`}
+        >
+          Disclaimer
+        </ul>
+      </nav>
         <div className="w-[80vw] mt-5 rounded-lg overflow-hidden p-6">
           {tab === "Disclaimer" && (
             <div className="w-[80vw] rounded-lg overflow-hidden p-6">
@@ -215,17 +220,16 @@ function ProductDetails() {
               </div>
             </div>
           )}
-          {tab === "Country of Origin" && (
-            <div className="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden p-4">
-              <p className="text-gray-700 flex items-center mb-2">
-                <span className="ml-1 font-semibold">Made in India</span>
-              </p>
-              <p className="text-gray-700">
-                <span className="font-semibold">Address:</span> Apala Bazar
-                Panchayat Samiti Road, Shrigonda-413701, Ahmednagar, Maharashtra
-              </p>
-            </div>
-          )}
+           {tab === "Country of Origin" && (
+          <div className="country-origin-content">
+            <p className="text-gray-700 flex items-center mb-2">
+              <span className="ml-1 font-semibold">Made in India</span>
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Address:</span> Apala Bazar Panchayat Samiti Road, Shrigonda-413701, Ahmednagar, Maharashtra
+            </p>
+          </div>
+        )}
           {tab === "Reviews" && <Reviews />}
         </div>
       </div>

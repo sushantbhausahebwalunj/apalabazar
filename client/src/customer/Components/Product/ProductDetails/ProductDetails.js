@@ -11,15 +11,19 @@ import { useCartContext } from "../../../../Usecontext/cartContext";
 import { StarIcon } from "@heroicons/react/solid";
 import Reviews from "../../ReviewProduct/RateProduct";
 import "./ProductDetails.css"; // Import the improved CSS
-import {  ShoppingCartIcon } from "@heroicons/react/solid";
+import { ShoppingCartIcon } from "@heroicons/react/solid";
+import { IoLocation } from "react-icons/io5";
 
 function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams(); // Use useParams to get the product ID
-  const { productDetails, status, error } = useSelector((state) => state.products);
+  const { productDetails, status, error } = useSelector(
+    (state) => state.products
+  );
   const { addTocart } = useCartContext();
 
   const [tab, setTab] = useState("Reviews");
+  const [showPopup, setShowPopup] = useState(false);
   const [viewport, setViewport] = useState(window.innerWidth < 620);
 
   useEffect(() => {
@@ -32,6 +36,44 @@ function ProductDetails() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleViewDetails = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+  const DeliveryPopup = ({ closePopup }) => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-white text-xm p-6 rounded-lg shadow-lg max-w-md w-full">
+          <h2 className="text-xl font-semibold mb-6">Delivery & Installation details</h2>
+          <p className="">Delivery by</p>
+          <p className="font-semibold">
+            8 Aug, Thursday <span className="text-green-500">| Free</span> <span className="text-muted">₹40</span>
+          </p>
+          <p className="text-sm text-muted text-gray-800">if ordered before 3:46 PM</p>
+          <h3 className="mt-4 font-semibold mb-1 text-gray-500">Installation Details</h3>
+          <ul className="list-disc list-inside text-sm mb-4 text-gray-800">
+            <li>This product doesn't require installation</li>
+          </ul>
+          <h3 className="font-semibold mb-2 text-gray-500">Shipping Charges For Apala Bajar Items</h3>
+          <p className="text-sm text-gray-800 mb-4">
+            Shipping charges are calculated based on the number of units, distance and delivery date.
+          </p>
+          <p className="text-sm text-gray-800 mb-4">Delivery charges if applicable will be shown on the product page and cart.</p>
+          <button
+            className="mt-4 bg-black text-white text-primary-foreground hover:bg-primary/80 py-2 px-4 rounded"
+            onClick={closePopup}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   const settings = {
     dots: true,
@@ -54,101 +96,138 @@ function ProductDetails() {
         {viewport ? <MobNavbar /> : <Navbar number={12} />}
       </div>
 
-      
-      <div className='flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8'>
-        <div className='shadow-lg mt-5 bg-white w-full'>
-          <div className='flex flex-col rounded-3xl mt-10 lg:flex-row '>
-            <div className='w-3/4 lg:w-[700px] lg:max-h-max my-6 lg:my-0 mx-12'>
+      <div className="flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8">
+        <div className="shadow-lg mt-5 bg-white w-full">
+          <div className="flex flex-col rounded-3xl mt-10 lg:flex-row ">
+            <div className="w-3/4 lg:w-[700px] lg:max-h-max my-6 lg:my-0 mx-12">
               <Slider {...settings}>
-
-                  <img
-                    src={productDetails?.imageUrl} // Single image URL
-                    alt='Product Image'
-                    className='w-[80%] h-[60%] object-contain'
-
-                  />
+                <img
+                  src={productDetails?.imageUrl} // Single image URL
+                  alt="Product Image"
+                  className="w-[80%] h-[60%] object-contain"
+                />
               </Slider>
             </div>
-            <div className='lg:ml-5 flex flex-col w-full'>
-              <div className='flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0 mb-5'>
-                <div className='flex flex-col space-y-3 max-h-max mb-3'>
-                <h1 className="product-title">{productDetails?.title}</h1>
+            <div className="lg:ml-5 flex flex-col w-full">
+              <div className="flex flex-col lg:flex-col lg:space-x-5 px-5 lg:px-0 mb-5">
+                <div className="flex flex-col space-y-3 max-h-max mb-3">
+                  <h1 className="product-title">{productDetails?.title}</h1>
 
-                <div className="product-rating">
-            {[...Array(5)].map((star, index) => (
-              <StarIcon
-                key={index}
-                className={`star-icon ${index < productDetails?.rating ? "filled" : ""}`}
-              />
-            ))}
-            <span className="rating-text">
-              {productDetails?.numRatings || 0} Ratings
-            </span>
-          </div>
-          <div className="product-pricing">
-            <span className="discounted-price">
-              ₹{productDetails?.discountedPrice}
-            </span>
-            <span className="original-price">
-              ₹{productDetails?.price}
-            </span>
-          </div>
-          <div className="stock-status">In Stock</div>
-          <div className="quantity-selector">
-            <label htmlFor="quantity">Quantity:</label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              min="1"
-              max="10"
-              defaultValue="1"
-            />
-          </div>
-          <div className="button-group">
-            <button
-              className="add-to-cart-btn"
-              onClick={() => addTocart(productDetails)}
-            >
-              <ShoppingCartIcon className="cart-icon" /> Add to Cart
-            </button>
-            <button className="buy-now-btn">Buy Now</button>
-          </div>
+                  <div className="product-rating">
+                    {[...Array(5)].map((star, index) => (
+                      <StarIcon
+                        key={index}
+                        className={`star-icon ${
+                          index < productDetails?.rating ? "filled" : ""
+                        }`}
+                      />
+                    ))}
+                    <span className="rating-text">
+                      {productDetails?.numRatings || 0} Ratings
+                    </span>
+                  </div>
+                  <div className="product-pricing">
+                    <span className="discounted-price">
+                      ₹{productDetails?.discountedPrice}
+                    </span>
+                    <span className="original-price">
+                      ₹{productDetails?.price}
+                    </span>
+                  </div>
+                  <div className="stock-status">In Stock</div>
+                  <div className="quantity-selector">
+                    <label htmlFor="quantity">Quantity:</label>
+                    <input
+                      type="number"
+                      id="quantity"
+                      name="quantity"
+                      min="1"
+                      max="10"
+                      defaultValue="1"
+                    />
+                  </div>
+                  {/* delivery pincode */}
+                  <div className="p-4 bg-background w-[500px] border border-border rounded-lg">
+                    <div className="flex items-center mb-2">
+                      <span className="text-black font-semibold">
+                        Delivery :
+                      </span>
+                      <span className="material-icons text-muted mx-2">
+                        <IoLocation className="text-xl text-green-500" />
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Enter Delivery Pincode"
+                        className="border-b-2 border-b-green-500 p-2"
+                      />
+                      <button className="bg-primary text-primary-foreground hover:bg-primary/80 ml-2 px-4 py-2 rounded-md">
+                        Check
+                      </button>
+                    </div>
+                    <div className="text-xm text-center">
+                      Delivery by{" "}
+                      <span className="font-semibold">8 Aug, Thursday</span> |{" "}
+                      <span className="text-green-500">Free</span>{" "}
+                      <span className="text-muted">₹40</span>
+                      <div className="text-muted text-xs">
+                        if ordered before 3:46 PM
+                        <a
+                          href="#"
+                          className="text-blue-500 text-end font-semibold px-3 hover:underline"
+                          onClick={handleViewDetails}
+                        >
+                          View Details
+                        </a>
+                      </div>
+                    </div>
+                    {showPopup && <DeliveryPopup closePopup={closePopup} />}
+                  </div>
+                  <div className="button-group">
+                    <button
+                      className="add-to-cart-btn"
+                      onClick={() => addTocart(productDetails)}
+                    >
+                      <ShoppingCartIcon className="cart-icon" /> Add to Cart
+                    </button>
+                    <button className="buy-now-btn">Buy Now</button>
+                  </div>
                 </div>
                 <div className="product-description">
-            <h2 className="tab-title">Description</h2>
-            <div className="description-content">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: productDetails?.description,
-                }}
-              />
-            </div>
-          </div>
+                  <h2 className="tab-title">Description</h2>
+                  <div className="description-content">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: productDetails?.description,
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <nav className="tabs-navigation">
-        <ul
-          onClick={() => setTab("Reviews")}
-          className={`tab-item ${tab === "Reviews" ? "active" : ""}`}
-        >
-          Reviews
-        </ul>
-        <ul
-          onClick={() => setTab("Country of Origin")}
-          className={`tab-item ${tab === "Country of Origin" ? "active" : ""}`}
-        >
-          Country of Origin
-        </ul>
-        <ul
-          onClick={() => setTab("Disclaimer")}
-          className={`tab-item ${tab === "Disclaimer" ? "active" : ""}`}
-        >
-          Disclaimer
-        </ul>
-      </nav>
+          <ul
+            onClick={() => setTab("Reviews")}
+            className={`tab-item ${tab === "Reviews" ? "active" : ""}`}
+          >
+            Reviews
+          </ul>
+          <ul
+            onClick={() => setTab("Country of Origin")}
+            className={`tab-item ${
+              tab === "Country of Origin" ? "active" : ""
+            }`}
+          >
+            Country of Origin
+          </ul>
+          <ul
+            onClick={() => setTab("Disclaimer")}
+            className={`tab-item ${tab === "Disclaimer" ? "active" : ""}`}
+          >
+            Disclaimer
+          </ul>
+        </nav>
         <div className="w-[80vw] mt-5 rounded-lg overflow-hidden p-6">
           {tab === "Disclaimer" && (
             <div className="w-[80vw] rounded-lg overflow-hidden p-6">
@@ -220,16 +299,17 @@ function ProductDetails() {
               </div>
             </div>
           )}
-           {tab === "Country of Origin" && (
-          <div className="country-origin-content">
-            <p className="text-gray-700 flex items-center mb-2">
-              <span className="ml-1 font-semibold">Made in India</span>
-            </p>
-            <p className="text-gray-700">
-              <span className="font-semibold">Address:</span> Apala Bazar Panchayat Samiti Road, Shrigonda-413701, Ahmednagar, Maharashtra
-            </p>
-          </div>
-        )}
+          {tab === "Country of Origin" && (
+            <div className="country-origin-content">
+              <p className="text-gray-700 flex items-center mb-2">
+                <span className="ml-1 font-semibold">Made in India</span>
+              </p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Address:</span> Apala Bazar
+                Panchayat Samiti Road, Shrigonda-413701, Ahmednagar, Maharashtra
+              </p>
+            </div>
+          )}
           {tab === "Reviews" && <Reviews />}
         </div>
       </div>

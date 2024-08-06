@@ -203,10 +203,21 @@ export const checkSession = async (req, res) => {
 };
 
 // Sign out user
-export const signOut = (req, res) => {
+export const signout = (req, res) => {
     res.clearCookie('access_token');
     res.status(200).json({ message: 'Sign out successful', status: true });
 };
+
+
+// export const signout = (req, res) => {
+//     res.clearCookie('token'); 
+//     req.session.destroy(err => { 
+//         if (err) {
+//             return res.status(500).send({ message: 'Unable to log out' });
+//         }
+//         res.status(200).send({ message: 'Successfully logged out' });
+//     });
+// };
 
 
 
@@ -252,4 +263,3 @@ export const registerWithGoogle = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', status: false });
     }
 };
-

@@ -1,119 +1,139 @@
-import React, { useEffect, useState } from "react";
-import Register from "../Auth/Register";
-import {
-  FaUser,
-  FaHeart,
-  FaBox,
-  FaSignOutAlt,
-} from "react-icons/fa";
-import { clearUser } from "../../../Redux/User/userSlice";
-import MobNavbar from "./MobileNavbar.js";
-import logo from "../../../logo.png";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCart} from '../../../Redux/Cart/cartSlice';
-import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
+  import React, { useEffect, useState } from "react";
+  import Register from "../Auth/Register";
+  import {
+    FaUser,
+    FaHeart,
+    FaBox,
+    FaSignOutAlt,
+  } from "react-icons/fa";
+  import { clearUser } from "../../../Redux/User/userSlice";
+  import logo from "../../../logo.png";
+  import { useNavigate } from "react-router-dom";
+  import { useDispatch, useSelector } from "react-redux";
+  import { fetchCart } from '../../../Redux/Cart/cartSlice';
+  import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
+  import { signoutUser } from "../../../Redux/User/userSlice";
+  import "./navbar_sty.css";
 
-const Navbar = (props) => {
-  const [showModal, setShowModal] = useState(false);
-  const [hoverDropdown, setHoverDropdown] = useState(false);
-  const [hoverProfile, setHoverProfile] = useState(false); // Track profile hover state
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
-  const [search, setSearch] = useState("");
-  const { items, status, fetchCartError } = useSelector((state) => state.cart);
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  const Navbar = (props) => {
+    const [showModal, setShowModal] = useState(false);
+    const [hoverDropdown, setHoverDropdown] = useState(false);
+    const [hoverProfile, setHoverProfile] = useState(false); // Track profile hover state
+    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+    const [showProfileMenu, setShowProfileMenu] = useState(false); // For mobile profile menu
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector((state) => state.user);
+    const [search, setSearch] = useState("");
+    const { items } = useSelector((state) => state.cart);
 
-  useEffect(() => {
-    dispatch(fetchCart());
-  },[dispatch]);
-  const authToken = localStorage.getItem("authToken");
-  const isAuthenticated = !!authToken;
+    useEffect(() => {
+      dispatch(fetchCategories());
+    }, [dispatch]);
 
-  const categories = useSelector((state) => state.categories.categories);
-  const handleSide = (path) => {
-    navigate(path);
-  };
+    useEffect(() => {
+      dispatch(fetchCart());
+    }, [dispatch]);
 
-  const renderCategories = () => {
-    return categories
-      .filter((category) => category.level === 1)
-      .map((category, i) => {
-        if (i < 8) {
-          return (
-            <button
-              onClick={() => handleSide(`/category/${category._id}`)}
-              className=" border-none focus:border-none ml-3"
-            >
-              {category.name.toUpperCase()}
-            </button>
-          );
-        }
-        return null;
-      });
-  };
+    const authToken = localStorage.getItem("authToken");
+    const isAuthenticated = !!authToken;
 
-  const handleNavigate = () => {
-    navigate("/category");
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (search.trim() === "") return; // Check if the search field is empty
-    navigate(`/search/${search}`);
-  };
-
-  const showCart = () => {
-    navigate("/cart");
-  };
-
-  const handleProfileClick = () => {
-    if (localStorage.getItem("role") === "ADMIN") {
-      navigate("/admin");
-    } else {
-      // navigate("/myprofile/profile-information");
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    dispatch(clearUser());
-    navigate("/");
-  };
-
-  const handleMouseEnter = (event) => {
-    if (isAuthenticated) {
-      const { top, left, height } = event.currentTarget.getBoundingClientRect();
-      setDropdownPosition({ top: top + height, left });
-      setHoverProfile(true); // Track profile hover state
-      setHoverDropdown(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (isAuthenticated) {
-      setTimeout(() => {
-        if (!hoverProfile && !hoverDropdown) {
-          setHoverDropdown(false);
-        }
-      }, 100);
-    }
-  };
-
-  const [viewport, setViewport] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 620);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setViewport(window.innerWidth < 620);
-      setIsMobile(window.innerWidth < 620);
+    const categories = useSelector((state) => state.categories.categories);
+    const handleSide = (path) => {
+      navigate(path);
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
+
+    const renderCategories = () => {
+      return categories
+        .filter((category) => category.level === 1)
+        .map((category, i) => {
+          if (i < 8) {
+            return (
+              <button
+                onClick={() => handleSide(`/category/${category._id}`)}
+                className={`category-button ${category.name === 'Groceries' ? 'bg-orange-500 text-black' : 'bg-gray-200 text-black-700'}`}
+                key={category._id}
+              >
+                {category.name}
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+            );
+          }
+          return null;
+        });
+    };
+    
+
+    const handleNavigate = () => {
+      navigate("/category");
+    };
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+      if (search.trim() === "") return; // Check if the search field is empty
+      navigate(`/search/${search}`);
+    };
+
+    const showCart = () => {
+      navigate("/cart");
+    };
+
+    const handleProfileClick = () => {
+      if (localStorage.getItem("role") === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/myprofile/profile-information");
+      }
+    };
+
+    const handleLogout = () => {
+      dispatch(signoutUser());
+      dispatch(clearUser());
+      window.location.reload();
+    };
+
+    const handleMouseEnter = (event) => {
+      if (isAuthenticated) {
+        const { top, left, height } = event.currentTarget.getBoundingClientRect();
+        setDropdownPosition({ top: top + height, left });
+        setHoverProfile(true); // Track profile hover state
+        setHoverDropdown(true);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (isAuthenticated) {
+        setTimeout(() => {
+          if (!hoverProfile && !hoverDropdown) {
+            setHoverDropdown(false);
+          }
+        }, 100);
+      }
+    };
+
+    const [viewport, setViewport] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 620);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setViewport(window.innerWidth < 768);
+        setIsMobile(window.innerWidth < 620);
+      };
+      handleResize();
+      window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -473,4 +493,4 @@ function SearchBar() {
   );
 };
 
-export default Navbar;
+  export default Navbar;

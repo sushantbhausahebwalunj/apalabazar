@@ -78,7 +78,7 @@ const Trending = () => {
     infinite: true,
     speed: 5000,
     slidesToShow: isMobile ? 1 : 5,
-    autoplay: true,
+    // autoplay: true,
     autoplaySpeed: 2000,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
@@ -97,11 +97,51 @@ const Trending = () => {
     return <div>Error fetching products</div>;
   }
 
+
+const SimpleSlider = ({ slides }) => {
+  const [current, setCurrent] = useState(0);
+  const length = slides.length;
+
+  const nextSlide = () => {
+    setCurrent(current === length - 1 ? 0 : current + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrent(current === 0 ? length - 1 : current - 1);
+  };
+
+  if (!Array.isArray(slides) || slides.length <= 0) {
+    return null;
+  }
+
   return (
-    <div>
+      <div className="relative flex justify-center items-center">
+        <button className="absolute left-0 z-10 p-2 bg-gray-700 text-white" onClick={prevSlide}>
+          &#10094;
+        </button>
+        <button className="absolute right-0 z-10 p-2 bg-gray-700 text-white" onClick={nextSlide}>
+          &#10095;
+        </button>
+        {slides.map((slide, index) => (
+          <div
+            className={`transition-transform duration-1000 ease-in-out transform ${index === current ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+            key={index}
+          >
+            {index === current && (
+              <img src={slide.image} alt={`Slide ${index}`} className="w-full h-auto object-cover" />
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+
+  return (
+    <div >
       <Slider {...settings}>
         {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
+          <ProductCard key={product._id} product={product} className="p-4"/>
         ))}
       </Slider>
     </div>

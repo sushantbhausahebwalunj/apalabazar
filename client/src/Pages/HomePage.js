@@ -175,86 +175,73 @@ function HomePage() {
   const settings = {
     dots: true,
     infinite: true,
+    // autoplay: true,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 2000,
-    cssEase: "linear",
+    centerMode: true,
+    centerPadding: '0',
   };
+  const imageSources = [
+    'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=2700/layout-engine/2022-05/Group-33704.jpg',
+    // './chocolates.jpg',
+    './dailyneeds.jpg',
+    // './snacks.jpg'
+
+  ];
+  
 
   // const prodID = advertisements[4].product._id;
 
   return (
-    <div className="overflow-hidden bg-gray-100">
+    <div className="overflow-hidden bg-white">
       <Navbar />
-      <div className="w-[95vw] mx-auto overflow-hidden mt-5 rounded-md">
-        <Slider {...settings} className="rounded-md">
+      <div className="flex justify-center items-center w-full">
+      <div className="flex  mt-36 w-11/12 item-center rounded-md">
+      <Slider {...settings} className="w-full h-fit flex justify-center ">
         {adsstatus === "succeeded" && (
-            advertisements.length > 0 ? (
-                advertisements
-                    .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
-                    .map(publishedAdvertisement => (
-                      // <Link to={`/product/${prodID}`}>
-                        <div className="w-full rounded-md" key={publishedAdvertisement.id}>
-                            {/* <a href="./product/${advertisement.product._id}" className="rounded-md"> */}
-                                <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
-                                    <img
-                                    
-                                        src={publishedAdvertisement.imageUrl}
-                                        className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                                        alt="Skin Care"
-                                    />
-                                </div>
-                                {/* </Link> */}
-                        </div>
-                      // </Link>
-                    ))
-            ) : (
-                  
-              <>
-              <div className="w-full rounded-md">
-                <a href="./product/2" className="rounded-md">
+          advertisements.length > 10 ? (
+            advertisements
+              .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
+              .map(publishedAdvertisement => (
+                <div className="w-full rounded-md" key={publishedAdvertisement.id}>
+                  <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
+                    <img
+                      src={publishedAdvertisement.imageUrl}
+                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
+                      alt="Skin Care"
+                    />
+                  </div>
+                </div>
+              ))
+          ) : (
+            imageSources.map((src, index) => (
+              <div key={index} className="w-fit p-4 rounded-md">
+                <a href={`./product/${index + 1}`} className="rounded-md">
                   <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
                     <img
-                      src="./chocolates.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Chocolates"
+                      src={src}
+                      className="w-full rounded-md"
+                      alt={`Product ${index + 1}`}
                     />
                   </div>
                 </a>
               </div>
-              <div className="w-full rounded-md">
-                <a href="./product/1" className="rounded-md">
-                  <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
-                    <img
-                      src="./dailyneeds.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Daily Needs"
-                    />
-                  </div>
-                </a>
-              </div>
-              <div className="w-full rounded-md">
-                <a href="./product/1" className="rounded-md">
-                  <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
-                    <img
-                      src="./snacks.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Snacks"
-                    />
-                  </div>
-                </a>
-              </div> 
-              </>
-            )
-          )} 
-        </Slider>
+            ))
+          )
+        )}
+      </Slider>
+
+        
+        
       </div>
+      </div>
+
 
       {!isMobile && (
         <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
+          {/* <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2> */}
+          <h2 className="text-2xl font-bold leading-none text-orange-600">Trending Products</h2>
           <TrendingProducts />
         </div>
       )}

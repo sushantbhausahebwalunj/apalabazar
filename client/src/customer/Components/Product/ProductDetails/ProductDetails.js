@@ -96,7 +96,7 @@ function ProductDetails() {
   return (
     <>
       <div className="lg:block">
-        {viewport ? <MobNavbar /> : <Navbar number={12} />}
+        {viewport ? < MobNavbar /> : <Navbar number={12} />}
       </div>
 
       <div className="product-details-container mt-5 mb-8">
@@ -206,7 +206,7 @@ function ProductDetails() {
           </div>
         )}
         {tab === "Reviews" && <Reviews />}
-
+      </div>
 
       <div className="flex flex-col overflow-hidden items-center flex-nowrap h-full justify-center mt-5 mb-8">
         <div className="shadow-lg mt-5 bg-white w-full">

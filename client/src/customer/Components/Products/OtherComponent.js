@@ -29,7 +29,7 @@ const gadgets = [
     console.log(advertisements)
     return (
       <div className="p-8 bg-white rounded-md">
-        <h2 className="text-2xl font-bold text-orange-500 text-center mb-6">Best Food and Beverages</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Best Food and Beverages</h2>
       
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {advertisements.filter(advertisement => advertisement.section === "Section 2").map((advertisement, index) => (

@@ -1,40 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
-
+// import MobNavbar from "../../Navbar/MobileNavbar";
 import Footer from "../../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../../../../Redux/Product/productSlice"; // Update the import path as needed
 import { useCartContext } from "../../../../Usecontext/cartContext";
 import { StarIcon } from "@heroicons/react/solid";
 import Reviews from "../../ReviewProduct/RateProduct";
-import "./ProductDetails.css";
+import "./ProductDetails.css"; // Import the improved CSS
 import "./slick.css";
 import ProductCards from "./ProductCrads";
-
-import { addToCart } from '../../../../Redux/Cart/cartSlice';
-import { fetchProduct, fetchSuggestedProducts } from "../../../../Redux/Product/productSlice";
-
 import { useNavigate, Link } from 'react-router-dom';
+import { addToCart } from '../../../../Redux/Cart/cartSlice';
 
 function ProductDetails() {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const { productDetails, suggestedProducts, status, error } = useSelector((state) => state.products);
+  const { id } = useParams(); // Use useParams to get the product ID
+  const { productDetails, similarProducts, status, error } = useSelector((state) => state.products);
   const { addTocart } = useCartContext();
-
-  useEffect(() => {
-    dispatch(fetchProduct(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (productDetails.categoryId) {
-      dispatch(fetchSuggestedProducts(productDetails.categoryId));
-    }
-  }, [dispatch, productDetails.categoryId]);
 
   const [tab, setTab] = useState("Reviews");
   const [viewport, setViewport] = useState(window.innerWidth < 620);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchProduct(id)); // Fetch product details based on ID
+  }, [dispatch, id]);
 
   useEffect(() => {
     const handleResize = () => setViewport(window.innerWidth < 620);
@@ -43,45 +36,77 @@ function ProductDetails() {
   }, []);
 
 
+
+  
   const navigate = useNavigate();
   const { addToCartStatus, addToCartError } = useSelector((state) => state.cart);
 
   const handleAddToCart = async () => {
-
+    
     const resultAction = await dispatch(addToCart(id));
     if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
       navigate('/login');
     }
   };
 
-
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(0); 
   const [hoverRating, setHoverRating] = useState(0);
   const handleRatingClick = (index) => {
-    setRating(index + 1);
-
+    setRating(index + 1); 
   };
   const handleMouseLeave = () => {
     setHoverRating(0);
   };
   const handleMouseEnter = (index) => {
-
-    setHoverRating(index + 1);
+    setHoverRating(index + 1); 
   };
-
+ 
 
   const [showAll, setShowAll] = useState(false);
   const handleViewAllClick = () => {
     setShowAll(!showAll);
-
+    
+  };
   const sectionHeight = showAll ? '1000px' : '400px';
+
 
   const settings = {
     dots: false,
-    arrows: false,
+    arrows: false, 
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+  };
+
+  const similarProductsSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   if (status === "loading") {
@@ -222,9 +247,7 @@ function ProductDetails() {
 
 
       <div className="similar-products-section mt-5 mb-8">
-
-        <ProductCards  />
-
+        <ProductCards />
       </div>
       <Footer />
     </>

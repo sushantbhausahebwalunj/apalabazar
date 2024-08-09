@@ -1,6 +1,6 @@
-import TotalOnlineSales from "../models/total.online.sales";
+import TotalOnlineSales from "../models/total.online.sales.js";
 
-const getTotalOnlineSale = asyncHandler(async (req, res) => {
+const getTotalOnlineSale = (async (req, res) => {
     const { id } = req.user;
     const cart = await TotalOnlineSales.find();
 

@@ -4,7 +4,8 @@ import Review from '../models/review.model.js';
 import slugify from 'slugify';
 import { uploadImageOnCloudinary } from '../cloud/cloudinary.js';
 import fs from 'fs';
-import Category from '../models/category.model.js'; // Import the Category model
+
+import Category from '../models/category.model.js';
 
 // Create product
 export const createProduct = async (req, res) => {
@@ -268,21 +269,17 @@ export const SuggestProduct = async (req, res) => {
   const { CategoriesId } = req.query;
 
   try {
-    // Find the category by the provided ID
-    const parentCategory = await Category.findById(CategoriesId);
-    
-    // Get all categories with the same parent category
-    const categories = await Category.find({ parentCategory: parentCategory._id });
+    // Find products belonging to the provided category ID
+    const products = await Product.find({ category: CategoriesId });
 
-    // Extract the category IDs
-    const categoryIds = categories.map(category => category._id);
-
-    // Find products belonging to any of these categories
-    const products = await Product.find({ category: { $in: categoryIds } });
+    // Check if products were found
+    if (!products || products.length === 0) {
+      return res.status(404).send({ message: "No products found for this category", status: false });
+    }
 
     return res.status(200).send({ message: "Suggested products retrieved successfully", status: true, data: products });
   } catch (error) {
-    console.error('Error finding products by parent category:', error);
+    console.error('Error finding products by category:', error);
     return res.status(500).send({ message: "Internal server error", status: false, error: error.message });
   }
 };

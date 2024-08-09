@@ -4,6 +4,7 @@ import Review from '../models/review.model.js';
 import slugify from 'slugify';
 import { uploadImageOnCloudinary } from '../cloud/cloudinary.js';
 import fs from 'fs';
+import Category from '../models/category.model.js'; // Import the Category model
 
 // Create product
 export const createProduct = async (req, res) => {
@@ -131,58 +132,7 @@ export const viewProduct = async (req, res) => {
   }
 };
 
-// // Update product
-// export const updateProduct = async (req, res) => {
-//   const { id } = req.params;
-//   const { title, description, price, discountedPrice, discountPercent, quantity, brand, category, ratings, reviews } = req.body;
 
-//   if (!title || !description || !price) {
-//     return res.status(400).send({ message: "Title, description, and price are required", status: false });
-//   }
-
-//   try {
-//     let imageUrl = '';
-//     if (req.file) {
-//       const result = await uploadImageOnCloudinary(req.file.path);
-//       imageUrl = result.secure_url;
-//       fs.unlinkSync(req.file.path); // Remove the local file after uploading to Cloudinary
-//     } else {
-//       // Fetch existing product to retain the current image URL
-//       const existingProduct = await Product.findById(id);
-//       if (!existingProduct) {
-//         return res.status(404).send({ message: "Product not found", status: false });
-//       }
-//       imageUrl = existingProduct.imageUrl; // Retain the existing image URL
-//     }
-
-//     const slug = slugify(title, { lower: true });
-//     const updatedProduct = await Product.findByIdAndUpdate(
-//       id,
-//       { title, description, price, discountedPrice, discountPercent, quantity, brand, imageUrl, category, slug },
-//       { new: true }
-//     );
-
-//     if (!updatedProduct) {
-//       return res.status(404).send({ message: "Product not found", status: false });
-//     }
-
-//     if (ratings) {
-//       updatedProduct.ratings = ratings;
-//     }
-
-//     if (reviews) {
-//       updatedProduct.reviews = reviews;
-//     }
-
-//     await updatedProduct.save();
-
-//     return res.status(200).send({ message: "Product updated successfully", status: true, data: updatedProduct });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).send({ message: "Internal server error", status: false, error: error.message });
-//   }
-// };
-// Update product
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
   const {
@@ -309,6 +259,30 @@ export const viewProducts = async (req, res) => {
     return res.status(200).send({ message: "Products retrieved successfully", status: true, data: products });
   } catch (error) {
     console.error(error);
+    return res.status(500).send({ message: "Internal server error", status: false, error: error.message });
+  }
+};
+
+// Suggest Product 
+export const SuggestProduct = async (req, res) => {
+  const { CategoriesId } = req.query;
+
+  try {
+    // Find the category by the provided ID
+    const parentCategory = await Category.findById(CategoriesId);
+    
+    // Get all categories with the same parent category
+    const categories = await Category.find({ parentCategory: parentCategory._id });
+
+    // Extract the category IDs
+    const categoryIds = categories.map(category => category._id);
+
+    // Find products belonging to any of these categories
+    const products = await Product.find({ category: { $in: categoryIds } });
+
+    return res.status(200).send({ message: "Suggested products retrieved successfully", status: true, data: products });
+  } catch (error) {
+    console.error('Error finding products by parent category:', error);
     return res.status(500).send({ message: "Internal server error", status: false, error: error.message });
   }
 };

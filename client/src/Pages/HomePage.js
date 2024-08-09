@@ -254,7 +254,7 @@ function HomePage() {
 
       {!isMobile && (
         <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
+          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Daily Essentials</h2>
           <TrendingProducts />
         </div>
       )}

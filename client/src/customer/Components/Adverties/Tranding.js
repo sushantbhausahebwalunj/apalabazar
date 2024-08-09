@@ -109,3 +109,109 @@ const Trending = () => {
 };
 
 export default Trending;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchProducts } from '../../../Redux/Product/productSlice';
+// import { useCartContext } from '../../../Usecontext/cartContext';
+// import { Link } from 'react-router-dom';
+// import Slider from 'react-slick';
+// import './Trending.css';
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import ProductCard from '../Products/Cards';
+
+// const CustomPrevArrow = ({ onClick }) => (
+//   <button
+//     className='rounded-md px-4 py-8 absolute left-[-15px] top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 hover:bg-blue-400 transition-colors duration-300 ease-in-out'
+//     onClick={onClick}
+//     style={{ display: "block" }}
+//   >
+//     &lt;
+//   </button>
+// );
+
+// const CustomNextArrow = ({ onClick }) => (
+//   <button
+//     className='bg-gray-200 hover:bg-blue-400 transition-colors duration-300 ease-in-out rounded-md px-4 py-8 absolute right-[-15px] top-1/2 transform -translate-y-1/2 z-10'
+//     onClick={onClick}
+//     style={{ display: "block" }}
+//   >
+//     &gt;
+//   </button>
+// );
+
+// const Trending = () => {
+//   const dispatch = useDispatch();
+//   const { products, status } = useSelector((state) => state.products);
+//   const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+
+//   useEffect(() => {
+//     dispatch(fetchProducts());
+//     const handleResize = () => setIsMobile(window.innerWidth <= 500);
+//     window.addEventListener('resize', handleResize);
+
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, [dispatch]);
+
+//   const settings = {
+//     dots: true,
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: isMobile ? 1 : 5,
+//     autoplay: true,
+//     autoplaySpeed: 2000,
+//     slidesToScroll: 1,
+//     prevArrow: <CustomPrevArrow />,
+//     nextArrow: <CustomNextArrow />,
+//   };
+
+//   const filteredProducts = products.filter(product =>
+//     ['grocery', 'dairy', 'fruits'].includes(product.category)
+//   );
+
+//   if (isMobile) {
+//     return null;
+//   }
+
+//   if (status === 'loading') {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (status === 'failed') {
+//     return <div>Error fetching products</div>;
+//   }
+
+//   return (
+//     <div className="py-10">
+//       <Slider {...settings}>
+//         {filteredProducts.map((product) => (
+//           <ProductCard key={product._id} product={product} />
+//         ))}
+//       </Slider>
+//     </div>
+//   );
+// };
+
+// export default Trending;
+

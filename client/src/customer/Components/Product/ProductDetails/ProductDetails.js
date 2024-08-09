@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
+
 import Footer from "../../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useCartContext } from "../../../../Usecontext/cartContext";
@@ -10,8 +11,11 @@ import Reviews from "../../ReviewProduct/RateProduct";
 import "./ProductDetails.css";
 import "./slick.css";
 import ProductCards from "./ProductCrads";
+
 import { addToCart } from '../../../../Redux/Cart/cartSlice';
 import { fetchProduct, fetchSuggestedProducts } from "../../../../Redux/Product/productSlice";
+
+import { useNavigate, Link } from 'react-router-dom';
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -38,32 +42,38 @@ function ProductDetails() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   const navigate = useNavigate();
   const { addToCartStatus, addToCartError } = useSelector((state) => state.cart);
 
   const handleAddToCart = async () => {
+
     const resultAction = await dispatch(addToCart(id));
     if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
       navigate('/login');
     }
   };
 
+
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const handleRatingClick = (index) => {
     setRating(index + 1);
+
   };
   const handleMouseLeave = () => {
     setHoverRating(0);
   };
   const handleMouseEnter = (index) => {
+
     setHoverRating(index + 1);
   };
+
 
   const [showAll, setShowAll] = useState(false);
   const handleViewAllClick = () => {
     setShowAll(!showAll);
-  };
+
   const sectionHeight = showAll ? '1000px' : '400px';
 
   const settings = {
@@ -212,7 +222,9 @@ function ProductDetails() {
 
 
       <div className="similar-products-section mt-5 mb-8">
+
         <ProductCards  />
+
       </div>
       <Footer />
     </>

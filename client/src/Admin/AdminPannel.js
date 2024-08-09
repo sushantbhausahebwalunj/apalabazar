@@ -9,11 +9,10 @@ import Customers from "./components/Customer/Customer";
 import Categories from './components/Category/categories';
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import Navbar from "./tables/navbar";
-import { FaTachometerAlt, FaBoxOpen, FaTags, FaShoppingCart, FaUser, FaCog, FaTimes } from 'react-icons/fa';
-import { RiAdvertisementFill,RiCoupon2Fill } from "react-icons/ri";
-
 import Advertisements from "./components/Advertisements/Advertisements";
 import Coupons from "./components/Coupons/Coupons";
+import { FaTachometerAlt, FaBoxOpen, FaTags, FaShoppingCart, FaUser, FaCog, FaTimes } from 'react-icons/fa';
+import { RiAdvertisementFill,RiCoupon2Fill } from "react-icons/ri";
 
 const sidebarClasses = 'w-64 bg-white border-r border-gray-200 shadow-lg fixed lg:static h-full lg:z-auto'; // Increased z-index
 const linkClasses = 'flex items-center p-4 mt-2 text-gray-600 hover:bg-gray-100 hover:text-green-500 rounded-lg transition-colors duration-200';
@@ -36,20 +35,17 @@ function AdminPanel() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
-    if (window.innerWidth <= 1024) { // Adjust this width based on your design breakpoints
-      setIsSidebarOpen(!isSidebarOpen);
-    }
+    setIsSidebarOpen(!isSidebarOpen);
   };
-  
 
   return (
     <section className="flex w-screen">
-      <div className="bg-[#eff4f8] w-fit">
+      <div className="bg-[#eff4f8] w-full">
         <Navbar toggleSidebar={toggleSidebar} />
         <div className="flex h-full">
           {isSidebarOpen && (
             <div className={sidebarClasses}>
-              <div className="p-4 flex justify-between z-55 items-center w-[280px]">
+              <div className="p-4 flex justify-between items-center w-[280px]">
                 <h1 className="text-2xl font-bold text-green-500">Admin</h1>
                 <button className="text-gray-600 hover:text-green-500 lg:hidden" onClick={toggleSidebar}>
                   <FaTimes />

@@ -193,6 +193,7 @@ export const updateProduct = async (req, res) => {
     discountPercent,
     quantity,
     brand,
+    slug,
     category,
     ratings,
     reviews,

@@ -19,21 +19,18 @@ const cookiesOptions = {
     sameSite: true,
 };
 
-// Utility function to send OTP email
 const sendOTPEmail = async (email, otp) => {
-
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        service: 'gmail', 
         auth: {
-            user: 'efren.stark@ethereal.email',
-            pass: 'xCGveSFhAPsQTkZhJf'
+            user: process.env.EMAIL_USER, 
+            pass: process.env.PASSWORD  // 'tstp uuyo fnoo lick'
         }
     });
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
+        from: process.env.EMAIL_USER, 
+        to: email,                    
         subject: 'Your OTP Code',
         text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
     };

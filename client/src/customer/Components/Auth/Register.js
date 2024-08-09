@@ -256,7 +256,7 @@ const Register = ({ showModal, setShowModal }) => {
                       id="otp"
                       value={otp}
                       onChange={handleOtpChange}
-                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      className={`w-full text-black p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
                       required
                     />
                   </div>
@@ -272,7 +272,7 @@ const Register = ({ showModal, setShowModal }) => {
                       id="userName"
                       value={userName}
                       onChange={handleUserNameChange}
-                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      className={`w-full p-2 text-black ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
                       required
                     />
                   </div>
@@ -288,7 +288,7 @@ const Register = ({ showModal, setShowModal }) => {
                       id="password"
                       value={password}
                       onChange={handlePasswordChange}
-                      className={`w-full p-2 ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
+                      className={`w-full p-2 text-black ${sharedClasses.borderZinc} rounded border-gray-600 border-[1px] ${sharedClasses.darkBgInput} ${sharedClasses.darkBorderZinc}`}
                       required
                     />
                   </div>

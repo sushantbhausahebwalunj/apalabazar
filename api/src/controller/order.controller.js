@@ -1,16 +1,18 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import Cart from "../models/cart.model.js";
+import Cart from "../models/order.model.js";
 import Order from "../models/order.model.js";
 import OrderItem from "../models/orderItems.js";
 import CartItem from "../models/cartItem.model.js";
+import Product from "../models/product.model.js";
+import { handleAllTotalOnlineSales, TotalAllupdateSalesData } from "./sale.controller.js";
 
 const placeOrder = asyncHandler(async (req, res) => {
   const { id } = req.user;
 
-  const cart = await Cart.findOne({ user: id }).populate("cartItems");
+  const order = await Cart.findOne({ user: id }).populate("cartItems");
 
-  if (!cart) {
+  if (!order) {
     return res.status(404).json(new ApiResponse(404, "Cart not found", null));
   }
 
@@ -26,7 +28,9 @@ const placeOrder = asyncHandler(async (req, res) => {
 
   try {
     const orderItems = [];
-    for (const cartItem of cart.cartItems) {
+    let purchaseRate=0;
+    for (const cartItem of order.cartItems) {
+      const product = await Product.findById(cartItem._id);
       const orderItem = new OrderItem({
         product: cartItem.product,
         quantity: cartItem.quantity,
@@ -36,26 +40,36 @@ const placeOrder = asyncHandler(async (req, res) => {
       });
       await orderItem.save();
       orderItems.push(orderItem._id);
+      purchaseRate=purchaseRate+product.purchaseRate;
     }
 
     const order = new Order({
       user: id,
       orderItems: orderItems,
-      totalPrice: cart.totalPrice,
-      totalDiscountedPrice: cart.totalDiscountedPrice,
-      totalItem: cart.totalItem,
-      discount: cart.discount,
-      GST: 0.18 * cart.totalPrice,
+      totalPrice: order.totalPrice,
+      totalDiscountedPrice: order.totalDiscountedPrice,
+      totalItem: order.totalItem,
+      discount: order.discount,
+      GST: 0,
       shippingAddress: req.body.shippingAddress,
       paymentDetails: req.body.paymentDetails,
     });
-
+    const OrderSale = {
+      totalPrice: order.totalPrice,
+      totalDiscountedPrice: order.totalDiscountedPrice,
+      GST: 0,
+      discount: order.discount,
+      totalItem: order.totalItem,
+      totalPurchaseRate: purchaseRate,
+      totalProfit: order.totalDiscountedPrice-purchaseRate,
+      finalPriceWithGST: order.totalDiscountedPrice,
+  };
     await order.save();
-
+    await  handleAllTotalOnlineSales(OrderSale);
     await CartItem.deleteMany({
-      _id: { $in: cart.cartItems.map((item) => item._id) },
+      _id: { $in: order.cartItems.map((item) => item._id) },
     });
-    await Cart.findByIdAndDelete(cart._id);
+    await Cart.findByIdAndDelete(order._id);
 
     return res
       .status(200)
@@ -109,6 +123,44 @@ const cancelOrder = asyncHandler(async (req, res) => {
     return res
       .status(400)
       .json(new ApiResponse(400, "Order is already cancelled", null));
+  }
+ // Creating a plain object copy of the order
+  const cancelFields = {
+      totalPrice: 0,
+      totalDiscountedPrice: 0,
+      GST: 0,
+      discount: 0,
+      totalItem: 0,
+      totalPurchaseRate: 0,
+      totalProfit: 0,
+      finalPriceWithGST: 0,
+  };  
+  const OrderSale = {
+    totalPrice: order.totalPrice,
+    totalDiscountedPrice: order.totalDiscountedPrice,
+    GST: order.GST,
+    discount: order.discount,
+    totalItem: order.totalItem,
+    totalPurchaseRate: purchaseRate,
+    totalProfit: order.totalPrice,
+    finalPriceWithGST: order.totalDiscountedPrice,
+};
+await TotalAllupdateSalesData(OrderSale,cancelFields);
+  order.totalPrice = cancelFields.totalPrice;
+  order.totalDiscountedPrice = cancelFields.totalDiscountedPrice;
+  order.GST = cancelFields.GST;
+  order.discount = cancelFields.discount;
+  order.totalItem = cancelFields.totalItem;
+  order.totalPurchaseRate = cancelFields.totalPurchaseRate;
+  order.totalProfit = cancelFields.totalProfit;
+  await order.save();
+
+  for (const item of order.orderItems) {
+      const product = await Product.findById(item.product);
+      if (product) {
+          product.quantity += item.quantity;
+          await product.save();
+      }
   }
 
   order.orderStatus = "CANCELLED";

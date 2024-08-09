@@ -78,7 +78,7 @@ const Trending = () => {
     infinite: true,
     speed: 5000,
     slidesToShow: isMobile ? 1 : 5,
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 2000,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
@@ -97,51 +97,11 @@ const Trending = () => {
     return <div>Error fetching products</div>;
   }
 
-
-const SimpleSlider = ({ slides }) => {
-  const [current, setCurrent] = useState(0);
-  const length = slides.length;
-
-  const nextSlide = () => {
-    setCurrent(current === length - 1 ? 0 : current + 1);
-  };
-
-  const prevSlide = () => {
-    setCurrent(current === 0 ? length - 1 : current - 1);
-  };
-
-  if (!Array.isArray(slides) || slides.length <= 0) {
-    return null;
-  }
-
   return (
-      <div className="relative flex justify-center items-center">
-        <button className="absolute left-0 z-10 p-2 bg-gray-700 text-white" onClick={prevSlide}>
-          &#10094;
-        </button>
-        <button className="absolute right-0 z-10 p-2 bg-gray-700 text-white" onClick={nextSlide}>
-          &#10095;
-        </button>
-        {slides.map((slide, index) => (
-          <div
-            className={`transition-transform duration-1000 ease-in-out transform ${index === current ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-            key={index}
-          >
-            {index === current && (
-              <img src={slide.image} alt={`Slide ${index}`} className="w-full h-auto object-cover" />
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-
-  return (
-    <div >
+    <div>
       <Slider {...settings}>
         {products.map((product) => (
-          <ProductCard key={product._id} product={product} className="p-4"/>
+          <ProductCard key={product._id} product={product} />
         ))}
       </Slider>
     </div>
@@ -149,3 +109,109 @@ const SimpleSlider = ({ slides }) => {
 };
 
 export default Trending;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchProducts } from '../../../Redux/Product/productSlice';
+// import { useCartContext } from '../../../Usecontext/cartContext';
+// import { Link } from 'react-router-dom';
+// import Slider from 'react-slick';
+// import './Trending.css';
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import ProductCard from '../Products/Cards';
+
+// const CustomPrevArrow = ({ onClick }) => (
+//   <button
+//     className='rounded-md px-4 py-8 absolute left-[-15px] top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 hover:bg-blue-400 transition-colors duration-300 ease-in-out'
+//     onClick={onClick}
+//     style={{ display: "block" }}
+//   >
+//     &lt;
+//   </button>
+// );
+
+// const CustomNextArrow = ({ onClick }) => (
+//   <button
+//     className='bg-gray-200 hover:bg-blue-400 transition-colors duration-300 ease-in-out rounded-md px-4 py-8 absolute right-[-15px] top-1/2 transform -translate-y-1/2 z-10'
+//     onClick={onClick}
+//     style={{ display: "block" }}
+//   >
+//     &gt;
+//   </button>
+// );
+
+// const Trending = () => {
+//   const dispatch = useDispatch();
+//   const { products, status } = useSelector((state) => state.products);
+//   const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+
+//   useEffect(() => {
+//     dispatch(fetchProducts());
+//     const handleResize = () => setIsMobile(window.innerWidth <= 500);
+//     window.addEventListener('resize', handleResize);
+
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, [dispatch]);
+
+//   const settings = {
+//     dots: true,
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: isMobile ? 1 : 5,
+//     autoplay: true,
+//     autoplaySpeed: 2000,
+//     slidesToScroll: 1,
+//     prevArrow: <CustomPrevArrow />,
+//     nextArrow: <CustomNextArrow />,
+//   };
+
+//   const filteredProducts = products.filter(product =>
+//     ['grocery', 'dairy', 'fruits'].includes(product.category)
+//   );
+
+//   if (isMobile) {
+//     return null;
+//   }
+
+//   if (status === 'loading') {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (status === 'failed') {
+//     return <div>Error fetching products</div>;
+//   }
+
+//   return (
+//     <div className="py-10">
+//       <Slider {...settings}>
+//         {filteredProducts.map((product) => (
+//           <ProductCard key={product._id} product={product} />
+//         ))}
+//       </Slider>
+//     </div>
+//   );
+// };
+
+// export default Trending;
+

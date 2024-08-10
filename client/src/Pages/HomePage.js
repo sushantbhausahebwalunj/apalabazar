@@ -160,17 +160,43 @@ function HomePage() {
     };
   }, []);
 
+  const items = [
+    {
+      id: 1,
+      href: "./product/2",
+      src: "./chocolates.jpg",
+      alt: "Chocolates",
+    },
+    {
+      id: 2,
+      href: "./product/1",
+      src: "./dailyneeds.jpg",
+      alt: "Daily Needs",
+    },
+    {
+      id: 3,
+      href: "./product/3",
+      src: "./snacks.jpg",
+      alt: "Snacks",
+    },
+  ];
   
+
   const dispatch = useDispatch();
-  const { advertisements, status : adsstatus } = useSelector((state) => state.advertisements || {});
+  const { advertisements, status: adsstatus } = useSelector((state) => state.advertisements || {});
 
   useEffect(() => {
     dispatch(fetchAdvertisements());
   }, [dispatch]);
-  if (adsstatus === 'succeeded'){
-    console.log("PUBLISHED ADVERTISEMENTS first element product brand: ", advertisements[0]);
-  }
   
+
+  useEffect(() => {
+    if (adsstatus === 'succeeded') {
+      console.log("PUBLISHED ADVERTISEMENTS first element product brand: ", advertisements[0]);
+    }
+  }, [advertisements, adsstatus]);
+
+
 
   const settings = {
     dots: true,
@@ -190,81 +216,59 @@ function HomePage() {
       <Navbar />
       <div className="w-[95vw] mx-auto overflow-hidden mt-5 rounded-md">
         <Slider {...settings} className="rounded-md">
-        {adsstatus === "succeeded" && (
+          {adsstatus === "succeeded" && (
             advertisements.length > 0 ? (
-                advertisements
-                    .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
-                    .map(publishedAdvertisement => (
-                      // <Link to={`/product/${prodID}`}>
-                        <div className="w-full rounded-md" key={publishedAdvertisement.id}>
-                            {/* <a href="./product/${advertisement.product._id}" className="rounded-md"> */}
-                                <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
-                                    <img
-                                    
-                                        src={publishedAdvertisement.imageUrl}
-                                        className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                                        alt="Skin Care"
-                                    />
-                                </div>
-                                {/* </Link> */}
-                        </div>
-                      // </Link>
-                    ))
+              advertisements
+              .filter(publishedAdvertisement => publishedAdvertisement.section === "Section 0")
+                .map(publishedAdvertisement => (
+                  // <Link to={`/product/${prodID}`}>
+                  <div className="w-full rounded-md" key={publishedAdvertisement.id}>
+                    {/* <a href="./product/${advertisement.product._id}" className="rounded-md"> */}
+                    <div className="flex items-center justify-center bg-opacity-50 rounded-md h-1/2 w-full">
+                      <img
+
+                        src={publishedAdvertisement.imageUrl}
+                        className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
+                        alt="Skin Care"
+                      />
+                    </div>
+                    {/* </Link> */}
+                  </div>
+                  // </Link>
+                ))
             ) : (
-                  
-              <>
-              <div className="w-full rounded-md">
-                <a href="./product/2" className="rounded-md">
-                  <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
-                    <img
-                      src="./chocolates.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Chocolates"
-                    />
-                  </div>
-                </a>
-              </div>
-              <div className="w-full rounded-md">
-                <a href="./product/1" className="rounded-md">
-                  <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
-                    <img
-                      src="./dailyneeds.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Daily Needs"
-                    />
-                  </div>
-                </a>
-              </div>
-              <div className="w-full rounded-md">
-                <a href="./product/1" className="rounded-md">
-                  <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
-                    <img
-                      src="./snacks.jpg"
-                      className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
-                      alt="Snacks"
-                    />
-                  </div>
-                </a>
-              </div> 
-              </>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {items.map((item) => (
+                <div key={item.id} className="w-full rounded-md">
+                  <a href={item.href} className="rounded-md">
+                    <div className="flex items-center justify-center bg-opacity-50 rounded-md w-full">
+                      <img
+                        src={item.src}
+                        className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
+                        alt={item.alt}
+                      />
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
             )
-          )} 
+          )}
         </Slider>
       </div>
 
-      {!isMobile && (
-        <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Trending Products</h2>
-          <TrendingProducts />
-        </div>
-      )}
+
+      <div className="relative bg-white py-5 mt-5  mb-5">
+        <TrendingProducts />
+      </div>
+
       <GadgetSection advertisements={advertisements} status={adsstatus} />
-      {!isMobile && (
-        <div className="relative bg-white px-5 py-16 mt-5 mx-6 mb-5 rounded-lg">
-          <h2 className="text-lg sm:text-2xl mb-3 font-semibold">Frozen Snacks</h2>
-          <TrendingProducts/>
-        </div>
-      )}
+
+      <div className="relative bg-white  py-5 mt-5  mb-5">
+        <FrozenSnacks />
+      </div>
+
       <ProductComponent advertisements={advertisements} status={adsstatus} />
       <HomePageAdvertisement advertisements={advertisements} status={adsstatus} />
       <Maylike />

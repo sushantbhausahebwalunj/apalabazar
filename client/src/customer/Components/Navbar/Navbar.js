@@ -1,4 +1,4 @@
-  // import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
   // import Register from "../Auth/Register";
   // import {
   //   FaUser,
@@ -772,7 +772,7 @@
       // </>
       <>
       <header className="fixed top-0 left-0 right-0 flex flex-wrap justify-between items-center pt-2 w-full bg-orange-600 max-md:px-5 overflow-hidden z-50 max-md:max-w-full">
-        <div className="h-full px-8" >
+        <div className="h-full px-8 py-8" >
           {/* <img src={logo} alt="Logo" className="h-10" crossOrigin="anonymous"/> */}
           <p className="font-bold text-white text-2xl">Apala<span className="text-gray-600">Bajar</span></p>
         </div>

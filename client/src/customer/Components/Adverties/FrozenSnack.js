@@ -18,7 +18,7 @@ const smartphones = [
   { name: 'Galaxy M53 (4GB | 64 GB)', price: '₹31999', originalPrice: '₹40999', image: 'dummy-image-4.jpg' },
 ];
 
-const FrozenSnacks = () => {
+const Trending = () => {
   const [showAll, setShowAll] = useState(false);
 
   const handleViewAllClick = () => {
@@ -31,7 +31,7 @@ const FrozenSnacks = () => {
     <div className="p-8">
       <div className="flex flex-row gap-4 justify-between items-center">
         <h2 className="text-2xl font-bold mb-4">
-          Grab the best Product in <span className="text-orange-500">FrozenSnacks</span>
+          Grab the best Product in <span className="text-orange-500">Trending</span>
         </h2>
         <button onClick={handleViewAllClick} className="text-orange-500">
           {showAll ? 'Show Less' : 'View All'}
@@ -42,8 +42,7 @@ const FrozenSnacks = () => {
         {displayedSmartphones.map((phone, index) => (
           <div
             key={index}
-            className={`p-2 sm:p-4 rounded-lg bg-gray-100 hover:bg-orange-100 shadow-lg transition ease-in`}
-
+            className={`p-2 sm:p-4 rounded-lg shadow-lg ${index === 1 ? 'border-2 border-orange-500' : ''}`}
           >
             <img src={phone.image} alt={phone.name} className="w-full h-32 sm:h-40 object-cover mb-2 sm:mb-4" />
             <h3 className="text-sm sm:text-lg font-semibold">{phone.name}</h3>
@@ -57,4 +56,4 @@ const FrozenSnacks = () => {
   );
 };
 
-export default FrozenSnacks;
+export default Trending;

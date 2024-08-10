@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import axiosInstance from '../../../axiosConfig';
 
 const Reviews = React.memo(() => {
   const navigate = useNavigate();
-  const [reviews, setReviews] = useState([]); 
   const { id } = useParams();
   const token = localStorage.getItem('authToken');
+  const [reviews, setReviews] = useState([]);
+  const [showAll, setShowAll] = useState(false);
+  const handleViewAllClick = () => setShowAll(!showAll);
 
   const handleRating = useCallback(() => {
     navigate(`/review/${id}`);
@@ -27,7 +28,9 @@ const Reviews = React.memo(() => {
       }
     };
     getReview(); // Call the function to fetch reviews
-  }, [token]);
+  }, [id, token]);
+
+  const displayedReviews = showAll ? reviews : reviews.slice(0, 2);
 
   return (
     <div className="p-4">
@@ -96,7 +99,7 @@ const Reviews = React.memo(() => {
       </div>
 
       <div className="space-y-4">
-        {reviews.map((review) => (
+        {displayedReviews.map((review) => (
           <div key={review._id} className="border-b pb-4">
             <div className="flex items-center space-x-2 mb-2">
               <div className={`flex items-center text-white px-2 py-1 rounded ${review.rating >= 4 ? 'bg-green-500' : review.rating === 3 ? 'bg-yellow-500' : 'bg-red-500'}`}>
@@ -123,7 +126,9 @@ const Reviews = React.memo(() => {
       </div>
 
       <div className="mt-4">
-        <a href="#" className="text-blue-500">All 37 reviews</a>
+        <button className='text-blue-500' onClick={handleViewAllClick}>
+          {showAll ? 'Show Less' : 'View All Reviews'}
+        </button>
       </div>
     </div>
   );

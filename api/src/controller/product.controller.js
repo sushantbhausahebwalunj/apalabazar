@@ -264,15 +264,12 @@ export const viewProducts = async (req, res) => {
   }
 };
 
-// Suggest Product 
 export const SuggestProduct = async (req, res) => {
   const { CategoriesId } = req.query;
 
   try {
-    // Find products belonging to the provided category ID
     const products = await Product.find({ category: CategoriesId });
 
-    // Check if products were found
     if (!products || products.length === 0) {
       return res.status(404).send({ message: "No products found for this category", status: false });
     }

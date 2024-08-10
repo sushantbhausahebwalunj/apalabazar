@@ -24,7 +24,7 @@ const sendOTPEmail = async (email, otp) => {
         service: 'gmail', 
         auth: {
             user: process.env.EMAIL_USER, 
-            pass: process.env.PASSWORD  // 'tstp uuyo fnoo lick'
+            pass: 'tstp uuyo fnoo lick' //process.env.PASSWORD
         }
     });
 
@@ -58,7 +58,7 @@ export const registerUser = async (req, res) => {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            return res.status(400).json({ message: 'User already exists', status: false });
+            return res.status(200).json({ message: 'User already exists', status: false });
         }
 
         const otp = generateOTP();

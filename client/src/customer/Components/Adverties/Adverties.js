@@ -1,51 +1,49 @@
+
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const productCardClasses = 'block rounded-lg overflow-hidden shadow-md';
-const productTitleClasses = 'text-xl font-bold text-zinc-800 dark:text-zinc-200';
-const productDescriptionClasses = 'text-zinc-600 dark:text-zinc-400';
-const buttonClasses = 'bg-green-500 text-white px-4 py-2 mx-5 rounded-lg';
-
-const ProductCard = ({ imageUrl, title, description, link }) => {
+const Gadgets = ({ advertisements, status }) => {
   return (
-   
-<div className='p-3 bg-gray-200 mx-4 rounded space-y-1'>
-<a href={link}>
-    <div className="flex items-center  justify-end bg-black bg-opacity-50 rounded  w-full"  >
-
-      <img src={imageUrl} className=' rounded-md object-fill h-[30vh] w-full' alt='img'></img>
-      <button className={`${buttonClasses} absolute`}>SHOP NOW</button>
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex flex-wrap -mx-4">
+        {advertisements
+          .filter((advertisement) => advertisement.section === "Section 3")
+          .slice(0, 2)
+          .map((advertisement, index) => (
+            <div
+              key={index}
+              className={`w-full md:w-${index === 0 ? '1/2' : '1/2'} lg:w-${index === 0 ? '1/3' : '2/3'} p-4`}
+            >
+              <div className="bg-white border rounded-lg shadow-lg overflow-hidden transform hover:shadow-xl transition-shadow duration-300">
+                <Link to={`/product/${advertisement.product._id}`}>
+                  <div className="relative">
+                    <img
+                      src={advertisement.imageUrl}
+                      alt={advertisement.title}
+                      className="w-full h-72 object-cover sm:h-[400px] lg:h-[500px] transition-transform duration-500 ease-in-out hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-white text-2xl font-semibold">View Details</span>
+                    </div>
+                  </div>
+                </Link>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{advertisement.title}</h3>
+                  <p className="text-green-600 text-sm mb-4">{advertisement.description}</p>
+                  <Link
+                    to={`/product/${advertisement.product._id}`}
+                    className="inline-block px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors duration-300"
+                  >
+                    Shop Now
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
-    </a>
-</div>
-
   );
 };
 
-const ProductList = () => {
-  return (
-    <div className="m-10 space-y-2 rounded-md">
-      <ProductCard
-        imageUrl="dailyneeds.jpg"
-   link="/product-detail-page-1"
-      />
-      <ProductCard
-        imageUrl="https://www.itcstore.in/_next/image?url=https%3A%2F%2Fadmin.itcstore.in%2Fmedia%2Fboolfly%2Fbanner%2Fnew_korean_Style_banner_desktop_4500-x-1125.jpg%3Fwidth%3D1024&w=1920&q=75"
-        // title="Just Pop It In!"
-        // description="Delicious Flavours | Easy To Make"
-        link="/product-detail-page-2"
-      />
-      <ProductCard
-        imageUrl="snacks.jpg"
-        // title="Time For A Chai Break!"
-        // description="Bakery products that go well with your tea."
-        link="/product-detail-page-3"
-      />
-    </div>
-  );
-};
-
-const ProductComponent = () => {
-  return <ProductList />;
-};
-
-export default ProductComponent;
+export default Gadgets;

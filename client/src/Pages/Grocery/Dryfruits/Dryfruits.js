@@ -1,141 +1,144 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
-import logo from './veg-logo.svg'
+import logo from "./veg-logo.svg";
 
+import pumpkinseed from "../Dryfruits/green-pumpkin-seeds-img.webp";
+import liondates from "../Dryfruits/lion-dates-img.webp";
+import kismis from "../Dryfruits/organic-kismis-img.webp";
+import pista from "../Dryfruits/pista-kernel-img.webp";
+import raisinkishmish from "../Dryfruits/raisinskishmish-black-with-seeds-img.webp";
+import sabja from "../Dryfruits/seeds-sabja-img.webp";
+import walnutakhrot from "../Dryfruits/walnutakhrot-kernels-chile-img.webp";
+import watermelonseed from "../Dryfruits/watermelontarbuj-seeds-img.webp";
+import ProductCard from "../../../customer/Components/Products/Cards";
 
-import pumpkinseed from '../Dryfruits/green-pumpkin-seeds-img.webp'
-import liondates from '../Dryfruits/lion-dates-img.webp'
-import kismis from '../Dryfruits/organic-kismis-img.webp'
-import pista from '../Dryfruits/pista-kernel-img.webp'
-import raisinkishmish from '../Dryfruits/raisinskishmish-black-with-seeds-img.webp'
-import sabja from '../Dryfruits/seeds-sabja-img.webp'
-import walnutakhrot from '../Dryfruits/walnutakhrot-kernels-chile-img.webp'
-import watermelonseed from '../Dryfruits/watermelontarbuj-seeds-img.webp'
-import {ProductCard  } from '../../../customer/Components/Product/ProductCard/ProductCard'
-
-
-
-export function Dryfruits() {
-
-const DryfruitsData = [
-  {
-    productname:"Green Pumpkin Seeds" ,
-    productimg: pumpkinseed ,
-    productprice:"₹50" ,
-    aplabazarprice:"₹49",
-    offprice:"₹1",
-    quantity:"50 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-  {
-    productname:"Dates/Kharjura" ,
-    productimg: liondates ,
-    productprice:"₹185" ,
-    aplabazarprice:"₹180",
-    offprice:"₹5",
-    quantity:"500 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-  {
-    productname:"Organic kismis/Raisins" ,
-    productimg: kismis ,
-    productprice:"₹599" ,
-    aplabazarprice:"₹493",
-    offprice:"₹18",
-    quantity:"1 kg",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-  {
-    productname:"Pista Magaj-Plain Kernel " ,
-    productimg: pista ,
-    productprice:"₹300" ,
-    aplabazarprice:"₹226",
-    offprice:"₹25",
-    quantity:"100 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-
-  {
-    productname:"Black Raisins" ,
-    productimg: raisinkishmish ,
-    productprice:"₹120" ,
-    aplabazarprice:"₹93",
-    offprice:"₹23",
-    quantity:"200 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-  {
-    productname:"Sabja" ,
-    productimg: sabja ,
-    productprice:"₹180" ,
-    aplabazarprice:"₹130",
-    offprice:"₹50",
-    quantity:"100 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-
-  {
-    productname:"Walnut/Akhrot" ,
-    productimg: walnutakhrot ,
-    productprice:"₹1000" ,
-    aplabazarprice:"₹774",
-     offprice:"₹23",
-    quantity:"500 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
-
-
-  {
-    productname:"Watermelon Seeds/Kallangadi Bija" ,
-    productimg: watermelonseed ,
-    productprice:"₹80" ,
-    aplabazarprice:"₹53",
-    offprice:"₹34",
-    quantity:"50 g",
-    logo : logo,
-    catogery:"Dry Fruits"
-  },
-
+export function Dryfruits({ showall, activeSubTab, setActiveTab }) {
+  const DryfruitsData = [
+    {
   
+      id: 1,
+      name: "Green Pumpkin Seeds",
+      image: pumpkinseed,
+      mrp: "₹50",
+      price: "₹49",
+      discount: "1",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Chana Dal",
+    },
+    {
+      id: 2,
+      name: "Dates/Kharjura",
+      image: liondates,
+      mrp: "₹185",
+      price: "₹180",
+      discount: "5",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Dates",
+    },
+    {
+      id: 3,
+      name: "Organic kismis/Raisins",
+      image: kismis,
+      mrp: "₹599",
+      price: "₹493",
+      discount: "18",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Raisins",
+    },
+    {
+      id:4,
+      name: "Pista Magaj-Plain Kernel ",
+      image: pista,
+      mrp: "₹300",
+      price: "₹226",
+      discount: "25",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Pista",
+    },
+    {
+      id:5,
+      name: "Black Raisins",
+      image: raisinkishmish,
+      mrp: "₹120",
+      price: "₹93",
+      discount: "23",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Raisins",
+    },
+    {
+      id:5,
+      name: "Sabja",
+      image: sabja,
+      mrp: "₹180",
+      price: "₹130",
+      discount: "50",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Walnuts",
+    },
+    {
+      id:6,
+      name: "Walnut/Akhrot",
+      image: walnutakhrot,
+      mrp: "₹1000",
+      price: "₹774",
+      discount: "23",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Walnuts",
+    },
+    {
+      id:7,
+      name: "Watermelon Seeds/Kallangadi Bija",
+      image: watermelonseed,
+      mrp: "₹80",
+      price: "₹53",
+      discount: "34",
+      weight: "1 L",
+      url: `/product/${"Mccain Smiles".replace(/ /g, "-").toLowerCase()}`,
+      logo: logo,
+      catogery: "Dry Fruits",
+      subCatogery: "Walnuts",
+    },
+  ];
 
-];
-return(
-
-<div className=' flex  flex-wrap w-full  '>
-
-{
-  DryfruitsData.map(
-    (data) => {
-    
   return (
-    
-     <ProductCard  productname={data.productname} productimg={data.productimg} productprice={data.productprice} aplabazarprice={data.aplabazarprice} offprice={data.offprice} quantity={data.quantity} logo={data.logo} />
-  )
-}
-  )
-}
 
-</div>
-    
-  )
+    <div className=" mt-[12.5vh] cookingoilcards border w-full flex flex-wrap gap-9 ">
+      {DryfruitsData.map((data, index) => {
+        if (data.subCatogery === activeSubTab) {
+          return (
+            <ProductCard key={index} product={data} />
+          );
+        } else if (showall) {
+          return (
+            <ProductCard key={index} product={data} />
+          );
+        } else {
+          return (
+           null
+          )
+        }
+      })}
+    </div>
+  );
 }
-

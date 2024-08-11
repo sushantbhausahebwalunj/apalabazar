@@ -1,52 +1,77 @@
 import React from 'react';
-import './Footer.css'; // Import the CSS file
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
+import qrCodeImage from './l.jpg'; 
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-gray-800 py-16 shadow-lg mt-auto">
-      <div className="container mx-auto px-4 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-40">
-        <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
-          
-          <img src="" alt="Logo" className="mb-4 w-32 h-auto" />
-          <div className="flex space-x-4 mb-4 text-2xl">
-            <a href="#" className="footer-link">
-              <img src="https://i.pinimg.com/originals/42/75/49/427549f6f22470ff93ca714479d180c2.png" alt="Facebook" className="w-8 h-8" />
-            </a>
-            <a href="#" className="footer-link">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUO0DwRBL0MB2rRIDS7z6uOxmRBbug7uXOqA&s" alt="Twitter" className="w-8 h-8" />
-            </a>
-            <a href="#" className="footer-link">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROlf2GkEtPk1w49L9mw1r1ERJRea7lAPMm6Q&s" alt="Instagram" className="w-8 h-8" />
-            </a>
-          </div>
-          {/* <div className="flex space-x-4 text-2xl">
-            <span><img src="/icons/visa.svg" alt="Visa" className="w-8 h-8" /></span>
-            <span><img src="/icons/mastercard.svg" alt="Mastercard" className="w-8 h-8" /></span>
-            <span><img src="/icons/amex.svg" alt="American Express" className="w-8 h-8" /></span>
-            <span><img src="/icons/rupay.svg" alt="Rupay" className="w-8 h-8" /></span>
-            <span><img src="/icons/cod.svg" alt="COD" className="w-8 h-8" /></span>
-          </div> */}
-        </div>
-        <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
-          <h2 className="text-2xl font-bold mb-2">Information</h2>
-          <div className="flex flex-col space-y-2 text-lg">
-            <a href="#" className="footer-link">FAQs</a>
-            <a href="#" className="footer-link">Privacy Policy</a>
-            <a href="#" className="footer-link">Pricing, Delivery, Return and Refund Policy</a>
-            <a href="#" className="footer-link">Terms and Conditions</a>
+    <footer className="bg-gray-900 text-white py-10">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-10 px-5">
+        
+        {/* Column 1 */}
+        <div className="w-full max-w-md mx-auto px-4">
+          <h2 className="text-xl font-semibold mb-4">Apala Bajar</h2>
+          <h3 className="text-xl font-medium mb-2">Subscribe</h3>
+          <p className="mb-4 text-sm">Get 10% off on your first order</p>
+          <div className="relative flex items-center border border-orange-500 rounded overflow-hidden">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full bg-gray-800 text-white p-2 focus:outline-none"
+            />
+            <button className="absolute right-0 bg-transparent border-l border-orange-500 p-2 flex items-center justify-center">
+              <FaPaperPlane className="text-orange-500" />
+            </button>
           </div>
         </div>
-        <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
-          <h2 className="text-2xl font-bold mb-2">Support</h2>
-          <div className="flex flex-col space-y-2 text-lg">
-            <a href="#" className="footer-link">Contact Us</a>
-            <a href="#" className="footer-link">About Us</a>
-            <a href="#" className="footer-link">Disclaimer</a>
+
+        {/* Column 2 */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Support</h2>
+          <p className="text-sm mb-2">Apla Bajar Panchayat Samiti Road, Jodhpur Maruti Chowk, Shrigonda, Ahilyanagar 413701</p>
+          <p className="text-sm mb-2">aaplabajar@gmail.com</p>
+          <p className="text-sm">+91 9423750349</p>
+        </div>
+
+        {/* Column 3 */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Account</h2>
+          <ul className="space-y-2">
+            <li><Link to="/myprofile/profile-information" className="hover:text-orange-500">My Account</Link></li>
+            <li><Link to="/login" className="hover:text-orange-500">Register/Login</Link></li>
+            <li><Link to="/cart" className="hover:text-orange-500">Cart</Link></li>
+            <li><Link to="/myprofile/likes" className="hover:text-orange-500">Wishlist</Link></li>
+            <li><Link to="/shop" className="hover:text-orange-500">Shop</Link></li>
+          </ul>
+        </div>
+
+        {/* Column 4 */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
+          <ul className="space-y-2">
+            <li><a href="privacy" className="hover:text-orange-500">Privacy Policy</a></li>
+            <li><a href="terms" className="hover:text-orange-500">Terms of Use</a></li>
+            <li><a href="/faq" className="hover:text-orange-500">FAQ</a></li>
+            <li><a href="/contact" className="hover:text-orange-500">Contact</a></li>
+          </ul>
+        </div>
+
+        {/* Column 5 */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Apala Bajar</h2>
+          <div className="flex mb-4">
+            <img src={qrCodeImage} alt="QR Code" className="w-20 h-20 mr-4" />
+          </div>
+          <div className="flex space-x-3 text-2xl">
+            <FaFacebook className="hover:text-orange-500 cursor-pointer" />
+            <FaTwitter className="hover:text-orange-500 cursor-pointer" />
+            <FaInstagram className="hover:text-orange-500 cursor-pointer" />
+            <FaLinkedin className="hover:text-orange-500 cursor-pointer" />
           </div>
         </div>
       </div>
-      <div className="text-center mt-12 text-lg">
-        <p>Copyright © 2024 Arohi Software. All Rights Reserved.</p>
+      <div className="text-center mt-10 text-gray-400 text-sm">
+        Apala Bazar © 2024. All rights reserved.
       </div>
     </footer>
   );

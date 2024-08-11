@@ -11,3 +11,5 @@ router.put('/update/:id', verifyAdmin, upload.single('image'), updateProduct);
 router.delete('/delete/:id', verifyAdmin, deleteProduct);
 router.get('/view', viewProducts);
     export default router;
+
+    

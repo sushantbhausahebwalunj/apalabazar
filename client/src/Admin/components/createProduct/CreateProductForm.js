@@ -7,6 +7,34 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
 
+import * as XLSX from 'xlsx';
+
+// export const importExcelData = (file, callback) => {
+//   const reader = new FileReader();
+//   reader.onload = (event) => {
+//     const data = new Uint8Array(event.target.result);
+//     const workbook = XLSX.read(data, { type: 'array' });
+//     const sheetName = workbook.SheetNames[0];
+//     const worksheet = workbook.Sheets[sheetName];
+//     const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+//     // Convert the array of arrays into an array of objects
+//     const headers = jsonData[0];
+//     const rows = jsonData.slice(1);
+//     const formattedData = rows.map((row) => {
+//       const obj = {};
+//       row.forEach((cell, index) => {
+//         obj[headers[index]] = cell;
+//       });
+//       return obj;
+//     });
+
+//     callback(formattedData);
+//   };
+//   reader.readAsArrayBuffer(file);
+// };
+
+
 const CreateProductForm = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);

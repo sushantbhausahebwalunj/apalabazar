@@ -28,7 +28,7 @@ function ProductDetails() {
   const [reviews, setReviews] = useState([]);
   
   const token = localStorage.getItem('authToken');
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchProduct(id)).then((resultAction) => {
@@ -82,12 +82,26 @@ function ProductDetails() {
     starRating: 'flex space-x-1 text-yellow-500',
   };
 
+  // const handleAddToCart = async () => {
+  //   const resultAction = dispatch(addToCart(id));
+  //   if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
+  //     navigate('/login');
+  //   }
+  // };
   const handleAddToCart = async () => {
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+      navigate('/login'); // Redirect to the login page if not logged in
+      return;
+    }
+    
     const resultAction = dispatch(addToCart(id));
     if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
       navigate('/login');
     }
   };
+  
 
   const handleRatingClick = (index) => setRating(index + 1);
   const handleMouseLeave = () => setHoverRating(0);

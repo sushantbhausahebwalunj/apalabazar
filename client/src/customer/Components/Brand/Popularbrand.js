@@ -25,7 +25,7 @@ const brands = [
 
 const PopularBrand = () => {
   return (
-    <div className="popular-brand-container bg-white flex flex-col w-[100vw] m-auto overflow-hidden relative mt-8">
+    <div className="popular-brand-container bg-white flex flex-col w-[100vw] m-auto overflow-hidden relative">
     <h2 className="text-2xl font-semibold mx-auto mt-10 text-center">Our most loved Brands</h2>
     <div className="brand-scroll flex items-center justify-start mb-8 overflow-x-hidden">
       <div className="scrolling-container flex items-center whitespace-nowrap animate-scroll animate-infinite">

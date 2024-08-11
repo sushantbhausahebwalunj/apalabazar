@@ -566,7 +566,7 @@
   function CategoryNavigation() {
     return (
       <nav className={navclasses}>
-        <div className="flex gap-6 self-center items-center justify-center w-full">
+        <div className="flex gap-4 self-center items-center justify-center w-full">
         <div className="border-r-[3px] p-2 pr-5 lg:pr-16 w-fit">
                <button
                   onClick={handleNavigate}
@@ -591,7 +591,7 @@
         ) : (  <span>All Categories</span>)}
                 </button>
               </div>
-              { viewport ? ( <div className="flex flex-wrap gap-3.5 px-8 w-fit max-md:max-w-full">
+              { viewport ? ( <div className="flex flex-wrap gap-3.5 w-full max-md:max-w-full">
                             <SearchBar />
                             {/* <IconGroup /> */}
                             <nav className="flex gap-5 items-center my-auto min-h-[20px]">
@@ -694,7 +694,7 @@
 
   function SearchBar() {
     return (
-      <form onSubmit={handleSearch} className="flex hidden lg:block flex-col grow shrink-0 justify-center items-start px-3 py-1 text-sm leading-none text-right rounded-xl basis-0 bg-slate-100 text-stone-500 md:w-[507px] h-auto max-md:pr-5 max-md:max-w-full">
+      <form onSubmit={handleSearch} className="flex lg:block flex-col grow shrink-0 justify-center items-start px-3 py-1 text-sm leading-none text-right rounded-xl basis-0 bg-slate-100 text-stone-500 md:w-[507px] h-auto max-md:pr-5 max-md:max-w-full">
         <div className="flex items-center w-full h-fit min-h-[8px]">
           <button type="submit">
             <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/99f489e1b79d5739e5672ea85b3334c7c95166c556f16f5b9bc5d5475ab92174?apiKey=b18cd05798ae4dd7bd4cecc4acd64b6b&" alt="" className="object-contain shrink-0 aspect-square w-[18px]" />

@@ -57,6 +57,9 @@ const ProductTable = () => {
     return words.slice(0, wordLimit).join(' ') + '...';
   };
 
+  //Import 
+  
+
   return (
     <div className="p-6 bg-card text-card-foreground rounded-lg max-w-full mx-auto overflow-x-auto">
       <ToastContainer />

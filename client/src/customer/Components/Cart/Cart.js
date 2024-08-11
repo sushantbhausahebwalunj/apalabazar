@@ -42,17 +42,17 @@ const CartItem = ({ unik, actualPrice, imageSrc, productName, price, savings, qt
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const [priceSummary,setPriceSummary] = useState('')
+  
+  const [priceSummary, setPriceSummary] = useState('')
   const { items, status, fetchCartError } = useSelector((state) => state.cart);
   const [viewport, setViewport] = useState(false);
 
   // COUPONS FETCHING
-  const { coupons, status : couponsstatus } = useSelector((state) => state.coupons);
+  const { coupons, status: couponsstatus } = useSelector((state) => state.coupons);
   const [showCouponOverlay, setShowCouponOverlay] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   useEffect(() => {
-      dispatch(fetchCoupons());
+    dispatch(fetchCoupons());
   }, [dispatch]);
 
   useEffect(() => {
@@ -101,11 +101,11 @@ const Cart = () => {
   };
 
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (search.trim() === "") return; // Check if the search field is empty
-    navigate(`/search/${search}`);
-  };
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   if (search.trim() === "") return; // Check if the search field is empty
+  //   navigate(`/search/${search}`);
+  // };
 
   const checkOut = () => {
     navigate('/checkout');
@@ -142,9 +142,7 @@ const Cart = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
+ 
 
   if (!items || items.length === 0) {
     setPriceSummary({ totalDiscountedPrice: 0, discount: 0, totalActualPrice: 0 });
@@ -153,66 +151,39 @@ const Cart = () => {
   }
 
   return (
-    
-    <div className="min-h-screen bg-gray-50">
- <div>
- <div className="bg-white p-4 border-b-[2px] flex items-center justify-between shadow-md">
- <a href="/" className="flex items-center space-x-4">
- <img
-                src={logo}
-                alt="Logo"
-                className="h-10"
-                crossOrigin="anonymous"
-              />
-            </a>
-            <div className="md:flex items-center hidden">
-            <form onSubmit={handleSearch}>
-                <input
-                  type="search"
-                  placeholder="Search for Biscuits"
-                  className="border-[2px] border-zinc-300 rounded-l-md shadow-md p-2 w-[40vw] lg:w-[35vw] dark:bg-white dark:text-black"
-                  onChange={(e) => setSearch(e.target.value)}
-                  required
-                  value={search}
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-500 border-[2px] border-blue-500 text-white p-2 rounded-r-md hover:bg-blue-700 transition duration-300"
-                  >
-                  SEARCH
-                </button>
-              </form>
-            </div>
-            </div>
- </div>
- <div className="container mx-auto p-4">
+
+    <div className="min-h-screen bg-gray-50 ">
+      <div>
+       <Navbar/>
+      </div>
+      <div className="container mx-auto p-4 mt-40">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-3/4">
-            <h3 className="text-lg mb-4"> 
+            <h3 className="text-lg mb-4">
               <span className="text-green-500 font-semibold">Cart /</span> <span>Checkout</span> / Confirmation ({items[0].length} items)</h3>
-              <div className="overflow-x-auto rounded-md bg-white border shadow-md">
-              <table className="min-w-full">
-              <thead className="bg-gray-100">
-              <tr>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Product</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Price</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">Aapla Bajar Price</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">You Save</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b">No. of items</th>
-                    <th className="py-2 px-2 sm:py-2 sm:px-4 border-b"></th>
+            <div className="overflow-x-auto rounded-md  shadow-sm">
+              <table className="min-w-full ">
+                <thead className="bg-Orange-500">
+                  <tr>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b">Product</th>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b">Price</th>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b">Aapla Bajar Price</th>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b">You Save</th>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b">No. of items</th>
+                    <th className="py-2 bg-orange-200 px-2 sm:py-2 sm:px-4 border-b"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className='bg-orange-500'>
                   {items[0].map(item => (
-                <CartItem
-                      key={item&&item._id}
-                      prodid={items&&item&&item.product&&item.product._id}
+                    <CartItem className='object-cover'
+                      key={item && item._id}
+                      prodid={items && item && item.product && item.product._id}
                       unik={item._id}
-                      imageSrc={items&&item&&item.product&&item.product.imageUrl}
-                      productName={items&&item&&item.product&&item.product.title}
-                      actualPrice={items&&item&&item.product&&item.product.price * item.quantity}
-                      price={items&&item&&item.product&&item.product.discountedPrice * item.quantity}
-                      savings={(items&&item&&item.product&&item.product.price -item.product.discountedPrice) * item.quantity}
+                      imageSrc={items && item && item.product && item.product.imageUrl}
+                      productName={items && item && item.product && item.product.title}
+                      actualPrice={items && item && item.product && item.product.price * item.quantity}
+                      price={items && item && item.product && item.product.discountedPrice * item.quantity}
+                      savings={(items && item && item.product && item.product.price - item.product.discountedPrice) * item.quantity}
                       qty={item.quantity}
                       decreaseQuantity={decreaseQuantity}
                       increaseQuantity={increaseQuantity}
@@ -223,27 +194,27 @@ const Cart = () => {
               </table>
             </div>
             <div className="flex justify-end mt-4">
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300" onClick={clearCartItems}>Remove all</button>
+              <button className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300" onClick={clearCartItems}>Remove all</button>
             </div>
           </div>
-          <div className="w-full lg:w-1/4 lg:pl-4 mt-4 lg:mt-0">
-  <div className="bg-white p-6 border rounded-md shadow-md">
-    <h3 className="text-xl font-semibold mb-4 text-gray-800">Price Summary</h3>
-    <div className="flex justify-between items-center mb-4">
-      <span className="text-gray-600">Cart Total</span>
-                <span  className="font-semibold text-gray-800">₹ {priceSummary.totalDiscountedPrice}</span>
+          <div className="w-full lg:w-1/4 lg:pl-4 mt-4 lg:mt-30">
+            <div className="bg-orange-100 p-6 border rounded-md shadow-md">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Price Summary</h3>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-gray-600">Cart Total</span>
+                <span className="font-semibold text-gray-800">₹ {priceSummary.totalDiscountedPrice}</span>
               </div>
               <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-600">You Saved</span>
-              <span className="font-semibold text-green-600">₹  {priceSummary.discount}</span>
+                <span className="text-gray-600">You Saved</span>
+                <span className="font-semibold text-green-600">₹  {priceSummary.discount}</span>
               </div>
               <div className="flex justify-between items-center mb-4">
-              <div className="group relative">
-              <button className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition duration-300">
-              <span >Delivery Charge <FaCircleInfo /></span>
+                <div className="group relative">
+                  <button className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition duration-300">
+                    <span >Delivery Charge <FaCircleInfo /></span>
                   </button>
                   <div className="absolute left-0 bottom-8 hidden mt-2 p-3 text-sm text-white bg-black border border-gray-300 rounded-md shadow-lg w-64 group-hover:block">
-                  <ul className="list-disc pl-4">
+                    <ul className="list-disc pl-4">
                       <li>Home Delivery : Flat Rs. 40</li>
                       <li>Pick Up Point : Free Delivery</li>
                     </ul>
@@ -254,7 +225,7 @@ const Cart = () => {
 
               {/* SHWOS HTHE AVAILABEL COUPONS */}
               <div className="relative">
-                <button className="bg-blue-500  w-full text-white px-4 mb-2 mt-4 py-2 rounded-full" onClick={() => setShowCouponOverlay(true)}>
+                <button className="bg-green-500  w-full text-white px-4 mb-2 mt-4 py-2 rounded-md" onClick={() => setShowCouponOverlay(true)}>
                   Apply Coupons
                 </button>
 
@@ -263,20 +234,20 @@ const Cart = () => {
                     {/* <div className="bg-white p-4 rounded-md shadow-lg"> */}
                     <div className="w-1/2 pr-4">
                       <div className="bg-green-100 p-8 rounded-lg shadow-md">
-                      <h2 className="text-lg font-semibold mb-2">Select a Coupon</h2>
-                      {couponsstatus === "succeeded" && coupons.map((coupon) => (
-                         <div key={coupon._id} className="mb-4 p-2 bg-white rounded-lg items-center hover:scale-[1.02] transition duration-300">
-                         <div className="flex justify-between p-4 bg-white rounded-lg items-center border-2 border-dashed border-gray-500">
-                             <div className="flex items-center">
-                                 <div className="mr-3 text-blue-500">
-                                     <LocalOfferIcon/>
-                                 </div>
-                                 <div>
-                                     <p className="text-gray-800 font-medium">{coupon.code}: {coupon.discountType === "percentage" ? `${coupon.discountValue}% off` : `${coupon.discountValue} off`}</p>
-                                     <p className="text-gray-600">Expires on {new Date(coupon.expirationDate).toLocaleDateString()}</p>
-                                 </div>
-                             </div>
-                             <div className="flex">
+                        <h2 className="text-lg font-semibold mb-2">Select a Coupon</h2>
+                        {couponsstatus === "succeeded" && coupons.map((coupon) => (
+                          <div key={coupon._id} className="mb-4 p-2 bg-white rounded-lg items-center hover:scale-[1.02] transition duration-300">
+                            <div className="flex justify-between p-4 bg-white rounded-lg items-center border-2 border-dashed border-gray-500">
+                              <div className="flex items-center">
+                                <div className="mr-3 text-blue-500">
+                                  <LocalOfferIcon />
+                                </div>
+                                <div>
+                                  <p className="text-gray-800 font-medium">{coupon.code}: {coupon.discountType === "percentage" ? `${coupon.discountValue}% off` : `${coupon.discountValue} off`}</p>
+                                  <p className="text-gray-600">Expires on {new Date(coupon.expirationDate).toLocaleDateString()}</p>
+                                </div>
+                              </div>
+                              <div className="flex">
                                 <input
                                   type="checkbox"
                                   checked={selectedCoupon === coupon._id}
@@ -284,32 +255,32 @@ const Cart = () => {
                                   disabled={selectedCoupon && selectedCoupon !== coupon._id}
                                   className="mr-2"
                                 />
-                                 {/* <div className="mr-3 text-red-300 hover:text-red-500" onClick={(e) => handleDelete(coupon._id,e)}>
+                                {/* <div className="mr-3 text-red-300 hover:text-red-500" onClick={(e) => handleDelete(coupon._id,e)}>
                                      <RemoveCircleIcon />
                                  </div> */}
-                             </div>
-                             
-                         </div>
-                         </div>
-                      ))}
-                      <div className="flex justify-end mt-4">
-                        <button
-                          className="bg-green-300 text-white px-4 py-2 hover:bg-green-600 rounded-full"
-                          onClick={applyCoupon}
-                          disabled={!selectedCoupon}
-                        >
-                          Apply
-                        </button>
-                        <button className="bg-red-300 text-white px-4 hover:bg-red-600 py-2 rounded-full ml-2" onClick={() => setShowCouponOverlay(false)}>
-                          Cancel
-                        </button>
+                              </div>
+
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-end mt-4">
+                          <button
+                            className="bg-green-300 text-white px-4 py-2 hover:bg-green-600 rounded-md"
+                            onClick={applyCoupon}
+                            disabled={!selectedCoupon}
+                          >
+                            Apply
+                          </button>
+                          <button className="bg-red-300 text-white px-4 hover:bg-red-600 py-2 rounded-full ml-2" onClick={() => setShowCouponOverlay(false)}>
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                    </div>
                     </div>
                   </div>
                 )}
               </div>
-              <button className="w-full bg-green-500 text-white py-2 rounded-full" onClick={checkOut}>PROCEED TO CHECKOUT</button>
+              <button className="w-full bg-orange-600 text-white py-2 rounded-md" onClick={checkOut}>PROCEED TO CHECKOUT</button>
             </div>
           </div>
 

@@ -857,7 +857,7 @@ const Navbar = (props) => {
             </div>
           </nav>
         </div>
-        <CategoryNavigation />
+       {isMobile ? null : <CategoryNavigation /> }
       </header>
     </>
   );

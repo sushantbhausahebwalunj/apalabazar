@@ -1,4 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchProducts } from '../../../Redux/Product/productSlice';
+import { useCartContext } from '../../../Usecontext/cartContext';
+import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import './Trending.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ProductCard from '../Products/Cards';
 
 const smartphones = [
   { name: 'Galaxy S22 Ultra', price: '₹32999', originalPrice: '₹74999', image: 'dummy-image-1.jpg' },
@@ -18,12 +28,37 @@ const smartphones = [
   { name: 'Galaxy M53 (4GB | 64 GB)', price: '₹31999', originalPrice: '₹40999', image: 'dummy-image-4.jpg' },
 ];
 
+
 const Trending = () => {
   const [showAll, setShowAll] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleViewAllClick = () => {
     setShowAll(!showAll);
   };
+
+  const dispatch = useDispatch();
+  const { products, status } = useSelector((state) => state.products);
+  useEffect(() => {
+    dispatch(fetchProducts());
+    // const handleResize = () => setIsMobile(window.innerWidth <= 500);
+    // window.addEventListener('resize', handleResize);
+
+    // return () => window.removeEventListener('resize', handleResize);
+  }, [dispatch]);
+
+  
+  
+  useEffect(() => {
+    if (status === "succeeded" && products.length > 0) {
+      const filtered = showAll ? products.slice(0,10) : products.slice(0, 5);
+      setFilteredProducts(filtered);
+      console.log("Filtered products: ", filtered);
+    } else {
+      setFilteredProducts([]); 
+    }
+  }, [products, status, showAll]);
+  
 
   const displayedSmartphones = showAll ? smartphones : smartphones.slice(0, 5);
 
@@ -39,19 +74,18 @@ const Trending = () => {
       </div>
       <hr className="border-t-2 border-orange-500 mb-4" />
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {displayedSmartphones.map((phone, index) => (
-          <div
-            key={index}
-            className={`p-2 sm:p-4 rounded-lg bg-gray-100 hover:bg-orange-100 shadow-lg transition ease-in`}
-
-
-          >
-            <img src={phone.image} alt={phone.name} className="w-full h-32 sm:h-40 object-cover mb-2 sm:mb-4" />
-            <h3 className="text-sm sm:text-lg font-semibold">{phone.name}</h3>
-            <div className="text-base sm:text-xl font-bold text-green-600">{phone.price}</div>
-            <div className="text-xs sm:text-sm text-gray-500 line-through">{phone.originalPrice}</div>
-            <button className="mt-1 sm:mt-2 text-green-600 text-xs sm:text-base">Buy Now</button>
-          </div>
+        {status === "succeeded" && filteredProducts?.map((product) => (
+          // <div
+          //   key={product._id}
+          //   className={`p-2 sm:p-4 rounded-lg bg-gray-100 hover:bg-orange-100 shadow-lg transition ease-in`}
+          // >
+          //   <img src={phone.image} alt={phone.name} className="w-full h-32 sm:h-40 object-cover mb-2 sm:mb-4" />
+          //   <h3 className="text-sm sm:text-lg font-semibold">{phone.name}</h3>
+          //   <div className="text-base sm:text-xl font-bold text-green-600">{phone.price}</div>
+          //   <div className="text-xs sm:text-sm text-gray-500 line-through">{phone.originalPrice}</div>
+          //   <button className="mt-1 sm:mt-2 text-green-600 text-xs sm:text-base">Buy Now</button>
+          // </div>
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>
@@ -59,22 +93,6 @@ const Trending = () => {
 };
 
 export default Trending;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

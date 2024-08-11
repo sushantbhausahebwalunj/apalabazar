@@ -23,6 +23,9 @@ const Categories = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState('');
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [categoriesPerPage] = useState(10); // Adjust the number of categories per page here
+
   useEffect(() => {
     dispatch(fetchCategories())
       .catch(err => setError(err.message)); // Handle errors when fetching categories
@@ -83,6 +86,18 @@ const Categories = () => {
     }
   };
 
+  // Pagination logic
+  const indexOfLastCategory = currentPage * categoriesPerPage;
+  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+
+  // Sort categories by level
+  const sortedCategories = [...categories].sort((a, b) => a.level - b.level);
+
+  // Get current categories for the current page
+  const currentCategories = sortedCategories.slice(indexOfFirstCategory, indexOfLastCategory);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="bg-transparent">
       <div className="m-9 rounded-lg p-4 bg-white text-[--foreground]">
@@ -105,41 +120,57 @@ const Categories = () => {
               <div className="w-1/4 p-2">Quantity</div>
               <div className="w-1/4 p-2">Action</div>
             </div>
-            {categories.map((category) => (
-              <div key={category._id} className="flex justify-between p-2 border-b border-gray-400">
-                <div className="w-1/4 p-2">{category.name}</div>
-                <div className="w-1/4 p-2">
-                  {category.parentCategory ? category.parentCategory.name : 'None'}
+            {currentCategories.length > 0 ? (
+              currentCategories.map((category) => (
+                <div key={category._id} className="flex justify-between p-2 border-b border-gray-400">
+                  <div className="w-1/4 p-2">{category.name}</div>
+                  <div className="w-1/4 p-2">
+                    {category.parentCategory ? category.parentCategory.name : 'None'}
+                  </div>
+                  <div className="w-1/4 p-2 hidden md:block">{category.level}</div>
+                  <div className="w-1/4 p-2">{category.level}</div>
+                  <div className="w-1/4 p-2 flex space-x-3">
+                    <button
+                      onClick={() => updateModal(category)}
+                      className="text-[--accent] hover:text-[--accent]/80"
+                      aria-label="Edit category"
+                    >
+                      <img
+                        aria-hidden="true"
+                        alt="edit-icon"
+                        src="https://openui.fly.dev/openui/16x16.svg?text=✏️"
+                      />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(category._id)}
+                      className="text-[--destructive] hover:text-[--destructive]/80"
+                      aria-label="Delete category"
+                    >
+                      <img
+                        aria-hidden="true"
+                        alt="delete-icon"
+                        src="https://openui.fly.dev/openui/16x16.svg?text=🗑️"
+                      />
+                    </button>
+                  </div>
                 </div>
-                <div className="w-1/4 p-2 hidden md:block">{category.level}</div>
-                <div className="w-1/4 p-2">{category.level}</div>
-                <div className="w-1/4 p-2 flex space-x-3">
-                  <button
-                    onClick={() => updateModal(category)}
-                    className="text-[--accent] hover:text-[--accent]/80"
-                    aria-label="Edit category"
-                  >
-                    <img
-                      aria-hidden="true"
-                      alt="edit-icon"
-                      src="https://openui.fly.dev/openui/16x16.svg?text=✏️"
-                    />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(category._id)}
-                    className="text-[--destructive] hover:text-[--destructive]/80"
-                    aria-label="Delete category"
-                  >
-                    <img
-                      aria-hidden="true"
-                      alt="delete-icon"
-                      src="https://openui.fly.dev/openui/16x16.svg?text=🗑️"
-                    />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="p-2">No categories found.</div>
+            )}
           </div>
+        </div>
+        {/* Pagination */}
+        <div className="flex justify-end mt-4">
+          {[...Array(Math.ceil(sortedCategories.length / categoriesPerPage)).keys()].map((pageNumber) => (
+            <button
+              key={pageNumber + 1}
+              className={`px-3 py-1 border rounded-md mx-1 ${currentPage === pageNumber + 1 ? 'bg-blue-500 text-white' : 'text-zinc-600 hover:bg-zinc-200'} transition duration-300`}
+              onClick={() => paginate(pageNumber + 1)}
+            >
+              {pageNumber + 1}
+            </button>
+          ))}
         </div>
         <Modal
           isOpen={showModal}
@@ -194,11 +225,13 @@ const Categories = () => {
                   className={`w-full p-2 ${sharedClasses.border}`}
                 >
                   <option value="">None</option>
-                  {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))}
+                  {categories
+                    .filter((category) => category._id !== form.id) // Exclude current category
+                    .map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.name}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="mb-4">
@@ -217,15 +250,8 @@ const Categories = () => {
               </div>
               <div className="flex justify-end">
                 <button
-                  type="button"
-                  onClick={closeModal}
-                  className="mr-2 px-4 py-2 bg-gray-300 rounded-lg"
-                >
-                  Cancel
-                </button>
-                <button
                   type="submit"
-                  className={`px-4 py-2 rounded-lg ${sharedClasses.primary}`}
+                  className={`px-4 py-2 rounded-lg ${sharedClasses.primary} hover:${sharedClasses.secondary}`}
                 >
                   {isEditing ? 'Update' : 'Add'}
                 </button>

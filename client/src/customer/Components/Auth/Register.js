@@ -39,7 +39,6 @@ const Register = ({ showModal, setShowModal }) => {
   };
 
   const handleContactChange = (e) => {
-    e.preventDefault();
     setContactValue(e.target.value);
   };
 

@@ -10,12 +10,6 @@ router.get('/view/:id', viewProduct);
 router.put('/update/:id', verifyAdmin, upload.single('image'), updateProduct);
 router.delete('/delete/:id', verifyAdmin, deleteProduct);
 router.get('/view', viewProducts);
-router.get('/suggested/:categoryId', async (req, res) => {
-    try {
-        const categoryId = req.params.categoryId;
-        const suggestedProducts = await Product.find({ category: categoryId }).limit(10);
-        res.status(200).json(suggestedProducts);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching suggested products' });
-    }
-});export default router;
+    export default router;
+
+    

@@ -7,10 +7,10 @@ import { signInWithGooglePopup } from "../../../firebaseConfig.js";
 import "./loginpg.css";
 import "react-toastify/dist/ReactToastify.css";
 import {jwtDecode} from "jwt-decode";
-import { useDispatch } from "react-redux"; // <-- Add this import
+import { useDispatch } from "react-redux"; 
 
 const Login = () => {
-  const dispatch = useDispatch(); // <-- You can now use dispatch in your component
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

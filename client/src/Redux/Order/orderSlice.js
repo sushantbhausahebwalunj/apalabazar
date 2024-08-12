@@ -13,15 +13,11 @@ export const placeOrder = createAsyncThunk('order/placeOrder', async (orderData,
 export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.get('/order/getAllOrders');
-    console.log("insider orderslice: ",response.data.data);
-    return response.data.data;
-    
+    return response.data.data;  // Assuming the API returns orders under `data.data`
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
-
-
 
 const orderSlice = createSlice({
   name: 'orders',
@@ -49,8 +45,7 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.orders = action.payload;
-        console.log("inside addcase: ",action.payload);
+        state.orders = action.payload;  // Populate the orders state
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = 'failed';

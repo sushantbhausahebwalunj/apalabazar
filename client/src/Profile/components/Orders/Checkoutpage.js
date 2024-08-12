@@ -9,8 +9,6 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { placeOrder } from "../../../Redux/Order/orderSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { createPaymentOrder, verifyPayment } from "../../../Redux/Payment/paymentSlice";
-import paymentlogo from './paymentlogo.png';
 
 const INPUT_CLASS =
   "mt-1 block w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-white text-zinc-900 dark:text-black";
@@ -119,64 +117,33 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     const res = await loadRazorpayScript();
-  
+
     if (!res) {
-      toast.error("Razorpay SDK failed to load. Are you online?");
+      alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-  
+
     try {
-      const order = await dispatch(createPaymentOrder({
+      const response = await axios.post("/payment/create-order", {
         amount: items[1].totalDiscountedPrice,
         currency: "INR",
-      })).unwrap();
-  
+      });
+
+      const { order } = response.data;
+
       const options = {
         key: "rzp_test_yWMvyDcDnYXnV6",
-        image: paymentlogo,
+        image: "./apala bazar.png",
         amount: order.amount,
         currency: order.currency,
         order_id: order.id,
-        name: "Aapala Bajar",
+        name: "Apala Bazar",
         description: "Checkout",
-        handler: async function (response) {
-          try {
-            const verificationData = {
-              order_id: response.razorpay_order_id,
-              payment_id: response.razorpay_payment_id,
-              signature: response.razorpay_signature,
-            };
-  
-            // Verify the payment
-            await dispatch(verifyPayment(verificationData)).unwrap();
-            toast.success("Payment verified successfully");
-  
-            // Get selected address
-            const selectedAddress = address.find(addr => addr._id === savedAddressChecked);
-            if (!selectedAddress) {
-              console.error("Selected address not found");
-              return;
-            }
-  
-            // Prepare order data
-            const orderData = {
-              shippingAddress: selectedAddress,
-              paymentDetails: {
-                paymentMethod: 'Online Payment',
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-              },
-            };
-  
-            // Place the order
-            await dispatch(placeOrder(orderData));
-            toast.success("Order placed successfully");
-            navigate('/myprofile/my-orders');
-          } catch (error) {
-            console.error("Failed to place order:", error);
-            toast.error("Failed to place order");
-          }
+        handler: function (response) {
+          alert("Payment successful");
+          alert("Payment ID: " + response.razorpay_payment_id);
+          alert("Order ID: " + response.razorpay_order_id);
+          alert("Signature: " + response.razorpay_signature);
         },
         prefill: {
           name: formData.fullName,
@@ -187,21 +154,17 @@ const Checkout = () => {
           address: `${formData.houseNumber}, ${formData.area}, ${formData.streetAddress}, ${formData.state} - ${formData.zipCode}`,
         },
         theme: {
-          color: "#FFAC1C",
+          color: "#3399cc",
         },
       };
-  
+
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
       console.error("Error creating order:", error);
-      toast.error("Error creating order. Please try again.");
+      alert("Error creating order. Please try again.");
     }
   };
-  
-  
-  
-  
 
 
   const handleOrder = () => {

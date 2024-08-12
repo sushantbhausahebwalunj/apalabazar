@@ -29,7 +29,7 @@ const OtherComponent = ({ advertisements, status }) => {
         </div>
         {advertisements.filter(advertisement => advertisement.section === "Section 2").length > 4 && (
           <div className="text-center mt-4">
-            <Link to="/all-food-and-beverages" className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+            <Link to="/all-food-and-beverages" className="bg-orange-500 text-white py-2 px-4 rounded-lg">
               View All
             </Link>
           </div>

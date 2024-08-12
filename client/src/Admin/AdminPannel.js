@@ -15,6 +15,7 @@ import Advertisements from "./components/Advertisements/Advertisements";
 import Coupons from "./components/Coupons/Coupons";
 import { FaTachometerAlt, FaBoxOpen, FaTags, FaShoppingCart, FaUser, FaCog, FaTimes } from 'react-icons/fa';
 import { RiAdvertisementFill,RiCoupon2Fill } from "react-icons/ri";
+import axiosInstance from "../axiosConfig";
 
 const sidebarClasses = 'w-64 bg-white border-r border-gray-200 shadow-lg fixed lg:static h-full lg:z-auto'; // Increased z-index
 const linkClasses = 'flex items-center p-4 mt-2 text-gray-600 hover:bg-gray-100 hover:text-green-500 rounded-lg transition-colors duration-200';

@@ -190,7 +190,7 @@ function HomePage() {
     {
       id: 1,
       href: "./product/2",
-      src: "./chocolates.jpg",
+      src: "https://cdn.shopify.com/s/files/1/0070/7032/files/ecommerce_20grocery_20companies.png?v=1706715954",
       alt: "Chocolates",
     },
     {
@@ -272,7 +272,7 @@ function HomePage() {
                       <img
 
                         src={item.src}
-                        className="object-contain h-[20vh] lg:h-[45vh] w-full rounded-md"
+                        className="object-cover h-[20vh] lg:h-[45vh] w-full rounded-md"
                         alt="Skin Care"
                       />
                     </div>

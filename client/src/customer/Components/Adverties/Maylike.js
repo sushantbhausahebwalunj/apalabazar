@@ -1,6 +1,6 @@
 import React from 'react';
 
-const cardClasses = "bg-blue-500  rounded-lg overflow-hidden transform hover:scale-105 transition duration-300";
+const cardClasses = " bg-orange-500 rounded-lg overflow-hidden transform hover:scale-105 transition duration-300";
 const contentClasses = "p-4";
 const titleClasses = "text-lg font-medium text-white";
 
@@ -17,7 +17,7 @@ const ProductCard = ({ imgSrc, imgAlt, title }) => {
 
 const ProductGrid = () => {
   return (
-    <div className="p-6 mt-6 mx-auto mb-8 bg-white rounded-md w-[96vw]">
+    <div className="p-6 mt-6 mx-auto bg-white rounded-md w-[96vw]">
       <h2 className="text-xl font-semibold mb-4">You may like...</h2>
       <div className="grid grid-cols-1 h-[92vh] lg:h-fit p-5 mb-10 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <ProductCard imgSrc="https://admin.itcstore.in/media/wysiwyg/gifting-essentials.jpg" imgAlt="Gifting Solution" title="Gifting Solution" />

@@ -28,7 +28,7 @@ function ProductDetails() {
   const [reviews, setReviews] = useState([]);
   
   const token = localStorage.getItem('authToken');
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchProduct(id)).then((resultAction) => {
@@ -82,19 +82,33 @@ function ProductDetails() {
     starRating: 'flex space-x-1 text-yellow-500',
   };
 
+  // const handleAddToCart = async () => {
+  //   const resultAction = dispatch(addToCart(id));
+  //   if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
+  //     navigate('/login');
+  //   }
+  // };
   const handleAddToCart = async () => {
-    const resultAction = await dispatch(addToCart(id));
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+      navigate('/login'); // Redirect to the login page if not logged in
+      return;
+    }
+    
+    const resultAction = dispatch(addToCart(id));
     if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {
       navigate('/login');
     }
   };
+  
 
   const handleRatingClick = (index) => setRating(index + 1);
   const handleMouseLeave = () => setHoverRating(0);
   const handleMouseEnter = (index) => setHoverRating(index + 1);
   const handleViewAllClick = () => setShowAll(!showAll);
 
-  const sectionHeight = showAll ? '1000px' : '400px';
+  const sectionHeight = showAll ? '1000px' : '150px';
 
   const settings = {
     dots: false,
@@ -120,17 +134,7 @@ function ProductDetails() {
       <div>
         <div style={{ height: sectionHeight + '30px', overflow: 'hidden', transition: 'height 0.3s ease' }} className="product-details-container mt-20 mb-8">
           <div className="product-image-section">
-            <div className="image-gallery">
-              {[...Array(4)].map((_, index) => (
-                <div key={index} className="thumbnail">
-                  <img
-                    src={productDetails?.imageUrl} 
-                    alt="Product Thumbnail"
-                    className="thumbnail-img"
-                  />
-                </div>
-              ))}
-            </div>
+         
             <div className="main-image">
               <Slider {...settings}>
                 <img
@@ -139,6 +143,17 @@ function ProductDetails() {
                   className="w-full h-auto object-contain "
                 />
               </Slider>
+            </div>
+            <div className="image-gallery">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="thumbnail">
+                  <img
+                    src={productDetails?.imageUrl} 
+                    alt={`Product Thumbnail ${index + 1}`}
+                    className="thumbnail-img"
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="product-info-section">

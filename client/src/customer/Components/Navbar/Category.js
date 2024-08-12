@@ -3,14 +3,24 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice"; // Adjust the path as necessary
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Category = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);
+  const categoryError = useSelector((state) => state.categories.error);
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategories())
+      .unwrap()
+      .then(() => {
+        toast.success("Categories loaded successfully!");
+      })
+      .catch((error) => {
+        toast.error(`Failed to load categories: ${error.message}`);
+      });
   }, [dispatch]);
 
   const handleNavigate = (path) => {
@@ -22,7 +32,9 @@ const Category = () => {
       .filter((category) => category.parentCategory && category.parentCategory._id === parentCategoryId)
       .map((subcategory) => (
         <li key={subcategory._id}>
-          <button onClick={() => handleNavigate(`/${subcategory.parentCategory._id.toLowerCase()}/${subcategory._id}`)}>{subcategory.name}</button>
+          <button onClick={() => handleNavigate(`/${subcategory.parentCategory._id.toLowerCase()}/${subcategory._id}`)}>
+            {subcategory.name}
+          </button>
         </li>
       ));
   };
@@ -59,6 +71,7 @@ const Category = () => {
           {renderCategories()}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

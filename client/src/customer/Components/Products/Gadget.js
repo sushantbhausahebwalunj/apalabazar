@@ -50,7 +50,7 @@ const Gadgets = ({ advertisements, status }) => {
           ))}
         </div>
         <div className="text-center mt-4">
-          <Link to="/gadgets" className="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
+          <Link to="/gadgets" className="inline-block bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition duration-300">
             View All
           </Link>
         </div>

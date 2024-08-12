@@ -17,6 +17,13 @@ const ProductCard = ({ product }) => {
   const { addToCartStatus, addToCartError } = useSelector((state) => state.cart);
 
   const handleAddToCart = async () => {
+
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+      navigate('/login'); // Redirect to the login page if not logged in
+      return;
+    }
     const id = product._id;
     const resultAction = dispatch(addToCart(id));
     if (addToCart.rejected.match(resultAction) && resultAction.payload && resultAction.payload.isUnauthorized) {

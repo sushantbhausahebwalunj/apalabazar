@@ -12,6 +12,9 @@ import couponsRoute from "../routes/coupons.route.js";
 import OrderRouter from "../routes/order.route.js";
 import deliveryRoute from "../routes/delivery.routes.js";
 import { importProducts } from "../controller/importexport.js";
+import paymentRoute from "../routes/payment.route.js";
+
+
 const allRouter = express.Router();
 
 allRouter.use("/admin", adminRouter);
@@ -26,6 +29,7 @@ allRouter.use("/coupons", couponsRoute);
 allRouter.use("/order", OrderRouter);
 allRouter.use("/cart", cartRouter);
 allRouter.use("/delivery", deliveryRoute);
+allRouter.use("/payment", paymentRoute);
 allRouter.use('/import',importProducts);
 
 export default allRouter;

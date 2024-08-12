@@ -400,6 +400,9 @@ import logo from "../../../logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from '../../../Redux/Cart/cartSlice';
+import { BiSolidOffer } from "react-icons/bi";
+import { TbMapPinCode } from "react-icons/tb";
+import { TbTruckDelivery } from "react-icons/tb";
 import { fetchCategories } from "../../../Redux/Category/categoriesSlice.js"; // Adjust the path as necessary
 
 const Navbar = (props) => {
@@ -771,7 +774,30 @@ const Navbar = (props) => {
     //   {/* )} */}
     // </>
     <>
-      <header className="fixed top-0 left-0 right-0 flex  flex-wrap justify-between items-center pt-2 w-full bg-orange-600 max-md:px-5 overflow-hidden z-50 max-md:max-w-full">
+      <header className="shadow-lg overflow-hidden relative ">
+        {/* top most navbar */}
+        <div className="flex top-0 items-center justify-between p-1 px-4 border-b-[1px]  bg-gray-50 border-b-gray-400 border-border">
+          <h1 className="text-xs  text-foreground">
+            Welcome to worldwide Aapla Bajar!
+          </h1>
+          <div className="flex items-center space-x-6">
+            <button className="flex items-center text-primary hover:text-red-500 space-x-1 hover:text-primary/80">
+              <TbMapPinCode className="text-blue-400 " />
+              <span className="text-xs">Deliver to 423651</span>
+            </button>
+            <button className="flex items-center space-x-1 text-primary hover:text-red-500 hover:text-primary/80">
+              <TbTruckDelivery className="text-blue-400 " />
+              <span className="text-xs">Track your order</span>
+            </button>
+            <button className="flex items-center text-primary hover:text-red-500 space-x-1 hover:text-primary/80">
+              <BiSolidOffer className="text-blue-400 " />
+              <span className="text-xs">All Offers</span>
+            </button>
+          </div>
+        </div>
+        {/* Top Navbar */}
+        <div className="left-0 right-0 flex  flex-wrap justify-between items-center pt-2 w-full bg-orange-600 max-md:px-5 overflow-hidden z-50 max-md:max-w-full">
+      
         <div className="h-full lg:px-8 px-2 py-8" >
           {/* <img src={logo} alt="Logo" className="h-10" crossOrigin="anonymous"/> */}
           <p className="font-bold text-white lg:text-2xl text-lg">Apala<span className="text-gray-600">Bajar</span></p>
@@ -858,7 +884,9 @@ const Navbar = (props) => {
           </nav>
         </div>
        {isMobile ? null : <CategoryNavigation /> }
+      </div>
       </header>
+      
     </>
   );
 };

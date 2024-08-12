@@ -1,36 +1,29 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import Cart from "../models/order.model.js";
-import Order from "../models/order.model.js";
 import OrderItem from "../models/orderItems.js";
 import CartItem from "../models/cartItem.model.js";
 import Product from "../models/product.model.js";
 import { handleAllTotalOnlineSales, TotalAllupdateSalesData } from "./sale.controller.js";
+import Cart from "../models/cart.model.js";
+import Order from "../models/order.model.js";
 
 const placeOrder = asyncHandler(async (req, res) => {
   const { id } = req.user;
 
-  const order = await Cart.findOne({ user: id }).populate("cartItems");
+  // Fetch the user's cart and populate cartItems
+  const cart = await Cart.findOne({ user: id }).populate("cartItems");
 
-  if (!order) {
+  if (!cart) {
     return res.status(404).json(new ApiResponse(404, "Cart not found", null));
   }
 
-  // pincode availability check
-  // Uncomment the below code to check if the delivery is available in the user's area
-  // const isAvailable = await isPinCodeAvailable(req.body.pincode);
-
-  // if (!isAvailable) {
-  //   return res
-  //     .status(400)
-  //     .json(new ApiResponse(400, "Delivery not available in your area", null));
-  // }
-
   try {
     const orderItems = [];
-    let purchaseRate=0;
-    for (const cartItem of order.cartItems) {
-      const product = await Product.findById(cartItem._id);
+    let purchaseRate = 0;
+
+    // Loop through each cartItem and create corresponding orderItems
+    for (const cartItem of cart.cartItems) {
+      const product = await Product.findById(cartItem.product);
       const orderItem = new OrderItem({
         product: cartItem.product,
         quantity: cartItem.quantity,
@@ -40,36 +33,43 @@ const placeOrder = asyncHandler(async (req, res) => {
       });
       await orderItem.save();
       orderItems.push(orderItem._id);
-      purchaseRate=purchaseRate+product.purchaseRate;
+      purchaseRate += product.purchaseRate;
     }
 
+    // Create the order
     const order = new Order({
       user: id,
       orderItems: orderItems,
-      totalPrice: order.totalPrice,
-      totalDiscountedPrice: order.totalDiscountedPrice,
-      totalItem: order.totalItem,
-      discount: order.discount,
+      totalPrice: cart.totalPrice,
+      totalDiscountedPrice: cart.totalDiscountedPrice,
+      totalItem: cart.totalItem,
+      discount: cart.discount,
       GST: 0,
       shippingAddress: req.body.shippingAddress,
       paymentDetails: req.body.paymentDetails,
     });
+
     const OrderSale = {
-      totalPrice: order.totalPrice,
-      totalDiscountedPrice: order.totalDiscountedPrice,
+      totalPrice: cart.totalPrice,
+      totalDiscountedPrice: cart.totalDiscountedPrice,
       GST: 0,
-      discount: order.discount,
-      totalItem: order.totalItem,
+      discount: cart.discount,
+      totalItem: cart.totalItem,
       totalPurchaseRate: purchaseRate,
-      totalProfit: order.totalDiscountedPrice-purchaseRate,
-      finalPriceWithGST: order.totalDiscountedPrice,
-  };
+      totalProfit: cart.totalDiscountedPrice - purchaseRate,
+      finalPriceWithGST: cart.totalDiscountedPrice,
+    };
+
     await order.save();
-    await  handleAllTotalOnlineSales(OrderSale);
+    await handleAllTotalOnlineSales(OrderSale);
+
+    // Delete cartItems after the order is placed
     await CartItem.deleteMany({
-      _id: { $in: order.cartItems.map((item) => item._id) },
+      _id: { $in: cart.cartItems.map((item) => item._id) },
     });
-    await Cart.findByIdAndDelete(order._id);
+
+    // Delete the cart after placing the order
+    await Cart.findByIdAndDelete(cart._id);
 
     return res
       .status(200)
@@ -81,6 +81,7 @@ const placeOrder = asyncHandler(async (req, res) => {
       .json(new ApiResponse(500, "Error placing order", error.message));
   }
 });
+
 
 const getAllOrders = asyncHandler(async (req, res) => {
   const { id } = req.user;

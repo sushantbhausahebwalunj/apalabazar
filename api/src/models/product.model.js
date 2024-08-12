@@ -67,8 +67,8 @@ const productSchema = new mongoose.Schema({
   },
   // New fields for offline counter sales
   BarCode:{
-    type: Number,
-    default: 0,
+    type: String,
+     required:true,
   },
   stockType:{
     type: String,

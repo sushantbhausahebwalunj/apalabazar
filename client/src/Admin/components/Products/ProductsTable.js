@@ -56,6 +56,7 @@ const ProductTable = () => {
   // Function to truncate description
   const truncateDescription = (text, wordLimit) => {
     const words = text.split(' ');
+    console.log(words);
     if (words.length <= wordLimit) return text;
     return words.slice(0, wordLimit).join(' ') + '...';
   };

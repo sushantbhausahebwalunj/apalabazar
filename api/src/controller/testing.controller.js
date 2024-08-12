@@ -1,43 +1,28 @@
-import User from "../models/user.model.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+
+import Product from "../models/product.model.js";
+import Category from "../models/category.model.js";
+import Order from "../models/order.model.js";
+import Cart from "../models/cart.model.js";
+import CartItem from "../models/cartItem.model.js";
+import TotalOnlineSales from "../models/total.online.sales.js";
+
 
 // Verify OTP and create user
 export const testingRegisterUser = async (req, res) => {
 
-    const { email, password, userName } = req.body;
+      try{ 
+        await Order.collection.drop();
+        await Cart.collection.drop();
+        await CartItem.collection.drop();
+        await TotalOnlineSales.collection.drop();
+         await  Product.collection.drop();
+         await Category.collection.drop();
+         
+    
 
-    if (!email || !password || !userName) {
-        return res.status(400).json({ message: 'Email, OTP, password, and userName are required', status: false });
-    }
-
-    try {
-        
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create the user
-        const user = await User.create({ 
-            email, 
-            password: hashedPassword, 
-            userName 
-        });
-
-        
-
-        // Generate JWT token
-        if (!process.env.JWT_SECRET) {
-            console.error('JWT_SECRET environment variable is not set.');
-            return res.status(500).json({ message: 'Internal server error', status: false });
-        }
-        
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
-        
-        return res
+        return  res
         .status(201)
-        .json({ message: 'User created successfully', status: true, token, data: user });
+        .json({ message: 'User created successfully', status: true });
 
     } 
     

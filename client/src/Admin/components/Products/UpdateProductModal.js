@@ -9,9 +9,10 @@ const UpdateProductModal = ({ product, onClose, onUpdate }) => {
     price: product.price || '',
     discountedPrice: product.discountedPrice || '',
     discountPercent: product.discountPercent || '',
+    slug: product.slug || '',
     quantity: product.quantity || '',
     brand: product.brand || '',
-    category: product.category._id || '',
+    category:product.category.name ||'null' ,
     imageUrl: null, // Changed from imageUrl to image for file upload
   });
 
@@ -99,6 +100,14 @@ const UpdateProductModal = ({ product, onClose, onUpdate }) => {
             value={formData.brand}
             onChange={handleChange}
             placeholder="Brand"
+            className="block w-full mb-2 p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="text"
+            name="slug"
+            value={formData.slug}
+            onChange={handleChange}
+            placeholder="slug*"
             className="block w-full mb-2 p-2 border border-gray-300 rounded"
           />
           <input

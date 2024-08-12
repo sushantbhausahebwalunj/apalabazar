@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
-    default: 'TITLE'    // required: true,
+    default: 'TITLE',
+    required: true,    // required: true,
   },
   description: {
     type: String,
@@ -66,8 +67,8 @@ const productSchema = new mongoose.Schema({
   },
   // New fields for offline counter sales
   BarCode:{
-    type: Number,
-    default: 0,
+    type: String,
+     required:true,
   },
   stockType:{
     type: String,
